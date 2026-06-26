@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>22CH203 – Engineering Chemistry II | Unit 5 Answer Key</title>
+<style>
+  /* ── Design tokens ── */
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #f0883e;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --text3: #c9d1d9;
+    --keyword: #79c0ff;
+    --formula: #ffa657;
+    --sidebar-w: 300px;
+    --radius: 8px;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-display: 'Georgia', 'Times New Roman', serif;
+  }
+  .light {
+    --bg: #f6f8fa;
+    --bg2: #ffffff;
+    --bg3: #eaeef2;
+    --border: #d0d7de;
+    --accent: #0969da;
+    --accent2: #1a7f37;
+    --accent3: #bc4c00;
+    --text: #1f2328;
+    --text2: #57606a;
+    --text3: #24292f;
+    --keyword: #0550ae;
+    --formula: #953800;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+    transition: background .25s, color .25s;
+  }
+
+  /* ── Sidebar ── */
+  #sidebar {
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0;
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform .3s ease, background .25s;
+  }
+  #sidebar.hidden { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+  .sidebar-header {
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+    background: var(--bg2);
+    z-index: 1;
+  }
+  .sidebar-header h2 {
+    font-family: var(--font-display);
+    font-size: .95rem;
+    color: var(--accent);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .sidebar-header p {
+    font-size: .72rem;
+    color: var(--text2);
+  }
+  .sidebar-search {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 72px;
+    background: var(--bg2);
+    z-index: 1;
+  }
+  .sidebar-search input {
+    width: 100%;
+    padding: 7px 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--text);
+    font-size: .82rem;
+    outline: none;
+    transition: border .2s;
+  }
+  .sidebar-search input:focus { border-color: var(--accent); }
+  .sidebar-search input::placeholder { color: var(--text2); }
+
+  #nav-list {
+    list-style: none;
+    padding: 8px 0;
+    flex: 1;
+  }
+  #nav-list li a {
+    display: block;
+    padding: 7px 16px;
+    font-size: .8rem;
+    color: var(--text2);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all .15s;
+    line-height: 1.4;
+  }
+  #nav-list li a:hover,
+  #nav-list li a.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: var(--bg3);
+  }
+  #nav-list li a .qnum {
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    color: var(--accent3);
+    margin-right: 6px;
+  }
+
+  /* ── Main ── */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    min-width: 0;
+    transition: margin .3s;
+  }
+  #main.full { margin-left: 0; }
+
+  /* ── Top bar ── */
+  #topbar {
+    position: sticky; top: 0;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    z-index: 50;
+  }
+  #topbar h1 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--text);
+    flex: 1;
+  }
+  #topbar h1 span { color: var(--accent); }
+
+  .btn {
+    padding: 6px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--text);
+    font-size: .78rem;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-accent {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .btn-accent:hover { opacity: .85; color: #fff; }
+
+  #menu-toggle { display: none; }
+
+  /* ── Content ── */
+  #content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  .unit-banner {
+    background: linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 28px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .unit-banner::before {
+    content: 'U5';
+    position: absolute;
+    right: -10px; top: -16px;
+    font-family: var(--font-display);
+    font-size: 7rem;
+    font-weight: bold;
+    color: var(--accent);
+    opacity: .06;
+    pointer-events: none;
+    user-select: none;
+  }
+  .unit-banner h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .unit-banner p {
+    font-size: .88rem;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+  .topic-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 14px;
+  }
+  .pill {
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    font-size: .73rem;
+    background: var(--bg);
+    color: var(--text2);
+  }
+
+  /* ── Question card ── */
+  .q-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .q-card:hover { border-color: var(--accent); }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .q-num {
+    min-width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg3);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: .82rem;
+    color: var(--accent3);
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .q-scenario {
+    flex: 1;
+  }
+  .q-scenario .label {
+    font-size: .68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text2);
+    margin-bottom: 4px;
+  }
+  .q-scenario p {
+    font-size: .85rem;
+    color: var(--text3);
+    line-height: 1.55;
+    margin-bottom: 6px;
+  }
+  .q-task {
+    font-size: .83rem;
+    color: var(--accent);
+    font-style: italic;
+    line-height: 1.45;
+  }
+  .q-chevron {
+    font-size: 1rem;
+    color: var(--text2);
+    transition: transform .2s;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .q-card.open .q-chevron { transform: rotate(180deg); }
+
+  .q-answer {
+    display: none;
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--border);
+  }
+  .q-card.open .q-answer { display: block; }
+
+  .ans-toolbar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 0;
+    margin-bottom: 14px;
+  }
+
+  /* ── Answer sections ── */
+  .ans-block { margin-bottom: 16px; }
+  .ans-block:last-child { margin-bottom: 0; }
+
+  .ans-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--text2);
+    margin-bottom: 8px;
+  }
+  .ans-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .ans-text {
+    font-size: .88rem;
+    line-height: 1.7;
+    color: var(--text3);
+  }
+  .ans-text p { margin-bottom: 8px; }
+  .ans-text p:last-child { margin-bottom: 0; }
+
+  kw {
+    color: var(--keyword);
+    font-weight: 600;
+  }
+  fm {
+    font-family: var(--font-mono);
+    font-size: .85em;
+    color: var(--formula);
+    background: var(--bg3);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .keypoints {
+    background: var(--bg3);
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+  }
+  .keypoints ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .keypoints ul li {
+    font-size: .84rem;
+    color: var(--text3);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.55;
+  }
+  .keypoints ul li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--accent2);
+    font-size: .65rem;
+    top: 3px;
+  }
+
+  .formula-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: var(--font-mono);
+    font-size: .87rem;
+    color: var(--formula);
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+
+  .summary-tag {
+    display: inline-block;
+    background: var(--bg3);
+    border: 1px solid var(--accent3);
+    color: var(--accent3);
+    font-size: .73rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+  }
+  .summary-box {
+    background: var(--bg3);
+    border-left: 3px solid var(--accent3);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: .85rem;
+    color: var(--text3);
+    line-height: 1.65;
+  }
+
+  /* ── Search highlight ── */
+  .highlight { background: rgba(88,166,255,.25); border-radius: 2px; }
+
+  /* ── Print ── */
+  @media print {
+    #sidebar, #topbar, .ans-toolbar, #menu-toggle { display: none !important; }
+    #main { margin-left: 0 !important; }
+    .q-answer { display: block !important; }
+    .q-card { break-inside: avoid; border: 1px solid #ccc; }
+    body { background: #fff; color: #000; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    #sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; }
+    #menu-toggle { display: inline-flex; }
+    #content { padding: 20px 16px 60px; }
+    #topbar h1 { font-size: .88rem; }
+  }
+
+  /* toast */
+  #toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--accent2);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: .83rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+    z-index: 999;
+  }
+  #toast.show { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h2>22CH203 – Engg. Chemistry II</h2>
+    <p>Unit 5 · Nuclear Chemistry &amp; Isotopes</p>
+  </div>
+  <div class="sidebar-search">
+    <input type="text" id="search-input" placeholder="Search questions…" autocomplete="off">
+  </div>
+  <ul id="nav-list"></ul>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="topbar">
+    <button class="btn" id="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <h1>Unit 5 · <span>Nuclear Chemistry &amp; Isotopes</span> — Answer Key</h1>
+    <button class="btn" onclick="expandAll()">Expand All</button>
+    <button class="btn" onclick="collapseAll()">Collapse All</button>
+    <button class="btn" onclick="window.print()">🖨 Print</button>
+    <button class="btn" id="dark-btn" onclick="toggleDark()">☀ Light</button>
+  </div>
+
+  <div id="content">
+
+    <div class="unit-banner">
+      <h2>Unit 5 — Nuclear Chemistry &amp; Isotopes</h2>
+      <p>Comprehensive answer key covering all 42 questions. Each answer includes scenario analysis, key concepts, important keywords, relevant formulae, key points, and an exam-ready summary.</p>
+      <div class="topic-pills">
+        <span class="pill">Isotopes &amp; Isobars</span>
+        <span class="pill">Nuclear Stability</span>
+        <span class="pill">Binding Energy</span>
+        <span class="pill">Radioactive Decay (α, β, γ)</span>
+        <span class="pill">Half-life &amp; Decay Constant</span>
+        <span class="pill">Nuclear Fission &amp; Fusion</span>
+        <span class="pill">Isotope Separation</span>
+        <span class="pill">Carbon-14 Dating</span>
+        <span class="pill">Applications of Isotopes</span>
+      </div>
+    </div>
+
+    <!-- QUESTIONS RENDERED BY JS -->
+    <div id="questions-container"></div>
+  </div>
+</div>
+
+<div id="toast">Copied to clipboard!</div>
+
+<script>
+// ── Question Data ──
+const questions = [
+  {
+    id: 1,
+    scenario: "A nuclear model shows that increasing neutron number beyond a limit leads to instability in certain elements.",
+    task: "Interpret why excessive neutrons reduce nuclear stability.",
+    keywords: ["Neutron-to-proton ratio", "Nuclear stability", "Band of stability", "Strong nuclear force", "Beta decay"],
+    answer: `<p>Nuclear stability depends critically on the balance between protons and neutrons. The <kw>strong nuclear force</kw> (SNF) is a short-range attractive force acting between all nucleons (protons and neutrons). Protons also repel each other via the long-range <kw>electrostatic (Coulomb) repulsion</kw>.</p>
+<p>For light nuclei (Z &lt; 20), stability is achieved at roughly a <kw>1:1 neutron-to-proton (n/p) ratio</kw>. As atomic number increases, more neutrons are needed to dilute proton-proton repulsion; the stable n/p ratio rises toward ~1.5:1.</p>
+<p>When the neutron count becomes <em>excessive</em>, the nucleus enters a neutron-rich region outside the <kw>band of stability</kw>. The SNF cannot fully compensate for the nuclear imbalance, and the nucleus undergoes <kw>β⁻ decay</kw> (a neutron converts to a proton + electron + antineutrino), moving it back toward stability.</p>
+<p>Additionally, extremely large nuclei (Z &gt; 83) are unstable regardless of the n/p ratio because even the maximum neutron count cannot overcome cumulative proton repulsion — these nuclei decay by <kw>alpha emission</kw>.</p>`,
+    keypoints: [
+      "Stability requires balance between strong nuclear force and electrostatic repulsion.",
+      "Optimal n/p ratio ≈ 1:1 for light nuclei, up to ~1.5:1 for heavy nuclei.",
+      "Excessive neutrons → β⁻ decay to restore stability.",
+      "All nuclei with Z > 83 are radioactively unstable.",
+      "The 'band of stability' is the region of stable n/p combinations on the Segré chart."
+    ],
+    formula: null,
+    summary: "Excessive neutrons push the nucleus outside the band of stability. The strong nuclear force cannot maintain cohesion, prompting β⁻ decay until the nucleus reaches a stable n/p ratio."
+  },
+  {
+    id: 2,
+    scenario: "Two atoms have the same atomic number but different atomic masses, yet they react identically in chemical reactions.",
+    task: "Justify why their chemical behavior remains unchanged despite mass differences.",
+    keywords: ["Isotopes", "Atomic number", "Electron configuration", "Chemical behavior", "Neutron number"],
+    answer: `<p>The two atoms described are <kw>isotopes</kw> — atoms of the same element having the same number of protons (same <kw>atomic number, Z</kw>) but different numbers of neutrons, giving different <kw>mass numbers (A = Z + N)</kw>.</p>
+<p>Chemical behavior is determined entirely by the <kw>electronic configuration</kw>, specifically the arrangement of electrons in the outermost (valence) shell. Since isotopes share the same Z, they have <em>identical numbers of electrons</em> and therefore <em>identical valence electron configurations</em>.</p>
+<p>Chemical reactions involve electron sharing, transfer, or rearrangement. Neutrons, residing in the nucleus, have <em>no direct role</em> in bonding or reactivity. Hence both isotopes exhibit the same valency, electronegativity, ionization energy, and chemical reactivity.</p>
+<p>Minor differences do exist (the <kw>kinetic isotope effect</kw>): heavier isotopes react slightly more slowly because C–D bonds (for example) are slightly stronger than C–H bonds due to zero-point energy differences — but this affects <em>rate</em>, not the fundamental reaction pathway or products.</p>`,
+    keypoints: [
+      "Isotopes: same Z, different A (different N).",
+      "Chemical properties depend on electron configuration, not mass.",
+      "Same Z → same electron count → same valence shell → same reactivity.",
+      "Kinetic isotope effect: minor rate differences, not chemical behavior differences.",
+      "Example: ¹H and ²H (deuterium) both form water (H₂O/D₂O) with oxygen."
+    ],
+    formula: "A = Z + N  (Mass number = Protons + Neutrons)",
+    summary: "Isotopes react identically because chemical reactivity is governed by electron configuration, which depends only on the number of protons (Z). Neutron number does not affect electron arrangement."
+  },
+  {
+    id: 3,
+    scenario: "A physicist calculates the mass of a nucleus and compares it with the sum of individual nucleon masses, finding a discrepancy associated with energy release during nucleus formation.",
+    task: "Determine the significance of this mass discrepancy and relate it to nuclear binding energy.",
+    keywords: ["Mass defect", "Binding energy", "Einstein's mass-energy equivalence", "Nuclear stability", "Nucleon"],
+    answer: `<p>The discrepancy is called the <kw>mass defect (Δm)</kw>. When protons and neutrons combine to form a nucleus, the resulting nuclear mass is always <em>less</em> than the arithmetic sum of the individual nucleon masses. This "missing" mass is converted to energy — the <kw>nuclear binding energy (BE)</kw> — and released during nucleus formation.</p>
+<p>The relationship is given by <kw>Einstein's mass-energy equivalence</kw>:</p>
+<p>The binding energy represents the energy that would need to be supplied to completely disassemble the nucleus into its constituent nucleons. A higher binding energy per nucleon indicates a more stable nucleus.</p>
+<p>The <kw>binding energy per nucleon</kw> curve peaks around iron (Fe-56), which is the most stable nucleus. Nuclei lighter than Fe-56 can release energy by fusion; nuclei heavier than Fe-56 can release energy by fission.</p>`,
+    keypoints: [
+      "Mass defect Δm = (sum of individual nucleon masses) − (actual nuclear mass).",
+      "Binding energy BE = Δm × c²  (Einstein's equation).",
+      "Higher BE per nucleon → greater nuclear stability.",
+      "Fe-56 has the highest BE per nucleon (~8.8 MeV) — most stable nucleus.",
+      "1 atomic mass unit (amu) = 931.5 MeV of energy."
+    ],
+    formula: "BE = Δm × c²\nΔm = [Z·mₚ + N·mₙ] − M_nucleus\n1 amu = 931.5 MeV",
+    summary: "Mass defect arises because nuclear binding energy (E = Δm·c²) is released when nucleons form a nucleus. Greater mass defect means greater binding energy and thus greater nuclear stability."
+  },
+  {
+    id: 4,
+    scenario: "A laboratory detects two isotopes of the same element; one is used in medical diagnostics due to its emission properties, while the other is non-reactive. Both have identical electron configurations but differ in nuclear composition.",
+    task: "Infer how nuclear differences enable one isotope to be suitable for diagnostic applications while the other remains inactive.",
+    keywords: ["Radioactive isotope", "Stable isotope", "Medical diagnostics", "Gamma emission", "Technetium-99m"],
+    answer: `<p>The two isotopes differ in their <kw>nuclear stability</kw>. The diagnostic isotope is <kw>radioactive</kw> — its nucleus has an unstable n/p ratio, causing it to spontaneously decay and emit detectable radiation (typically <kw>gamma (γ) rays</kw> or positrons).</p>
+<p>The stable isotope has a balanced n/p ratio within the band of stability, so it emits no radiation and cannot be detected instrumentally by radiation counters.</p>
+<p>In medical diagnostics (e.g., <kw>Tc-99m</kw> in nuclear medicine), the radioactive isotope emits γ-rays with energy detectable by gamma cameras. Because it shares the same chemical (electronic) behavior as the stable isotope, it follows identical metabolic pathways and accumulates in target organs, allowing imaging without altering biological function.</p>
+<p>Ideal diagnostic isotopes have: (1) <kw>short half-life</kw> to minimize radiation dose; (2) <kw>gamma emission only</kw> (no alpha/beta which cause tissue damage); (3) same chemical behavior as the stable form.</p>`,
+    keypoints: [
+      "Radioactive isotope: unstable nucleus → spontaneous decay → emits detectable radiation.",
+      "Stable isotope: balanced n/p ratio → no radiation → not detectable.",
+      "Same Z → same electron configuration → same metabolic/biological behavior.",
+      "Tc-99m: gold standard diagnostic isotope, emits 140 keV γ-rays, t½ = 6 hrs.",
+      "Short half-life and γ-only emission are key criteria for diagnostic isotopes."
+    ],
+    formula: null,
+    summary: "The radioactive isotope's unstable nucleus emits gamma radiation, enabling detection. Because both isotopes share the same electron configuration, the radioactive one follows identical biological pathways — making it a perfect tracer for diagnostics."
+  },
+  {
+    id: 5,
+    scenario: "A nuclear engineer studies isotopes on a neutron-to-proton ratio graph; certain nuclei lie within a stability band while others fall outside it and undergo decay to reach equilibrium.",
+    task: "Interpret the relationship between neutron-to-proton ratio and nuclear stability, and determine why nuclei outside the stability band tend to transform.",
+    keywords: ["Band of stability", "Segré chart", "n/p ratio", "Alpha decay", "Beta decay", "Positron emission"],
+    answer: `<p>The <kw>band of stability</kw> (also called the valley of stability or Segré chart) is the region on a neutron (N) vs. proton (Z) plot where stable nuclides exist. For Z &lt; 20, stable nuclei cluster near n/p ≈ 1:1. For heavier nuclei, the band curves above n/p = 1, reaching ~1.5:1 for the heaviest stable elements (Bi-209).</p>
+<p><strong>Nuclei outside the band:</strong></p>
+<p><kw>Neutron-rich nuclei</kw> (above the band): excess neutrons → undergo <kw>β⁻ decay</kw> (n → p + e⁻ + ν̄ₑ), increasing Z, decreasing N, moving toward the band.</p>
+<p><kw>Proton-rich nuclei</kw> (below the band): excess protons → undergo <kw>β⁺ decay (positron emission)</kw> or <kw>electron capture</kw> (p + e⁻ → n + νₑ), decreasing Z, increasing N.</p>
+<p><kw>Very heavy nuclei</kw> (Z &gt; 83): too massive for any n/p adjustment → undergo <kw>α decay</kw>, reducing both A by 4 and Z by 2, moving toward a lighter, more stable region.</p>`,
+    keypoints: [
+      "Band of stability: n/p ≈ 1:1 for Z < 20; increases to ~1.5:1 for Z ~ 80.",
+      "Above band (neutron-rich): β⁻ decay.",
+      "Below band (proton-rich): β⁺ decay or electron capture.",
+      "Z > 83: alpha decay to shed mass.",
+      "All decay modes move the nucleus toward the band of stability."
+    ],
+    formula: "β⁻: n → p + e⁻ + ν̄ₑ  (Z+1, A unchanged)\nβ⁺: p → n + e⁺ + νₑ  (Z−1, A unchanged)\nα:  A−4, Z−2",
+    summary: "Nuclei outside the band of stability have imbalanced n/p ratios. They undergo α, β⁻, or β⁺ decay — whichever moves them back within the stable band — until a stable configuration is reached."
+  },
+  {
+    id: 6,
+    scenario: "An energy researcher compares two uranium samples; one sustains controlled reactions, the other remains relatively inactive. Both share identical atomic numbers but differ in mass and energy output potential.",
+    task: "Evaluate how differences in nuclear composition influence binding energy and justify the observed variation in energy release capability.",
+    keywords: ["U-235 vs U-238", "Binding energy per nucleon", "Nuclear fission", "Fissile material", "Neutron cross-section"],
+    answer: `<p>Both samples are uranium isotopes — most likely <kw>U-235</kw> (fissile) and <kw>U-238</kw> (fertile). They have the same atomic number (Z = 92) but differ in neutron count: U-235 has 143 neutrons, U-238 has 146 neutrons.</p>
+<p>The key difference lies in <kw>binding energy per nucleon</kw> and <kw>neutron cross-section</kw>. U-235 has a large thermal neutron <kw>fission cross-section</kw> (~585 barns) — it readily absorbs a slow (thermal) neutron and becomes the highly unstable compound nucleus U-236, which splits into fission fragments + 2-3 neutrons + ~200 MeV energy.</p>
+<p>U-238 has a much smaller thermal neutron cross-section; it primarily absorbs neutrons to become U-239, which then β-decays to Pu-239, a fissile material.</p>
+<p>The slight difference in binding energy per nucleon between the fission fragments and the parent nucleus accounts for the large energy release — the products are on the high-BE-per-nucleon side of the iron peak, so the reaction is energetically downhill.</p>`,
+    keypoints: [
+      "U-235: fissile — sustains chain reaction with slow neutrons.",
+      "U-238: fertile — absorbs neutrons, converts to Pu-239.",
+      "Energy released per fission ≈ 200 MeV (from mass defect of products vs reactants).",
+      "Higher BE per nucleon in fission products than in parent → energy released.",
+      "Natural uranium is ~99.3% U-238 and only ~0.7% U-235."
+    ],
+    formula: "Energy = Δm · c²\nΔm = M(U-235 + n) − M(fission fragments + neutrons)",
+    summary: "U-235 and U-238 differ in neutron number, altering their nuclear binding energy and neutron-absorption cross-sections. U-235's favorable nuclear structure makes it fissile (sustains chain reaction), while U-238 is merely fertile."
+  },
+  {
+    id: 7,
+    scenario: "A materials scientist analyzes two carbon samples from different environments: both show identical chemical behavior but differ in mass. One is stable; the other undergoes gradual transformation.",
+    task: "Analyze the structural variation between the two samples and determine how nuclear composition influences their stability and transformation behavior.",
+    keywords: ["Carbon-12", "Carbon-14", "Radioactive carbon", "Beta decay", "Neutron excess"],
+    answer: `<p>The two samples are the isotopes <kw>Carbon-12 (¹²C)</kw> and <kw>Carbon-14 (¹⁴C)</kw>. Both have Z = 6 (6 protons, 6 electrons), giving identical chemical behavior. However, ¹²C has 6 neutrons (n/p = 1:1, stable), while ¹⁴C has 8 neutrons (n/p = 8/6 = 1.33:1).</p>
+<p>¹⁴C is neutron-rich relative to the band of stability for light nuclei (where n/p ≈ 1:1 is required). This excess of neutrons renders the nucleus unstable. It undergoes <kw>β⁻ decay</kw>: a neutron converts to a proton, emitting an electron and an antineutrino, transforming ¹⁴C → ¹⁴N (Nitrogen-14), which is stable.</p>
+<p>The <kw>half-life of C-14</kw> is approximately 5,730 years — slow enough to be used in <kw>radiocarbon dating</kw> of organic materials.</p>
+<p>Despite the nuclear instability of ¹⁴C, its 6 electrons maintain the same valence configuration as ¹²C, so both form identical chemical compounds (CO₂, organic molecules), explaining their identical chemical behavior.</p>`,
+    keypoints: [
+      "¹²C: 6p + 6n → stable (n/p = 1:1).",
+      "¹⁴C: 6p + 8n → neutron-rich, unstable.",
+      "¹⁴C undergoes β⁻ decay → ¹⁴N + e⁻ + ν̄ₑ.",
+      "Half-life of ¹⁴C = 5,730 years — basis of carbon dating.",
+      "Chemical behavior identical: both have same electron configuration."
+    ],
+    formula: "¹⁴₆C → ¹⁴₇N + ⁰₋₁e + ν̄ₑ\nt½(¹⁴C) = 5,730 years",
+    summary: "¹²C (stable) and ¹⁴C (radioactive) differ only in neutron number. The extra 2 neutrons in ¹⁴C create an unfavorable n/p ratio, triggering slow β⁻ decay to nitrogen-14. Their identical electron configurations mean identical chemical behavior."
+  },
+  {
+    id: 8,
+    scenario: "In a diffusion experiment, scientists compare rates of gas flow for isotopes under identical pressure conditions. The lighter isotope consistently moves faster.",
+    task: "Analyze the relationship between mass and diffusion rate from the observed data.",
+    keywords: ["Graham's law of diffusion", "Effusion", "Molar mass", "Kinetic molecular theory", "Isotope separation"],
+    answer: `<p>The observed behavior follows <kw>Graham's Law of Diffusion/Effusion</kw>, which states that the rate of diffusion (or effusion) of a gas is inversely proportional to the square root of its molar mass.</p>
+<p>For two isotopic gases A and B, the lighter isotope A diffuses faster because at the same temperature, all gas molecules have the same average kinetic energy (<fm>½mv² = constant</fm>). Lighter molecules must therefore move faster to have the same KE as heavier ones.</p>
+<p>This principle is used in <kw>gaseous diffusion separation</kw> of uranium isotopes: UF₆ gas made from U-235 diffuses slightly faster than UF₆ from U-238, enabling enrichment through thousands of diffusion stages (cascades).</p>`,
+    keypoints: [
+      "Graham's Law: r₁/r₂ = √(M₂/M₁) where r = rate, M = molar mass.",
+      "Lighter isotope → lower molar mass → higher diffusion rate.",
+      "Basis for gaseous diffusion uranium enrichment plants.",
+      "Kinetic theory: all gases at same T have same average KE (½mv²).",
+      "Separation factor per stage is small → requires many stages (cascade)."
+    ],
+    formula: "r₁/r₂ = √(M₂/M₁)\n(Graham's Law of Diffusion)",
+    summary: "At the same temperature, lighter isotopes move faster (same kinetic energy, less mass → more speed). Graham's Law quantifies this: diffusion rate is inversely proportional to the square root of molar mass — the foundation of gaseous diffusion isotope separation."
+  },
+  {
+    id: 9,
+    scenario: "Two isotopes of the same element are heated and their boiling points are measured. A slight variation is observed despite identical chemical composition.",
+    task: "Determine the reason for variation in boiling point and relate it to atomic characteristics.",
+    keywords: ["Isotope effect", "Zero-point energy", "Boiling point", "Atomic mass", "Intermolecular forces"],
+    answer: `<p>The slight difference in boiling points is a consequence of the <kw>isotope effect</kw> on physical properties. While both isotopes have identical electron configurations and therefore identical intermolecular forces (same polarity, same London dispersion forces), they differ in <kw>atomic mass</kw>.</p>
+<p>The heavier isotope has a higher <kw>zero-point energy difference</kw> relative to the lighter one when considering vibrational modes. More precisely, molecules of the heavier isotope have slightly stronger effective intermolecular interactions due to their lower vibrational amplitude at a given temperature.</p>
+<p>As a result, the heavier isotope requires marginally more energy to transition from liquid to gas phase → slightly higher boiling point. The classic example: <kw>H₂O boils at 100°C, D₂O (heavy water) boils at 101.4°C</kw>.</p>
+<p>This is a <em>physical</em> isotope effect, not a chemical one — it arises purely from mass-dependent vibrational and translational properties.</p>`,
+    keypoints: [
+      "Heavier isotope → slightly higher boiling point due to lower vibrational amplitude.",
+      "Difference is small (~1–2°C for hydrogen isotopes).",
+      "H₂O: 100°C; D₂O: 101.4°C — classic example.",
+      "Same intermolecular forces (same Z, same electrons).",
+      "Mass affects zero-point energy and vibrational frequency."
+    ],
+    formula: "ν ∝ 1/√m  (vibrational frequency inversely proportional to √mass)",
+    summary: "Though isotopes have identical electronic structures and intermolecular forces, their different masses affect vibrational frequencies and zero-point energies. The heavier isotope exhibits a marginally higher boiling point — a physical isotope effect."
+  },
+  {
+    id: 10,
+    scenario: "A research team uses isotopes as tracers to track water movement in soil. The isotopes behave chemically identical to normal water molecules but can be detected separately using instruments.",
+    task: "Analyze how isotopic properties enable tracing applications and infer why they do not disturb the system behavior.",
+    keywords: ["Isotopic tracers", "Radioactive tracer", "Stable isotope tracer", "Radiation detection", "Non-invasive"],
+    answer: `<p><kw>Isotopic tracers</kw> exploit two key properties simultaneously: (1) <em>chemical identity</em> with the natural element, and (2) <em>detectability</em> either through radioactivity or unique mass signatures.</p>
+<p>For water tracing, isotopes such as <kw>tritium (³H, T)</kw> or <kw>deuterium (²H, D)</kw> (or ¹⁸O) are used. Since they have the same electronic structure as regular hydrogen/oxygen, they form chemically identical water molecules (HTO or HDO/H₂¹⁸O) that travel through soil via the same hydrological pathways.</p>
+<p>Detection uses <kw>liquid scintillation counters</kw> (for tritium, a β-emitter) or <kw>mass spectrometry</kw> (for stable isotopes like D or ¹⁸O). Because only a trace amount of labeled water is introduced, it doesn't alter the bulk chemistry, pH, or flow dynamics of the system.</p>
+<p>This non-invasive, chemically transparent nature makes isotopic tracers ideal for hydrology, environmental science, and biological studies.</p>`,
+    keypoints: [
+      "Tracer isotopes: chemically identical to natural element → follow the same pathways.",
+      "Detected without disturbing the system (trace amounts used).",
+      "Radioactive tracers detected by radiation counters; stable isotopes by mass spec.",
+      "Common tracers: ³H (tritium), ¹⁴C, ¹⁸O, ²H (deuterium).",
+      "Applications: hydrology, drug metabolism, photosynthesis studies."
+    ],
+    formula: null,
+    summary: "Isotopic tracers work because they are chemically indistinguishable from natural atoms (same Z) but physically detectable via radiation or mass. Using trace quantities ensures no disturbance to the system under study."
+  },
+  {
+    id: 11,
+    scenario: "An industrial setup uses centrifugation to separate uranium isotopes. The heavier isotope moves outward more strongly under rotational force, while the lighter one remains closer to the center.",
+    task: "Determine how centrifugal force enables isotope separation and determine the role of mass difference in the process.",
+    keywords: ["Gas centrifuge", "Centrifugal force", "UF₆", "Uranium enrichment", "Mass difference"],
+    answer: `<p>The <kw>gas centrifuge method</kw> separates isotopes using the principle that in a rotating cylinder, a centrifugal force acts on gas molecules proportional to their mass. The centrifugal force on a molecule is <fm>F = mω²r</fm>, where m is mass, ω is angular velocity, and r is radial distance.</p>
+<p>Uranium hexafluoride gas (UF₆) is fed into the centrifuge. The heavier <kw>²³⁸UF₆</kw> (mass ≈ 352 amu) experiences a greater centrifugal force and migrates toward the outer wall. The lighter <kw>²³⁵UF₆</kw> (mass ≈ 349 amu) concentrates near the center/axis.</p>
+<p>By continuously extracting gas from the outer wall (U-238 enriched) and the center (U-235 enriched), partial separation is achieved. Cascades of centrifuges multiply the enrichment.</p>
+<p>The gas centrifuge is far more energy-efficient than gaseous diffusion (separation factor per stage is ~1.3 vs ~1.004 for diffusion), requiring far fewer stages.</p>`,
+    keypoints: [
+      "Centrifugal force F = mω²r — proportional to mass.",
+      "Heavier ²³⁸UF₆ → outer wall; lighter ²³⁵UF₆ → near axis.",
+      "Separation factor per stage ~1.3 (much better than diffusion at 1.004).",
+      "Multiple centrifuges arranged in cascades for greater enrichment.",
+      "More energy-efficient than gaseous diffusion method."
+    ],
+    formula: "F_centrifugal = m·ω²·r\nSeparation based on Δm between ²³⁵UF₆ (349 amu) and ²³⁸UF₆ (352 amu)",
+    summary: "In a gas centrifuge, heavier UF₆ molecules are pushed to the outer wall by greater centrifugal force while lighter ones concentrate near the axis. The 3 amu mass difference between ²³⁵UF₆ and ²³⁸UF₆ enables efficient uranium isotope separation in cascades."
+  },
+  {
+    id: 12,
+    scenario: "A pharmaceutical company notices that replacing hydrogen with deuterium slows down certain reactions. Bond strength appears slightly altered, affecting reaction kinetics.",
+    task: "Interpret the influence of isotopic substitution on reaction rate and justify the observed behavior using underlying kinetic principles.",
+    keywords: ["Kinetic isotope effect (KIE)", "Deuterium", "Zero-point energy", "C–H vs C–D bond", "Reaction rate"],
+    answer: `<p>The phenomenon is the <kw>kinetic isotope effect (KIE)</kw>. When hydrogen (¹H) is replaced by deuterium (²H), the <kw>C–D bond</kw> is stronger and has a lower <kw>zero-point energy (ZPE)</kw> than the C–H bond.</p>
+<p>According to quantum mechanics, even at 0 K, bonds vibrate at a minimum energy called the zero-point energy. For C–H: ZPE ≈ 18 kJ/mol; for C–D: ZPE ≈ 13 kJ/mol. Since the C–D bond sits at a lower energy level, the <kw>activation energy</kw> (energy needed to reach the transition state) is slightly higher for C–D bond breaking.</p>
+<p>The ratio of rate constants <fm>k_H/k_D</fm> is the primary kinetic isotope effect. Typical values are 2–7 for C–H/C–D (primary KIE). This means the H-containing compound reacts 2–7 times faster than the deuterated compound when the rate-determining step involves C–H bond cleavage.</p>
+<p>Pharmaceutical chemists use deuteration strategically to slow metabolic degradation of drugs (<kw>deuterium-stabilized drugs</kw>), extending their half-life in vivo.</p>`,
+    keypoints: [
+      "KIE arises from difference in zero-point energies of C–H vs C–D bonds.",
+      "C–D has lower ZPE → higher activation energy for bond breaking → slower rate.",
+      "Primary KIE: k_H/k_D ≈ 2–7 when H/D is directly involved in bond breaking.",
+      "Secondary KIE: smaller effect when H/D is adjacent to the breaking bond.",
+      "Deuterium-labeled drugs: slower metabolism → longer therapeutic duration."
+    ],
+    formula: "k_H/k_D = exp[(Ea_D − Ea_H)/RT]\nTypical primary KIE value: 2–7",
+    summary: "Replacing H with D lowers zero-point energy, increasing the effective activation energy for C–D bond cleavage. This primary kinetic isotope effect slows the reaction, with k_H/k_D typically 2–7 — exploited in pharmaceutical design for metabolic stability."
+  },
+  {
+    id: 13,
+    scenario: "Two isotopes of hydrogen diffuse through a porous membrane. The lighter isotope escapes faster under identical conditions. Researchers aim to design an isotope separation system.",
+    task: "Determine the governing principle behind the observed diffusion difference and evaluate how it can be applied to isotope separation in industrial systems.",
+    keywords: ["Graham's Law", "Effusion", "Hydrogen isotopes", "Separation factor", "Cascade"],
+    answer: `<p>The governing principle is <kw>Graham's Law of Effusion</kw>: the rate of effusion through a porous membrane is inversely proportional to the square root of the molar mass of the gas. Lighter molecules move faster at the same temperature (equal kinetic energy per molecule) and therefore pass through pores at a higher rate.</p>
+<p>For hydrogen isotopes H₂ (M = 2 g/mol) and D₂ (M = 4 g/mol): rate_H₂/rate_D₂ = √(4/2) = √2 ≈ 1.41.</p>
+<p>In an industrial <kw>gaseous diffusion plant</kw>: the gas mixture is forced through a porous barrier. The lighter isotope preferentially passes through, enriching one side. The <kw>separation factor</kw> per stage is √(M₂/M₁). For uranium (²³⁵UF₆ vs ²³⁸UF₆): α = √(352/349) ≈ 1.0043 — very small, requiring ~1400 stages in a cascade for weapons-grade enrichment.</p>
+<p>For hydrogen isotopes the separation factor is much larger (~1.41), making single-stage or few-stage separation feasible.</p>`,
+    keypoints: [
+      "Graham's Law: r ∝ 1/√M (inverse square root of molar mass).",
+      "Lighter isotope has higher effusion rate through porous membrane.",
+      "Separation factor α = √(M_heavy/M_light) per stage.",
+      "H₂/D₂ separation factor ≈ 1.41; UF₆ separation factor ≈ 1.004.",
+      "Cascades (multiple stages) needed when α is small."
+    ],
+    formula: "r₁/r₂ = √(M₂/M₁)\nSeparation factor α = √(M₂/M₁)",
+    summary: "Graham's Law governs the faster diffusion of lighter isotopes through porous membranes. Applied industrially, this principle separates isotopes using cascades of diffusion stages — fewer stages for large mass differences (H₂/D₂), many more for small differences (uranium isotopes)."
+  },
+  {
+    id: 14,
+    scenario: "A chemical plant compares two isotopes of chlorine in parallel reactions; identical pathways but slight rate differences. Engineers suspect atomic mass influences certain measurable parameters.",
+    task: "Analyze the observed similarities and differences in the behavior of the isotopes and determine how atomic structure and mass contribute to these variations.",
+    keywords: ["Chlorine isotopes", "³⁵Cl and ³⁷Cl", "Kinetic isotope effect", "Chemical properties", "Physical properties"],
+    answer: `<p>Chlorine has two naturally occurring stable isotopes: <kw>³⁵Cl</kw> (75.77%, mass 35 amu) and <kw>³⁷Cl</kw> (24.23%, mass 37 amu). Both have Z = 17, so they have identical electron configurations and exhibit identical chemical behavior — same valency (−1), same electronegativity, same reaction pathways.</p>
+<p><strong>Similarities:</strong> Both form the same compounds (HCl, NaCl, Cl₂), undergo the same reactions, have the same chemical properties.</p>
+<p><strong>Differences (due to mass):</strong></p>
+<p>1. <kw>Reaction rate</kw>: A small secondary kinetic isotope effect means ³⁵Cl reacts marginally faster than ³⁷Cl in reactions where C–Cl bond breaking is rate-determining.</p>
+<p>2. <kw>Physical properties</kw>: ³⁷Cl has a slightly higher boiling point, slightly lower diffusion rate, and slightly different vibrational frequencies (IR spectrum).</p>
+<p>3. <kw>Mass spectrometry</kw>: The 2 amu mass difference is detectable by MS, giving a characteristic M:M+2 isotope pattern (3:1 ratio) in chlorine-containing compounds — a powerful analytical tool.</p>`,
+    keypoints: [
+      "Same Z = 17 → identical electron configuration → identical chemical behavior.",
+      "³⁵Cl (75.77%) and ³⁷Cl (24.23%) — natural abundance ratio ~3:1.",
+      "Minor rate differences due to secondary kinetic isotope effect.",
+      "Different masses → different IR vibrational frequencies.",
+      "Distinct MS isotope patterns used in analytical chemistry for structure elucidation."
+    ],
+    formula: "Isotope ratio ³⁵Cl:³⁷Cl ≈ 3:1\nObserved in MS as M and M+2 peaks in ~3:1 ratio",
+    summary: "³⁵Cl and ³⁷Cl share chemical identity (same Z, same electrons) but their 2 amu mass difference causes minor physical differences (slightly different boiling points, diffusion rates, vibrational frequencies) and detectable MS isotope patterns — illustrating that mass affects physical but not fundamental chemical properties."
+  },
+  {
+    id: 15,
+    scenario: "A decay series shows successive emissions where mass number decreases significantly at one stage and remains constant at another stage.",
+    task: "Interpret the decay stages and correlate them with corresponding radiation types.",
+    keywords: ["Alpha decay", "Beta decay", "Decay series", "Mass number", "Atomic number"],
+    answer: `<p>In a radioactive decay series, different emissions change mass number (A) and atomic number (Z) by characteristic amounts:</p>
+<p><kw>Alpha (α) decay</kw>: The nucleus emits a helium-4 nucleus (⁴₂He). This <em>decreases mass number by 4 (ΔA = −4)</em> and atomic number by 2 (ΔZ = −2). Stages where A decreases significantly correspond to α-decay.</p>
+<p><kw>Beta-minus (β⁻) decay</kw>: A neutron converts to a proton, emitting an electron. <em>Mass number remains unchanged (ΔA = 0)</em> while Z increases by 1 (ΔZ = +1). Stages where A stays constant correspond to β⁻ decay.</p>
+<p><kw>Gamma (γ) emission</kw>: Pure energy release; neither A nor Z changes (ΔA = 0, ΔZ = 0). Often accompanies α or β decay.</p>
+<p>In the uranium-238 decay series, for example, the sequence involves multiple α decays (dropping A by 4 each step) interspersed with β⁻ decays (A unchanged) until stable Pb-206 is reached.</p>`,
+    keypoints: [
+      "α decay: ΔA = −4, ΔZ = −2 (mass number drops by 4).",
+      "β⁻ decay: ΔA = 0, ΔZ = +1 (mass number unchanged).",
+      "β⁺/positron: ΔA = 0, ΔZ = −1.",
+      "γ emission: ΔA = 0, ΔZ = 0 (energy release only).",
+      "U-238 decay series ends at stable Pb-206 after 8α + 6β decays."
+    ],
+    formula: "α: ᴬ𝓩X → ᴬ⁻⁴𝓩₋₂Y + ⁴₂He\nβ⁻: ᴬ𝓩X → ᴬ𝓩₊₁Y + ⁰₋₁e + ν̄\nγ: ᴬ𝓩X* → ᴬ𝓩X + γ",
+    summary: "Stages with significant mass number decrease → α decay (ΔA = −4). Stages with constant mass number but changing Z → β decay (ΔA = 0). Together, these decay modes guide the nucleus through a series toward a stable product."
+  },
+  {
+    id: 16,
+    scenario: "A radioactive nucleus emits radiation that does not alter its atomic structure but releases energy. The radiation passes through thick materials easily and shows no charge.",
+    task: "Determine the emission type and infer its role in nuclear stability.",
+    keywords: ["Gamma radiation", "Electromagnetic radiation", "Nuclear excited state", "Penetrating power", "Energy release"],
+    answer: `<p>The described radiation is <kw>gamma (γ) radiation</kw>. Its characteristics match exactly:</p>
+<p>• <em>No charge</em> — γ rays are high-energy electromagnetic photons (no mass, no charge).</p>
+<p>• <em>Not deflected in electric/magnetic fields</em> — confirms zero charge.</p>
+<p>• <em>Highest penetrating power</em> — γ rays penetrate several centimeters of lead or meters of concrete; they can pass through thick materials easily.</p>
+<p>• <em>No change in A or Z</em> — the nucleus itself does not transform; only energy is released.</p>
+<p><strong>Role in nuclear stability:</strong> γ emission occurs when a nucleus in an <kw>excited state (metastable state)</kw> — often produced after α or β decay — transitions to its <kw>ground state</kw>. The excess energy is released as a γ photon. This is analogous to electronic relaxation in atoms (visible light), but at nuclear energy scales (keV–MeV range).</p>
+<p>Example: <kw>Tc-99m → Tc-99 + γ (140 keV)</kw> — widely used in medical imaging.</p>`,
+    keypoints: [
+      "γ radiation: high-energy EM photons, no charge, no mass.",
+      "Does NOT change A or Z of the nucleus.",
+      "Emitted when nucleus transitions from excited state to ground state.",
+      "Highest penetrating power of the three types (α < β < γ).",
+      "Lowest ionizing power (α > β > γ)."
+    ],
+    formula: "ᴬ𝓩X* → ᴬ𝓩X + γ  (no change in A or Z)\nγ energy range: keV to MeV",
+    summary: "Gamma radiation consists of high-energy electromagnetic photons emitted when a nuclear excited state relaxes to ground state. It does not alter the nucleus's proton or neutron count, but stabilizes it energetically. Its high penetrating power requires thick shielding (lead, concrete)."
+  },
+  {
+    id: 17,
+    scenario: "An artificially produced radioactive isotope decays by emitting radiation that increases the atomic number of the daughter nucleus. The radiation shows noticeable deflection in electric fields and moderate penetration.",
+    task: "Analyze the decay mechanism and determine how artificial radioactivity leads to such nuclear transformation.",
+    keywords: ["Beta-minus decay", "Artificial radioactivity", "Curie-Joliot", "Neutron-rich nucleus", "Atomic number increase"],
+    answer: `<p>The described decay is <kw>β⁻ (beta-minus) decay</kw>: the emitted radiation (fast electrons) deflects in an electric field toward the positive plate, has moderate penetration (stopped by ~5 mm of aluminum), and its emission increases the atomic number by 1 (a neutron converts to a proton).</p>
+<p><kw>Artificial radioactivity</kw> (discovered by Irène and Frédéric Joliot-Curie in 1934) refers to radioactivity induced in normally stable nuclei by bombardment with particles (α, n, p, γ). The resulting artificially produced nuclides are often neutron-rich or proton-rich depending on the projectile used, and they subsequently decay.</p>
+<p><strong>Mechanism:</strong> Bombardment with neutrons (e.g., from a nuclear reactor) adds a neutron to a stable nucleus, creating a neutron-rich artificial isotope. This isotope then undergoes β⁻ decay — a neutron is converted to a proton: <fm>n → p + e⁻ + ν̄ₑ</fm> — increasing Z by 1 and producing the daughter nucleus.</p>
+<p>The radiation (β⁻) has: charge = −1 (deflected toward +ve plate), moderate ionizing power, moderate penetration through matter.</p>`,
+    keypoints: [
+      "β⁻ decay: n → p + e⁻ + ν̄ₑ; Z increases by 1, A unchanged.",
+      "Artificial radioactivity: stable nucleus made radioactive by particle bombardment.",
+      "Discovered by Joliot-Curie (1934) using α-particle bombardment of Al.",
+      "β⁻ particles deflected toward positive plate in electric field.",
+      "Used to produce radioisotopes for medicine and research in reactors/cyclotrons."
+    ],
+    formula: "β⁻: ᴬ𝓩X → ᴬ𝓩₊₁Y + ⁰₋₁e + ν̄ₑ\nArtificial: ²⁷₁₃Al + ⁴₂He → ³⁰₁₅P + ¹₀n  → ³⁰₁₄Si + β⁺ (Joliot-Curie example)",
+    summary: "β⁻ decay increases Z by 1 (neutron→proton) while A stays constant. Artificially produced neutron-rich isotopes (made by neutron bombardment in reactors) commonly undergo β⁻ decay to reach stability. The emitted electrons deflect toward positive plates and have moderate penetration."
+  },
+  {
+    id: 18,
+    scenario: "A radioactive substance produces very strong ionization but fails to pass through a thin sheet of paper. The emitted particles are suspected to be massive and charged.",
+    task: "Infer the type of radiation and justify the relationship between its ionizing power and penetration capability.",
+    keywords: ["Alpha radiation", "Alpha particle", "Helium-4 nucleus", "Ionizing power", "Penetration depth"],
+    answer: `<p>The described radiation is <kw>alpha (α) radiation</kw>. α particles are helium-4 nuclei (<fm>⁴₂He²⁺</fm>) — composed of 2 protons + 2 neutrons with a +2 charge and mass of 4 amu.</p>
+<p><strong>High ionizing power:</strong> Due to their large charge (+2) and relatively slow speed (typically 5–7% of c), α particles interact intensely with surrounding electrons as they travel through matter. Each interaction ionizes an atom in their path. The large mass also causes more frequent, dense collisions. This results in <em>very high linear energy transfer (LET)</em> — up to 20× more ionizing than β or γ per unit path length.</p>
+<p><strong>Very low penetration:</strong> Because α particles lose energy so rapidly through ionization, they are stopped by just a few centimeters of air or a single sheet of paper. They cannot penetrate skin.</p>
+<p>This inverse relationship — high charge + large mass → intense ionization → rapid energy loss → very short range — explains both properties simultaneously. The particle expends all its energy in a short distance (the <kw>Bragg peak</kw>).</p>`,
+    keypoints: [
+      "α particle = ⁴₂He²⁺ (2 protons + 2 neutrons, charge +2).",
+      "Highest ionizing power of α, β, γ radiations.",
+      "Lowest penetration: stopped by paper, a few cm of air, or dead skin layer.",
+      "High ionization → rapid energy loss → short range.",
+      "Dangerous if ingested/inhaled (internal exposure), less harmful externally."
+    ],
+    formula: "α decay: ᴬ𝓩X → ᴬ⁻⁴𝓩₋₂Y + ⁴₂He\nRange in air: 3–8 cm; stopped by: thin paper",
+    summary: "Alpha particles (⁴He²⁺) are massive and doubly charged, causing intense ionization of matter they pass through. This rapid energy transfer means they are stopped by a mere sheet of paper. Their high ionizing power and low penetration are two sides of the same coin."
+  },
+  {
+    id: 19,
+    scenario: "A medical imaging facility uses a radioactive source emitting highly penetrating radiation with no charge and no mass. Not deflected in fields. Nucleus does not change its atomic or mass number.",
+    task: "Identify the radiation type and evaluate its nuclear significance. Interpret why no change occurs in nuclear composition during this emission.",
+    keywords: ["Gamma radiation", "Excited nuclear state", "Ground state", "Electromagnetic photon", "Medical imaging"],
+    answer: `<p>All described properties confirm <kw>gamma (γ) radiation</kw>:</p>
+<p>• Zero charge and zero rest mass → electromagnetic photon.</p>
+<p>• Not deflected by electric or magnetic fields (no charge).</p>
+<p>• Highest penetrating power — passes through the body, detected externally by gamma cameras.</p>
+<p>• No change in A or Z — nucleus composition unchanged after emission.</p>
+<p><strong>Nuclear significance:</strong> γ emission represents a <kw>nuclear energy transition</kw>. After α or β decay, or after neutron capture, the daughter nucleus is often left in an energetically excited (metastable) state. It then de-excites to the ground state by emitting a γ photon carrying the energy difference. Since only energy (not matter) is emitted, nuclear composition (number of protons and neutrons) is preserved.</p>
+<p><strong>Medical imaging context:</strong> <kw>Technetium-99m</kw> is the most widely used medical isotope — it emits a single 140 keV γ-ray (ideal energy for gamma camera detection) with t½ = 6 hours, then decays to ground-state Tc-99.</p>`,
+    keypoints: [
+      "γ radiation: photon, zero charge, zero rest mass.",
+      "ΔA = 0, ΔZ = 0 — nucleus composition unchanged.",
+      "Emitted during nuclear de-excitation from excited → ground state.",
+      "Highest penetration; lowest ionization among α, β, γ.",
+      "Tc-99m: 140 keV γ, t½ = 6 hr — ideal medical imaging isotope."
+    ],
+    formula: "ᴬ𝓩X* → ᴬ𝓩X + γ\nγ energy: tens of keV to several MeV",
+    summary: "Gamma emission is a nuclear energy transition (excited → ground state) releasing a high-energy photon. Because no particles are emitted, the nucleus's proton and neutron count stays unchanged. Its high penetration (detected outside the body) makes it ideal for medical imaging."
+  },
+  {
+    id: 20,
+    scenario: "A radioactive isotope emits fast-moving electrons showing strong magnetic deflection. Moderate penetration and ionization. Nucleus shows increased atomic number but unchanged mass number.",
+    task: "Analyze the decay process involved and infer how nuclear composition changes. Reconstruct the reasoning linking particle properties to nuclear transformation.",
+    keywords: ["Beta-minus decay", "Electron emission", "Antineutrino", "Atomic number change", "Mass number"],
+    answer: `<p>The described decay is <kw>β⁻ (beta-minus) decay</kw>. Evidence:</p>
+<p>• <em>Fast-moving electrons</em> — β⁻ particles are high-energy electrons (⁰₋₁e) ejected from the nucleus.</p>
+<p>• <em>Strong deflection in magnetic field</em> — electrons are light and charged, deflecting significantly.</p>
+<p>• <em>Moderate penetration</em> — stopped by ~5 mm aluminum or ~10 m of air.</p>
+<p>• <em>Atomic number increases by 1, mass number unchanged</em> — confirms n → p conversion.</p>
+<p><strong>Mechanism:</strong> Inside the nucleus, a <kw>neutron is converted to a proton</kw> via the weak nuclear force: a <fm>d quark → u quark</fm> transition, releasing a <kw>W⁻ boson</kw> that decays to an electron and an electron antineutrino.</p>
+<p>Net result: Z+1 (one more proton), N−1 (one fewer neutron), A unchanged. The daughter nucleus is a different element with the same mass number but one higher atomic number.</p>
+<p>This is the most common decay mode for <em>neutron-rich</em> (artificially produced or heavy natural) isotopes.</p>`,
+    keypoints: [
+      "β⁻ decay: n → p + e⁻ + ν̄ₑ (antineutrino also emitted).",
+      "Z increases by 1; A unchanged; N decreases by 1.",
+      "Emitted electron deflected strongly in magnetic field.",
+      "Penetration: ~5 mm aluminum, stopped by skin.",
+      "Occurs in neutron-rich nuclei to reduce n/p ratio."
+    ],
+    formula: "ᴬ𝓩X → ᴬ𝓩₊₁Y + ⁰₋₁e + ν̄ₑ\nWithin nucleus: n → p + e⁻ + ν̄ₑ",
+    summary: "β⁻ decay converts a neutron to a proton inside the nucleus, emitting a fast electron and antineutrino. Atomic number increases by 1, mass number stays the same. The fast electrons show strong magnetic deflection and moderate penetration — defining signatures of β⁻ radiation."
+  },
+  {
+    id: 21,
+    scenario: "A laboratory analyzes an unknown radioactive sample emitting heavy particles with low penetration but high ionizing power. Particles deflect slightly in an electric field. The nucleus changes significantly after emission.",
+    task: "Determine the nature of the emitted radiation and analyze how atomic number and mass number transform. Justify using observed properties.",
+    keywords: ["Alpha decay", "Helium-4 nucleus", "Alpha particle properties", "Atomic number −2", "Mass number −4"],
+    answer: `<p>The observed properties identify the radiation as <kw>alpha (α) particles</kw>:</p>
+<p>• <em>Heavy particles</em> — α = ⁴₂He²⁺ (mass = 4 amu, second heaviest common radiation particle).</p>
+<p>• <em>Low penetration</em> — stopped by a sheet of paper or a few cm of air.</p>
+<p>• <em>High ionizing power</em> — large charge (+2) causes intense ionization.</p>
+<p>• <em>Slight deflection in electric field</em> — positive charge, but large mass means less deflection than β particles for same field.</p>
+<p>• <em>Significant nuclear change</em> — A decreases by 4, Z decreases by 2.</p>
+<p><strong>Nuclear transformation:</strong> The parent nucleus loses a helium-4 nucleus. Z decreases by 2 (moves two places left in the periodic table), A decreases by 4. The daughter is a completely different element.</p>
+<p>Example: <kw>²³⁸₉₂U → ²³⁴₉₀Th + ⁴₂He</kw></p>
+<p>Alpha decay is common in heavy nuclei (Z &gt; 82) where the nucleus is too large for the strong force to maintain stability, and emitting an α particle reduces both mass and charge simultaneously.</p>`,
+    keypoints: [
+      "α particle = ⁴₂He²⁺ (charge +2, mass 4 amu).",
+      "Deflects toward negative plate in electric field (positive charge).",
+      "ΔA = −4, ΔZ = −2 after alpha decay.",
+      "Penetration: few cm air, stopped by paper.",
+      "Predominant decay mode for Z > 82 nuclei."
+    ],
+    formula: "ᴬ𝓩X → ᴬ⁻⁴𝓩₋₂Y + ⁴₂He\nExample: ²³⁸₉₂U → ²³⁴₉₀Th + ⁴₂He",
+    summary: "The heavy, highly ionizing, low-penetrating particles deflected toward the negative plate are alpha particles (⁴He²⁺). Alpha decay reduces the parent nucleus's mass number by 4 and atomic number by 2, producing a daughter element two places lower in the periodic table."
+  },
+  {
+    id: 22,
+    scenario: "A scientist studies the average lifetime of radioactive nuclei. The decay constant is known and is used to relate average lifetime with half-life.",
+    task: "Analyze the relationship between mean life and half-life and determine how they are connected through decay behavior.",
+    keywords: ["Mean life (τ)", "Half-life (t½)", "Decay constant (λ)", "Radioactive decay law", "Average lifetime"],
+    answer: `<p>Radioactive decay is a statistical process governed by the <kw>decay constant (λ)</kw>. The probability that a given nucleus decays per unit time is λ.</p>
+<p>The <kw>mean life (τ)</kw> — also called average lifetime — is the average time a nucleus exists before decaying. It is the reciprocal of the decay constant: <fm>τ = 1/λ</fm>.</p>
+<p>The <kw>half-life (t½)</kw> is the time for exactly half the nuclei in a sample to decay: <fm>t½ = ln2/λ = 0.693/λ</fm>.</p>
+<p>Relating the two: <fm>τ = t½/ln2 = t½/0.693 ≈ 1.443 × t½</fm>.</p>
+<p>Therefore, the mean life is always <em>longer</em> than the half-life by a factor of 1/ln2 ≈ 1.443. This makes intuitive sense: some nuclei survive much longer than t½, pulling the average upward.</p>
+<p>After one mean life (τ), approximately 36.8% (= 1/e) of the original nuclei remain, compared to 50% at t½.</p>`,
+    keypoints: [
+      "Decay constant λ = probability of decay per unit time.",
+      "Mean life τ = 1/λ (average time before decay).",
+      "Half-life t½ = ln2/λ = 0.693/λ.",
+      "Relationship: τ = 1.443 × t½ (mean life > half-life).",
+      "After time τ: N = N₀/e ≈ 0.368 N₀ remain."
+    ],
+    formula: "N(t) = N₀ · e^(−λt)\nt½ = ln2/λ = 0.693/λ\nτ = 1/λ\nτ = t½/ln2 = 1.443 × t½",
+    summary: "The mean life (τ = 1/λ) and half-life (t½ = 0.693/λ) are both measures of decay rate. Mean life is 1.443 times the half-life because it accounts for the full exponential distribution of survival times. After one mean life, 36.8% of nuclei remain; after one half-life, 50% remain."
+  },
+  {
+    id: 23,
+    scenario: "A radioactive sample reduces to one-fourth of its original activity over a period of time following a consistent halving pattern.",
+    task: "Determine how many decay stages are involved when activity reduces to one-fourth of its initial value.",
+    keywords: ["Half-life", "Activity reduction", "Decay stages", "Radioactive decay law", "One-fourth"],
+    answer: `<p>Activity (A) is proportional to the number of undecayed nuclei (N). The fraction remaining after n half-lives is: <fm>N/N₀ = (1/2)ⁿ</fm>.</p>
+<p>If activity reduces to <kw>one-fourth (1/4)</kw> of the original:</p>
+<p><fm>(1/2)ⁿ = 1/4 = (1/2)²</fm></p>
+<p>Therefore, <strong>n = 2 half-lives</strong> have elapsed.</p>
+<p>In other words, <kw>two decay stages (two half-lives)</kw> are required for the activity to fall to one-quarter of its initial value.</p>
+<p>This can also be seen intuitively: after the first half-life, activity drops to 1/2; after the second half-life, it drops to 1/2 × 1/2 = 1/4.</p>
+<p>The total time elapsed = 2 × t½ of the isotope in question.</p>`,
+    keypoints: [
+      "After n half-lives: remaining fraction = (1/2)ⁿ.",
+      "For 1/4 remaining: (1/2)² = 1/4 → n = 2 half-lives.",
+      "Activity ∝ number of undecayed nuclei.",
+      "Each half-life reduces the remaining amount by 50%.",
+      "Time elapsed = 2 × t½."
+    ],
+    formula: "N/N₀ = (1/2)ⁿ\n1/4 = (1/2)²  →  n = 2\nTime = 2 × t½",
+    summary: "Activity falling to one-fourth requires exactly 2 half-lives: after the first t½ → 50% remains; after the second t½ → 25% (1/4) remains. This is a direct application of the exponential decay law (1/2)ⁿ = remaining fraction."
+  },
+  {
+    id: 24,
+    scenario: "A medical physicist observes radioactive tracers under different environmental conditions (temperature and pressure). Decay rate remains unchanged in all cases.",
+    task: "Analyze the influence of environmental conditions on radioactive decay and justify the observed consistency.",
+    keywords: ["Radioactive decay independence", "Nuclear process", "Extranuclear conditions", "Fundamental nuclear force"],
+    answer: `<p>Radioactive decay is a <kw>nuclear process</kw> governed by the <kw>strong nuclear force</kw> and the <kw>weak nuclear force</kw> — fundamental forces operating at the nuclear scale (10⁻¹⁵ m). These forces are completely unaffected by macroscopic conditions such as temperature, pressure, chemical state, or physical form.</p>
+<p><strong>Why temperature doesn't matter:</strong> Chemical reactions are influenced by temperature because they involve breaking and forming electron bonds (energies of eV scale). Nuclear binding energies are millions of times larger (MeV scale). Thermal energy at any achievable temperature (even stellar temperatures) is negligible compared to nuclear binding energies.</p>
+<p><strong>Why pressure doesn't matter:</strong> Pressure affects electron orbitals very marginally (orbital electron capture can be very slightly affected at extreme pressures), but for practical medical and industrial purposes, pressure has no measurable effect on decay rate.</p>
+<p>The <kw>decay constant (λ)</kw> is therefore a fundamental property of each radionuclide, independent of its chemical environment. This invariance makes radioactive decay a <em>reliable chronometer</em> for dating (carbon-14, uranium-lead, etc.).</p>`,
+    keypoints: [
+      "Radioactive decay is a nuclear process — unaffected by temperature, pressure, or chemical state.",
+      "Nuclear energies (MeV) >> thermal energies (fraction of eV) at any practical temperature.",
+      "Decay constant λ is a fixed property of each nuclide.",
+      "This independence makes isotopic dating reliable across geological time.",
+      "Exception (extremely minor): electron capture rate slightly affected at enormous pressures."
+    ],
+    formula: "λ = constant (independent of T, P, chemical state)\nActivity A = λN",
+    summary: "Radioactive decay constants are unaffected by temperature, pressure, or chemical environment because nuclear forces (MeV scale) vastly outweigh any external energy perturbation. This invariance makes radioactive decay a precise and reliable clock for scientific dating applications."
+  },
+  {
+    id: 25,
+    scenario: "A graph plotted between number of nuclei and time shows a continuously decreasing curve — rapid initially, slower later — never reaching zero.",
+    task: "Interpret the graphical representation of radioactive decay and determine what it indicates about the variation in decay rate.",
+    keywords: ["Exponential decay", "Radioactive decay curve", "Decay rate", "N vs t graph", "Asymptotic"],
+    answer: `<p>The graph represents <kw>exponential radioactive decay</kw>. The mathematical form is: <fm>N(t) = N₀ · e^(−λt)</fm>, which produces a continuously decreasing curve that approaches but never reaches zero.</p>
+<p><strong>Interpretation of graph features:</strong></p>
+<p>1. <kw>Steeper slope initially</kw>: The rate of decay (dN/dt = −λN) is highest when N is largest. More nuclei present → more decays per second → faster rate initially.</p>
+<p>2. <kw>Slope decreases progressively</kw>: As nuclei decay, fewer remain → fewer decays per second → slower rate over time.</p>
+<p>3. <kw>Curve never reaches zero</kw>: Exponential functions asymptotically approach zero — in theory, a small fraction of nuclei always remains. In practice, with finite numbers of atoms, the last nucleus eventually decays.</p>
+<p>4. <kw>Constant half-life</kw>: Equal intervals of time always reduce N by the same fraction (1/2) — a fundamental property of exponential decay, regardless of starting amount.</p>`,
+    keypoints: [
+      "N(t) = N₀·e^(−λt) — exponential decay equation.",
+      "Rate of decay dN/dt = −λN (proportional to current N).",
+      "Rapid initial decrease → slower later (rate ∝ N).",
+      "Curve is asymptotic — theoretically never reaches exactly zero.",
+      "Half-life is constant regardless of initial N₀."
+    ],
+    formula: "N(t) = N₀ · e^(−λt)\ndN/dt = −λN\nActivity A(t) = A₀ · e^(−λt)",
+    summary: "The N vs t curve for radioactive decay is an exponential function. It starts steep (many nuclei → many decays/second) and progressively flattens (fewer nuclei → fewer decays/second). The curve asymptotically approaches zero, and the half-life remains constant throughout — hallmarks of first-order exponential decay."
+  },
+  {
+    id: 26,
+    scenario: "An archaeologist studies an ancient object where radioactive material activity has significantly decreased. The decay follows a predictable pattern providing a way to estimate the object's age.",
+    task: "Analyze how the concept of half-life can be applied to infer the age of the artifact based on observed reduction in activity.",
+    keywords: ["Radiocarbon dating", "Half-life", "Age determination", "Carbon-14", "Activity ratio"],
+    answer: `<p>The application described is <kw>radiocarbon dating</kw> (or more generally, <kw>radiometric dating</kw>). The principle relies on the known, constant rate of radioactive decay (constant λ, constant t½) to calculate elapsed time.</p>
+<p><strong>Method:</strong></p>
+<p>1. While alive, an organism continuously exchanges carbon with the atmosphere, maintaining a constant ¹⁴C/¹²C ratio (≈ 1.2 × 10⁻¹²).</p>
+<p>2. At death, exchange stops. ¹⁴C decays with t½ = 5,730 years; ¹²C is stable.</p>
+<p>3. Measuring the current <kw>specific activity</kw> (A) and comparing to the initial activity (A₀) allows calculation of time elapsed (t).</p>
+<p>The age formula: <fm>t = (1/λ) · ln(A₀/A) = (t½/0.693) · ln(A₀/A)</fm></p>
+<p>The archaeologist compares the measured activity of the artifact with the expected initial activity (from modern samples). The ratio A/A₀ gives the decay fraction, from which t is calculated directly.</p>`,
+    keypoints: [
+      "At death, ¹⁴C exchange stops; ¹⁴C decays with t½ = 5,730 years.",
+      "Age t = (1/λ)·ln(A₀/A) = 1.443·t½·ln(A₀/A).",
+      "Useful range: up to ~50,000 years (beyond that, ¹⁴C too depleted to measure).",
+      "Reliable because λ (and t½) of ¹⁴C is constant and well-measured.",
+      "Calibration curves correct for variations in atmospheric ¹⁴C over time."
+    ],
+    formula: "t = (1/λ)·ln(N₀/N) = (t½/0.693)·ln(A₀/A)\nλ = 0.693/t½ = 0.693/5730 yr = 1.21×10⁻⁴ yr⁻¹",
+    summary: "Radiometric dating exploits constant radioactive decay rates. By measuring the ratio of remaining ¹⁴C activity to initial activity (equal to modern atmospheric level), the age formula t = (1/λ)·ln(A₀/A) gives the time since the organism died — the basis of archaeological and geological dating."
+  },
+  {
+    id: 27,
+    scenario: "A radioactive material consistently reduces to half its initial amount over equal time intervals. Researchers compare isotopes based on this halving behavior, noting some decay faster while others persist longer.",
+    task: "Interpret the relationship between half-life and decay constant and determine how this relationship enables comparison of different radioactive materials.",
+    keywords: ["Half-life", "Decay constant", "Inverse relationship", "Radioisotope comparison", "Stability"],
+    answer: `<p>The <kw>half-life (t½)</kw> and <kw>decay constant (λ)</kw> are inversely related: <fm>t½ = ln2/λ = 0.693/λ</fm>. This fundamental relationship means:</p>
+<p>• <em>Large λ</em> → nucleus is highly unstable → decays rapidly → <em>short half-life</em>.</p>
+<p>• <em>Small λ</em> → nucleus is relatively stable → decays slowly → <em>long half-life</em>.</p>
+<p>Since both λ and t½ are <em>intrinsic properties</em> of each nuclide (independent of external conditions), they serve as unique identifiers for radionuclides. Measuring t½ experimentally allows direct calculation of λ and vice versa.</p>
+<p><strong>Comparison of isotopes:</strong> A shorter t½ indicates a more unstable nucleus (higher λ). For example, ²¹⁴Po (t½ = 164 μs) vs ²³²Th (t½ = 1.4×10¹⁰ yr) — both are alpha emitters but with vastly different stabilities.</p>
+<p>In applications, short-lived isotopes are preferred for medical imaging (less patient radiation exposure); long-lived isotopes are used for geological dating.</p>`,
+    keypoints: [
+      "t½ = 0.693/λ — inverse relationship between half-life and decay constant.",
+      "Large λ → short t½ → rapidly decaying (highly unstable).",
+      "Small λ → long t½ → slowly decaying (relatively stable).",
+      "Both are nuclide-specific, constant properties.",
+      "Example: I-131 (t½ = 8 days, used in thyroid treatment); U-238 (t½ = 4.5×10⁹ yr, geological dating)."
+    ],
+    formula: "t½ = ln2/λ = 0.693/λ\nλ = 0.693/t½\nActivity A = λN = (0.693/t½)·N",
+    summary: "Half-life and decay constant are inversely related (t½ = 0.693/λ). A shorter half-life means a larger decay constant — the nucleus is more unstable and decays faster. This relationship allows comparison of radionuclide stability and guides selection of isotopes for specific applications."
+  },
+  {
+    id: 28,
+    scenario: "A nuclear laboratory monitors a radioactive isotope used in imaging, where activity decreases steadily over time. Rate of disintegration depends on number of undecayed nuclei. The team wants to understand the governing principle and how decay constant controls the process.",
+    task: "Analyze the governing principle of radioactive decay and determine how the decay constant influences the rate of disintegration in the given system.",
+    keywords: ["Law of radioactive decay", "Decay constant", "Activity", "First-order kinetics", "Rate of disintegration"],
+    answer: `<p>The governing principle is the <kw>Law of Radioactive Decay</kw> (Rutherford and Soddy, 1902): <em>The rate of disintegration of a radioactive substance is directly proportional to the number of undecayed atoms present at that instant.</em></p>
+<p>Mathematically: <fm>−dN/dt = λN</fm></p>
+<p>where dN/dt is the rate of decay (disintegrations/second = <kw>activity A</kw>), N is the current number of undecayed nuclei, and λ is the <kw>decay constant</kw> (s⁻¹ or yr⁻¹).</p>
+<p>Integrating: <fm>N(t) = N₀·e^(−λt)</fm> and <fm>A(t) = A₀·e^(−λt)</fm>.</p>
+<p><strong>Role of λ:</strong> A larger λ means each nucleus has a higher probability of decaying per unit time → higher activity at any given N → faster overall decay → shorter half-life. Conversely, small λ means low probability per unit time → slow decay → long half-life.</p>
+<p>This is mathematically <kw>first-order kinetics</kw> — the same mathematics as first-order chemical reactions, where rate ∝ concentration.</p>`,
+    keypoints: [
+      "Law: −dN/dt = λN (rate proportional to current N).",
+      "Activity A = λN (disintegrations per second, measured in Becquerel or Curie).",
+      "Integrated law: N(t) = N₀·e^(−λt).",
+      "Larger λ → higher activity → faster decay → shorter t½.",
+      "First-order kinetics: t½ is constant regardless of initial N₀."
+    ],
+    formula: "−dN/dt = λN\nN(t) = N₀·e^(−λt)\nA(t) = λN = A₀·e^(−λt)\n1 Becquerel (Bq) = 1 disintegration/second\n1 Curie (Ci) = 3.7×10¹⁰ Bq",
+    summary: "Radioactive decay follows first-order kinetics: −dN/dt = λN. The decay constant λ is the probability of a nucleus decaying per unit time. A larger λ means faster decay (shorter t½), larger activity, and more rapid decrease. The exponential decay law N(t) = N₀e^(−λt) fully describes the process."
+  },
+  {
+    id: 29,
+    scenario: "Two nuclear processes are compared: one splits heavy nuclei, the other combines light nuclei. Both release energy but differ in operational conditions.",
+    task: "Differentiate the processes based on mechanism and operational requirements.",
+    keywords: ["Nuclear fission", "Nuclear fusion", "Binding energy per nucleon", "Critical mass", "Plasma temperature"],
+    answer: `<p><strong><kw>Nuclear Fission</kw>:</strong> A heavy nucleus (e.g., U-235, Pu-239) absorbs a neutron and splits into two medium-sized fragments plus 2–3 neutrons and ~200 MeV of energy. The products (fission fragments) have higher binding energy per nucleon than the parent nucleus, so the reaction releases energy. <em>Operational requirements</em>: fissile material (U-235 or Pu-239), slow (thermal) neutrons for chain reaction, critical mass, moderator (to slow neutrons), control rods (to absorb excess neutrons). Occurs at room temperature once initiated.</p>
+<p><strong><kw>Nuclear Fusion</kw>:</strong> Two light nuclei (e.g., ²H + ³H → ⁴He + n + 17.6 MeV) combine to form a heavier nucleus. Energy released (~10× more per unit mass than fission) because the product (He-4) has much higher binding energy per nucleon than the reactants. <em>Operational requirements</em>: Extreme temperature (10⁸ K) and pressure to overcome Coulomb repulsion between nuclei — only achievable in stars or experimental plasma confinement devices (tokamak, inertial confinement). <em>Currently not commercially viable</em> (research stage).</p>`,
+    keypoints: [
+      "Fission: heavy nucleus → 2 fragments + neutrons + energy (~200 MeV).",
+      "Fusion: 2 light nuclei → heavier nucleus + energy (~17.6 MeV for D-T).",
+      "Both release energy because products have higher BE/nucleon than reactants.",
+      "Fission: requires critical mass, initiated easily at room temperature.",
+      "Fusion: requires 10⁸ K plasma — stars' energy source; clean, abundant fuel."
+    ],
+    formula: "Fission: ²³⁵U + n → fission fragments + 2-3n + ~200 MeV\nFusion: ²H + ³H → ⁴He + n + 17.6 MeV\nEnergy = Δm·c²",
+    summary: "Fission splits heavy nuclei (at room temperature with neutron initiation); fusion merges light nuclei (requiring 100 million K plasma). Both exploit the binding energy curve: moving toward Fe-56 (highest BE/nucleon) releases energy. Fission is the basis of current nuclear power; fusion powers the sun and is a future energy prospect."
+  },
+  {
+    id: 30,
+    scenario: "A system requires a minimum amount of fissile material to sustain a chain reaction. Below this limit, reactions stop quickly. Above it, reactions grow rapidly.",
+    task: "Determine the governing concept and infer its role in reaction sustainability.",
+    keywords: ["Critical mass", "Chain reaction", "Neutron multiplication factor k", "Subcritical", "Supercritical"],
+    answer: `<p>The governing concept is <kw>critical mass</kw> — the minimum amount of fissile material required to sustain a self-sustaining nuclear chain reaction.</p>
+<p>In fission, each splitting of a U-235 nucleus releases ~2.5 neutrons on average. For a chain reaction to be self-sustaining, at least one of these neutrons must cause another fission event. This is quantified by the <kw>neutron multiplication factor k</kw>:</p>
+<p>• k &lt; 1: <kw>subcritical</kw> — more neutrons lost (to leakage/absorption) than produced → chain reaction dies out.</p>
+<p>• k = 1: <kw>critical</kw> — exactly one neutron per fission causes next fission → steady, controlled reaction (nuclear reactor).</p>
+<p>• k &gt; 1: <kw>supercritical</kw> — neutron population grows exponentially → uncontrolled reaction (nuclear bomb).</p>
+<p>The critical mass depends on: (1) material enrichment, (2) geometry (sphere maximizes neutron retention), (3) presence of a reflector (to bounce escaping neutrons back), (4) density. For pure U-235: critical mass ≈ 52 kg (bare sphere); with reflector: ~15 kg.</p>`,
+    keypoints: [
+      "Critical mass: minimum fissile material for a self-sustaining chain reaction.",
+      "k < 1: subcritical (reaction dies); k = 1: critical (steady); k > 1: supercritical (grows).",
+      "Depends on enrichment, geometry, density, and presence of neutron reflector.",
+      "Nuclear reactors operate at k = 1 (controlled critical); bombs at k >> 1.",
+      "Control rods (made of B or Cd) absorb neutrons to keep k = 1."
+    ],
+    formula: "k = (neutrons produced per generation) / (neutrons lost per generation)\nk = 1 → critical condition",
+    summary: "Critical mass is the minimum fissile material needed for a self-sustaining chain reaction (k = 1). Below it, too many neutrons escape and the chain dies (k < 1). Above it, the reaction grows exponentially (k > 1). Nuclear reactors maintain k exactly at 1 using control rods, moderators, and geometry."
+  },
+  {
+    id: 31,
+    scenario: "A nuclear reaction releases energy when total mass of products is lower than reactants. Scientists compare this with another reaction where energy must be supplied.",
+    task: "Analyze the role of mass-energy relationships in determining whether a reaction releases or absorbs energy.",
+    keywords: ["Mass-energy equivalence", "E = mc²", "Mass defect", "Exothermic nuclear reaction", "Endothermic nuclear reaction"],
+    answer: `<p>The central principle is <kw>Einstein's mass-energy equivalence: E = mc²</kw>. In nuclear reactions, mass can be converted to energy and vice versa (unlike chemical reactions where mass is conserved to high precision).</p>
+<p><strong>Energy-releasing reaction (exothermic):</strong> If the total mass of products &lt; total mass of reactants, then Δm &gt; 0 (positive mass defect). This lost mass is converted to kinetic energy of the products: <fm>E = Δm · c²</fm>. Examples: fission of U-235, fusion of hydrogen isotopes.</p>
+<p><strong>Energy-absorbing reaction (endothermic):</strong> If total mass of products &gt; total mass of reactants, the reaction requires energy input to proceed. The products are at a higher mass-energy state. This is less common in nuclear physics but occurs in certain nuclear transmutations requiring energetic particle bombardment.</p>
+<p>The direction is determined by the <kw>Q-value</kw> of the reaction: Q = (M_reactants − M_products) × c². If Q &gt; 0: energy released; if Q &lt; 0: energy absorbed.</p>`,
+    keypoints: [
+      "E = mc²: mass and energy are equivalent and interconvertible.",
+      "Q = (M_reactants − M_products) × c².",
+      "Q > 0: exothermic (energy released); Q < 0: endothermic (energy absorbed).",
+      "Nuclear reactions involve mass changes of ~0.1% → enormous energy.",
+      "Chemical reactions: mass change negligible (<10⁻⁹ fraction)."
+    ],
+    formula: "Q = Δm · c²\nΔm = M_reactants − M_products\n1 amu = 931.5 MeV/c²",
+    summary: "Mass-energy equivalence (E = mc²) governs nuclear energy release. When product mass < reactant mass (positive Δm), the reaction releases energy (Q > 0). When products are heavier, energy must be supplied (Q < 0). The Q-value quantifies the energy balance of any nuclear reaction."
+  },
+  {
+    id: 32,
+    scenario: "A reactor core contains fuel rods surrounded by a moderator that slows neutrons. Another set of rods can be inserted or removed to regulate the reaction. The system must operate at steady power without overheating.",
+    task: "Infer how different reactor components collaboratively maintain controlled nuclear reactions and prevent instability.",
+    keywords: ["Nuclear reactor", "Fuel rods", "Moderator", "Control rods", "Neutron flux", "Coolant"],
+    answer: `<p>A nuclear reactor achieves controlled fission through the coordinated function of several components:</p>
+<p><kw>Fuel rods</kw>: Contain enriched uranium (3–5% U-235 in UO₂ pellets). Fission occurs here, releasing fast neutrons and energy. Fast neutrons are inefficient at causing further fission in U-235.</p>
+<p><kw>Moderator</kw> (e.g., water H₂O, D₂O, graphite): Slows down fast neutrons to thermal energies (~0.025 eV) through elastic collisions. Thermal neutrons have a much higher fission cross-section for U-235, making the chain reaction efficient. The moderator thus enables criticality at lower fuel enrichment.</p>
+<p><kw>Control rods</kw> (boron, cadmium, or hafnium): Absorb neutrons without fissioning. <em>Inserted deeper</em> → fewer neutrons for fission → k decreases toward subcritical → power decreases. <em>Withdrawn</em> → more neutrons available → power increases. Maintain k = 1 for steady operation.</p>
+<p><kw>Coolant</kw> (water, gas, or liquid metal): Removes heat from the reactor core, preventing overheating, and transfers thermal energy to steam turbines for electricity generation.</p>
+<p><kw>Containment structure</kw>: Thick concrete/steel dome prevents radiation release.</p>`,
+    keypoints: [
+      "Fuel rods: source of fission energy (enriched U-235 or Pu-239).",
+      "Moderator: slows fast neutrons → thermal neutrons → better fission cross-section.",
+      "Control rods: absorb neutrons to maintain k = 1 (critical condition).",
+      "Coolant: removes heat → drives turbines → electricity generation.",
+      "Automatic safety systems insert control rods if temperature rises (negative feedback)."
+    ],
+    formula: "k = 1 → stable reactor power\nNeutron slowing: E_fast (~2 MeV) → E_thermal (~0.025 eV)\nFission cross-section of U-235: ~585 barns (thermal) vs 1 barn (fast)",
+    summary: "A nuclear reactor achieves controlled criticality through synergy of components: fuel rods supply fissile material; moderator thermalizes neutrons for efficient fission; control rods precisely adjust neutron population to maintain k = 1; coolant removes heat safely. Together they sustain steady, controlled energy output."
+  },
+  {
+    id: 33,
+    scenario: "A nuclear experiment tracks a reaction where a target nucleus is bombarded by particles, resulting in a different element. The reaction obeys conservation of mass number and atomic number. Energy is calculated using measured mass differences.",
+    task: "Formulate the governing principles that validate the reaction representation and infer how energy changes are evaluated.",
+    keywords: ["Nuclear transmutation", "Conservation of mass number", "Conservation of atomic number", "Q-value", "Artificial nuclear reactions"],
+    answer: `<p>The governing principles for nuclear reaction representation and energy evaluation are:</p>
+<p><strong>1. <kw>Conservation of mass number (A)</kw>:</strong> The total mass number (total nucleon count) on the left side of the reaction must equal that on the right side.</p>
+<p><strong>2. <kw>Conservation of atomic number (Z)</kw>:</strong> The total number of protons on both sides must be equal (conservation of charge).</p>
+<p><strong>3. <kw>Conservation of energy (Mass-energy equivalence)</kw>:</strong> The total mass-energy (rest mass energy + kinetic energy) is conserved. The <kw>Q-value</kw> gives net energy: <fm>Q = (M_reactants − M_products) × 931.5 MeV/amu</fm>.</p>
+<p>A nuclear reaction is typically written as: target + projectile → products, or in compact notation: <kw>A(x,y)B</kw> (A = target, x = projectile, y = emitted particle, B = product nucleus).</p>
+<p>Example: <fm>¹⁴₇N + ⁴₂He → ¹⁷₈O + ¹₁H</fm> — Rutherford's first transmutation (1919). Verify: A: 14+4 = 17+1 ✓; Z: 7+2 = 8+1 ✓.</p>`,
+    keypoints: [
+      "ΣA (reactants) = ΣA (products) — conservation of mass number.",
+      "ΣZ (reactants) = ΣZ (products) — conservation of charge/atomic number.",
+      "Q = (ΣM_reactants − ΣM_products) × 931.5 MeV/amu.",
+      "Q > 0: exothermic; Q < 0: endothermic (requires energy input).",
+      "Compact notation: A(x,y)B or full nuclear equation."
+    ],
+    formula: "ΣA_left = ΣA_right  (mass number conservation)\nΣZ_left = ΣZ_right  (atomic number conservation)\nQ = (ΣM_reactants − ΣM_products) × 931.5 MeV/amu",
+    summary: "Nuclear reactions obey two conservation laws: mass number (A) and atomic number (Z) must balance on both sides. Energy release or absorption is quantified by the Q-value: Q = Δm × c². Positive Q means energy is released; negative Q means energy must be supplied to drive the reaction."
+  },
+  {
+    id: 34,
+    scenario: "In a high-temperature setup, two light nuclei combine under extreme pressure, producing a heavier nucleus and releasing substantial energy. Continuous energy input needed to overcome repulsion. Scientists evaluate long-term energy production feasibility.",
+    task: "Determine the nature of the reaction and justify the energy behavior by integrating nuclear forces, energy transformations, and feasibility considerations.",
+    keywords: ["Nuclear fusion", "Coulomb barrier", "Plasma", "Thermonuclear reaction", "Binding energy curve"],
+    answer: `<p>The described reaction is <kw>nuclear fusion</kw> — the merging of two light atomic nuclei into a heavier nucleus, releasing large amounts of energy.</p>
+<p><strong>Why energy input is required initially:</strong> Nuclei are positively charged. As they approach each other, the <kw>Coulomb (electrostatic) repulsion</kw> increases as 1/r² — they must be brought within ~10⁻¹⁵ m (nuclear diameter) for the <kw>strong nuclear force</kw> to take over and bind them. This requires overcoming the <kw>Coulomb barrier</kw>, which demands temperatures of ~10⁸ K (thermonuclear conditions) to give nuclei sufficient kinetic energy.</p>
+<p><strong>Why energy is released afterward:</strong> The fusion product (e.g., He-4 from D+T) has a much higher <kw>binding energy per nucleon</kw> (~7 MeV/nucleon for He-4 vs ~1 MeV for H-2/H-3). The mass of the product is less than the sum of reactants → Δm → E = Δm·c² is released.</p>
+<p><strong>Feasibility:</strong> D-T fusion releases 17.6 MeV per reaction (~4× more energy per unit mass than fission). Fuel (deuterium from seawater) is virtually limitless and products are non-radioactive. Challenge: achieving and maintaining 10⁸ K plasma (tokamak reactors — ITER project).</p>`,
+    keypoints: [
+      "Fusion requires overcoming Coulomb barrier → needs ~10⁸ K plasma.",
+      "Once fusion occurs, Δm → E = mc² released (products have higher BE/nucleon).",
+      "D + T → He-4 + n + 17.6 MeV (most studied fusion reaction).",
+      "Fuel: deuterium (from seawater), tritium (from lithium). Virtually limitless.",
+      "ITER (International Thermonuclear Experimental Reactor) aims to demonstrate net-positive fusion energy."
+    ],
+    formula: "²H + ³H → ⁴He + n + 17.6 MeV\nQ = Δm × c²\nCoulomb barrier height ≈ Z₁Z₂e²/(4πε₀r) in MeV",
+    summary: "Nuclear fusion merges light nuclei (e.g., D+T) into heavier ones after overcoming Coulomb repulsion at ~10⁸ K. The fusion product's higher binding energy per nucleon means the product mass is less than reactant mass, converting Δm to 17.6 MeV of energy per reaction — a clean, abundant, and powerful energy source still being developed."
+  },
+  {
+    id: 35,
+    scenario: "A research facility evaluates a heavy nucleus that splits into two fragments after absorbing a neutron, releasing additional neutrons and energy. The system sustains the reaction under controlled conditions using materials to regulate neutron speed.",
+    task: "Analyze the reaction process and determine the governing mechanism that sustains it, integrating how control strategies regulate the reaction rate.",
+    keywords: ["Nuclear fission", "Chain reaction", "Critical mass", "Moderator", "Control rods", "Neutron multiplication"],
+    answer: `<p>The described process is <kw>nuclear fission</kw> sustained as a <kw>chain reaction</kw>. The mechanism:</p>
+<p><strong>Step 1 — Neutron absorption:</strong> A thermal neutron is absorbed by a heavy fissile nucleus (U-235): <fm>²³⁵U + n → ²³⁶U*</fm> (compound nucleus in excited state).</p>
+<p><strong>Step 2 — Fission:</strong> The unstable ²³⁶U* splits into two medium-mass fission fragments (e.g., Kr-92 + Ba-141) plus 2–3 fast neutrons + ~200 MeV energy.</p>
+<p><strong>Step 3 — Chain propagation:</strong> Released neutrons initiate fission in other U-235 nuclei → exponential growth unless controlled.</p>
+<p><strong>Control strategies:</strong></p>
+<p><kw>Moderator</kw> (water/graphite): Slows fast neutrons to thermal energies, increasing fission probability (cross-section of U-235 for thermal neutrons >> for fast neutrons).</p>
+<p><kw>Control rods</kw> (B₄C, Cd): Absorb neutrons to regulate k precisely at 1 for stable power output. Inserted: k→&lt;1 (shutdown). Withdrawn: k→&gt;1 (power increase).</p>
+<p><kw>Critical mass geometry</kw>: Minimum size/mass to prevent excessive neutron leakage.</p>`,
+    keypoints: [
+      "Fission chain: one fission → 2–3 neutrons → 2–3 more fissions (if k ≥ 1).",
+      "Each U-235 fission releases ~200 MeV and 2–3 neutrons.",
+      "Moderator thermalizes neutrons for efficient chain reaction.",
+      "Control rods absorb neutrons to maintain k = 1 (stable reactor).",
+      "Delayed neutrons (~0.65%) allow physical control of fast-responding chain reaction."
+    ],
+    formula: "²³⁵U + ¹n → ⁹²Kr + ¹⁴¹Ba + 3¹n + ~200 MeV\nk = η·f·p·ε·P_NL (six-factor formula)\nk = 1 for criticality",
+    summary: "Nuclear fission chain reactions are self-sustaining when each fission produces enough neutrons (k = 1) to trigger further fissions. A moderator thermalizes fast neutrons to improve fission efficiency; control rods precisely adjust the neutron population to maintain safe, stable criticality. Slight k > 1 increases power; control rods restore k = 1."
+  },
+  {
+    id: 36,
+    scenario: "Environmental scientists measure isotope concentrations in water bodies to study pollution sources. Different pollutants carry distinct isotopic signatures depending on origin.",
+    task: "Infer how isotopic analysis helps identify pollution sources in environmental systems.",
+    keywords: ["Isotope ratio analysis", "Environmental tracing", "Stable isotopes", "Mass spectrometry", "Source fingerprinting"],
+    answer: `<p><kw>Isotopic fingerprinting</kw> exploits the fact that different natural and industrial processes fractionate stable isotopes to different extents, creating characteristic <kw>isotope ratios</kw> that are unique to specific sources.</p>
+<p>For example:</p>
+<p>• <kw>δ¹⁸O and δD</kw> (oxygen and hydrogen isotope ratios in water) vary with geographic origin, elevation, and precipitation history — allowing identification of water sources and pollution pathways.</p>
+<p>• <kw>Lead isotope ratios</kw> (²⁰⁶Pb/²⁰⁴Pb, etc.) differ between mining regions and industrial sources — used to trace atmospheric lead pollution sources (leaded gasoline vs. smelters).</p>
+<p>• <kw>¹³C/¹²C ratios</kw> differ between C3 and C4 plants, between fossil fuels and biological sources — used in carbon cycle studies and food adulteration detection.</p>
+<p>Isotope ratios are measured precisely using <kw>isotope ratio mass spectrometry (IRMS)</kw>. Since these ratios are not altered by dilution (unlike concentration measurements), they provide reliable source identification even for highly diluted pollutants in large water bodies.</p>`,
+    keypoints: [
+      "Each pollution source has a characteristic stable isotope ratio (fingerprint).",
+      "Isotope ratios conserved through dilution → reliable even in large water bodies.",
+      "Key isotope systems: δ¹³C, δ¹⁸O, δD, ²⁰⁶Pb/²⁰⁴Pb.",
+      "Measured by IRMS (isotope ratio mass spectrometry).",
+      "Applications: tracking agricultural runoff, industrial discharge, atmospheric deposition."
+    ],
+    formula: "δX (‰) = [(R_sample − R_standard)/R_standard] × 1000\nR = ratio of heavy to light isotope (e.g., ¹³C/¹²C)",
+    summary: "Different pollution sources have distinct isotope ratios (isotopic fingerprints) because natural and industrial processes fractionate stable isotopes differently. By measuring these ratios precisely (IRMS), scientists trace pollutants back to their origin — reliable because isotope ratios are conserved through dilution, unlike concentration measurements."
+  },
+  {
+    id: 37,
+    scenario: "An industrial plant uses isotopes to detect leaks in pipelines by introducing traceable radioactive materials and monitoring their escape points. Sensors detect radiation levels externally.",
+    task: "Determine how isotope tracing enables leak detection and justify its efficiency.",
+    keywords: ["Radioactive tracer", "Leak detection", "Gamma detection", "Non-invasive", "Pipeline inspection"],
+    answer: `<p><kw>Radioactive tracer leak detection</kw> is a highly sensitive non-invasive technique. A small, carefully chosen radioactive isotope (tracer) is introduced into the pipeline fluid. The tracer follows the flow of the substance within the pipe.</p>
+<p>At a leak site, the tracer escapes with the leaking fluid and accumulates in the surrounding soil or environment. The <kw>gamma radiation</kw> emitted by the tracer penetrates the pipe walls and overlying soil, and is detected by external radiation sensors (Geiger counters, scintillation detectors) moved along the pipeline length.</p>
+<p>A radiation peak at a specific location pinpoints the leak with centimeter-scale precision — far superior to conventional pressure-drop methods which can only confirm existence but not location of a leak.</p>
+<p><strong>Choice of tracer isotope criteria:</strong> (1) Short half-life (minimizes environmental contamination), (2) γ-emitter (penetrates pipe walls for external detection), (3) chemically compatible with pipeline fluid, (4) non-toxic at trace quantities. Common tracers: <kw>¹³¹I, ⁹⁹ᵐTc, ⁸²Br</kw>.</p>`,
+    keypoints: [
+      "Tracer injected into pipeline; follows fluid flow to leak site.",
+      "Gamma emission at leak site detected externally by radiation sensors.",
+      "Locates leak with high spatial precision (cm scale).",
+      "Non-invasive: no excavation needed to find the leak location.",
+      "Ideal tracers: γ-emitters, short t½, chemically compatible, non-toxic at trace levels."
+    ],
+    formula: null,
+    summary: "A gamma-emitting radioactive tracer introduced into a pipeline flows with the fluid. At a leak, tracer escapes and accumulates locally. External gamma detectors show a radiation peak precisely at the leak location — enabling accurate, non-invasive leak detection without pipeline excavation or shutdown."
+  },
+  {
+    id: 38,
+    scenario: "Geologists study rock formations using isotopes with long half-lives. They compare parent and daughter isotope ratios to estimate the age of Earth materials. The system is assumed closed over geological time.",
+    task: "Analyze how isotope ratios contribute to geological dating and infer the importance of system closure.",
+    keywords: ["Radiometric dating", "Parent-daughter isotopes", "Uranium-lead dating", "Closed system", "Age equation"],
+    answer: `<p><kw>Radiometric geological dating</kw> uses the known decay rate (constant λ, constant t½) of long-lived parent isotopes to calculate the time elapsed since a rock/mineral formed.</p>
+<p><strong>Method:</strong> When a mineral crystallizes (e.g., zircon), it incorporates parent isotopes (e.g., U-238) but excludes or minimally includes daughter isotopes (e.g., Pb-206). After crystallization, the closed mineral accumulates daughter isotope exclusively through radioactive decay.</p>
+<p>Measuring the current <kw>parent/daughter ratio</kw> and using the decay equation: <fm>t = (1/λ)·ln(1 + D/P)</fm> where D = daughter atoms, P = parent atoms currently present, gives the age.</p>
+<p>Common systems: <kw>U-238/Pb-206 (t½ = 4.47 Gyr)</kw>, K-40/Ar-40 (t½ = 1.25 Gyr), Rb-87/Sr-87 (t½ = 48.8 Gyr).</p>
+<p><strong>System closure critical:</strong> If the rock/mineral is not a closed system — if daughter products escape (e.g., argon gas from K-Ar system during metamorphism, or lead leaching from uranium minerals) — the measured ratio underestimates true age. Closed system assumption = no gain or loss of parent or daughter after initial crystallization.</p>`,
+    keypoints: [
+      "Age formula: t = (1/λ)·ln(1 + D/P).",
+      "Long-lived isotopes needed: t½ comparable to geological ages (millions to billions of years).",
+      "U-Pb dating: most reliable (two independent decay chains, cross-check via Concordia diagram).",
+      "Closed system: no loss of daughter or gain of extra parent after crystallization.",
+      "Open system (metamorphism, weathering, hydrothermal alteration) resets or disturbs the clock."
+    ],
+    formula: "t = (1/λ)·ln(1 + D/P)\nU-238 → Pb-206: t½ = 4.47 × 10⁹ yr\nK-40 → Ar-40: t½ = 1.25 × 10⁹ yr",
+    summary: "Geological dating measures the ratio of radioactive parent to stable daughter isotopes in a closed mineral system. Since decay rates are constant and precisely known, the parent/daughter ratio directly gives the rock's age. Closed-system integrity is essential — any loss of daughter product or addition of parent would corrupt the age calculation."
+  },
+  {
+    id: 39,
+    scenario: "Medical researchers use radioactive isotopes to trace metabolic pathways in the human body. The isotopes emit detectable radiation without significantly altering biological processes.",
+    task: "Assess how isotopes function as tracers and justify their effectiveness in medical diagnostics.",
+    keywords: ["Medical isotope tracers", "PET scan", "SPECT", "Technetium-99m", "Metabolic pathway"],
+    answer: `<p>Radioactive isotopes function as medical tracers by combining two properties: <kw>chemical identity</kw> with the element they replace (same Z → same metabolism) and <kw>physical detectability</kw> through radiation emission.</p>
+<p><strong>How they work:</strong> A radiopharmaceutical is designed where the radioactive tracer is attached to a biologically active molecule (e.g., glucose labeled with ¹⁸F in FDG-PET, or Tc-99m attached to target-specific ligands). The body metabolizes the radiopharmaceutical exactly as the non-labeled version. The tracer accumulates in target organs/tissues based on their metabolic activity.</p>
+<p>External detectors (gamma camera, PET scanner) detect the emitted radiation to create functional images — showing <em>how</em> organs function, not just their structure (unlike X-ray/CT).</p>
+<p><strong>Justification of effectiveness:</strong> (1) Trace amounts (nanomoles) don't disturb physiology. (2) Gamma emission penetrates tissue for external detection. (3) Short t½ minimizes radiation dose. (4) High specificity — tracer goes only where the biological molecule goes. Applications: cancer detection (FDG-PET), cardiac perfusion imaging (Tc-99m), thyroid studies (¹³¹I), brain imaging.</p>`,
+    keypoints: [
+      "Tracer = radioactive isotope attached to biologically active molecule.",
+      "Same chemical behavior → follows natural metabolic pathways.",
+      "Radiation (γ) detected externally by gamma camera or PET scanner.",
+      "Key tracers: Tc-99m (SPECT, most widely used), ¹⁸F-FDG (PET), ¹³¹I (thyroid).",
+      "Functional imaging: shows metabolic activity, not just anatomical structure."
+    ],
+    formula: "Tc-99m: t½ = 6 hr, 140 keV γ\n¹⁸F: t½ = 110 min, β⁺ emitter (PET)\n¹³¹I: t½ = 8.02 days, β⁻ + γ",
+    summary: "Medical radioactive tracers exploit both chemical identity (same metabolic behavior as natural element) and radiation detectability. Attached to target-specific biological molecules, they map metabolic pathways and organ function. Short half-lives (t½ = hours) and γ emission make them safe and detectable without significantly altering biological processes."
+  },
+  {
+    id: 40,
+    scenario: "A laboratory analyzes fossil samples but finds discrepancies in calculated ages due to environmental contamination and variations in historical carbon-14 levels. Scientists introduce calibration curves and correction factors.",
+    task: "Examine the limitations of radiocarbon dating and recommend how calibration techniques improve accuracy.",
+    keywords: ["Radiocarbon dating limitations", "Calibration curve", "IntCal", "Atmospheric ¹⁴C variations", "Dendrochronology"],
+    answer: `<p><strong>Limitations of radiocarbon dating:</strong></p>
+<p>1. <kw>Variable atmospheric ¹⁴C</kw>: The assumption of constant initial ¹⁴C/¹²C ratio is incorrect. Atmospheric ¹⁴C has varied due to changes in cosmic ray flux, solar activity, and geomagnetic field intensity — causing systematic errors if uncorrected.</p>
+<p>2. <kw>Contamination</kw>: Modern carbon contamination (from handling, groundwater, rootlets) adds ¹⁴C and makes samples appear younger. Ancient carbon contamination (from fossil carbonates) makes them appear older.</p>
+<p>3. <kw>Reservoir effects</kw>: Marine organisms incorporate ¹⁴C-depleted carbon (old dissolved ocean carbon), making them appear older than contemporaneous terrestrial organisms.</p>
+<p>4. <kw>Effective range</kw>: Only reliable for ~50,000 years (beyond this, ¹⁴C too depleted to measure accurately).</p>
+<p><strong>Calibration improvements:</strong> The <kw>IntCal calibration curve</kw> (International Calibration) uses tree rings (<kw>dendrochronology</kw> — up to ~14,000 yrs), coral records, cave speleothems, and marine varves to establish the true atmospheric ¹⁴C level at each point in history. Radiocarbon dates are converted from ¹⁴C years to calendar years using this curve. Modern AMS (accelerator mass spectrometry) dating requires only milligram samples, reducing contamination risk.</p>`,
+    keypoints: [
+      "Assumption: constant initial ¹⁴C/¹²C ratio — actually varies with time.",
+      "IntCal calibration curve corrects for past atmospheric ¹⁴C fluctuations.",
+      "Dendrochronology (tree rings) provides year-by-year ¹⁴C record.",
+      "Contamination: modern carbon → younger age; old carbon → older age.",
+      "Marine reservoir effect: marine samples ~400 yr apparently older than terrestrial."
+    ],
+    formula: "Uncalibrated (BP) → Calibrated (cal BP or cal CE/BCE)\nUsing IntCal23 calibration database",
+    summary: "Radiocarbon dating's key limitation is the variable historical atmospheric ¹⁴C level. The IntCal calibration curve, built from tree rings, coral, and speleothems, corrects radiocarbon ages to calendar years. Additionally, decontamination protocols and AMS technology minimize contamination errors — improving accuracy to ±decades for recent samples."
+  },
+  {
+    id: 41,
+    scenario: "Atmospheric scientists observe cosmic rays interacting with nitrogen atoms, producing carbon-14. This isotope mixes with CO₂ and enters plant systems through photosynthesis. Animals maintain dynamic equilibrium of carbon isotopes while alive.",
+    task: "Interpret the formation and distribution mechanism of carbon-14 and infer how this continuous cycle supports its use in chronological studies.",
+    keywords: ["Carbon-14 formation", "Cosmic rays", "Nitrogen-14", "Carbon cycle", "Dynamic equilibrium"],
+    answer: `<p><strong>Formation of ¹⁴C:</strong> High-energy cosmic ray protons entering Earth's atmosphere collide with atmospheric molecules, producing secondary neutrons. These thermal neutrons bombard abundant atmospheric <kw>nitrogen-14 (¹⁴N)</kw>:</p>
+<p><fm>¹⁴₇N + ¹₀n → ¹⁴₆C + ¹₁H</fm></p>
+<p>The ¹⁴C atoms rapidly oxidize to ¹⁴CO₂ and mix uniformly with atmospheric CO₂ (mostly ¹²CO₂).</p>
+<p><strong>Entry into biological systems:</strong> Plants absorb CO₂ during photosynthesis, incorporating both ¹²C and ¹⁴C in the same ratio as the atmosphere. Animals eat plants (or other animals), maintaining the same atmospheric ¹⁴C/¹²C ratio throughout their lives.</p>
+<p><strong>Dynamic equilibrium:</strong> The rate of ¹⁴C production (cosmic rays + N₁₄) equals its rate of decay (t½ = 5,730 yr) in the living organism — maintaining a <kw>constant specific activity</kw> of ~0.226 Bq/g (carbon) in all living organisms.</p>
+<p><strong>Chronological use:</strong> At death, carbon exchange stops. ¹⁴C decays without replacement; ¹²C remains constant. The decreasing ¹⁴C/¹²C ratio over time is the clock for radiocarbon dating.</p>`,
+    keypoints: [
+      "¹⁴C formed: ¹⁴N + n → ¹⁴C + H (cosmic ray neutron bombardment).",
+      "¹⁴C oxidizes to ¹⁴CO₂ → absorbed by plants via photosynthesis → animals via food chain.",
+      "Living organisms maintain constant ¹⁴C/¹²C ratio = atmospheric ratio.",
+      "At death: ¹⁴C intake stops → ¹⁴C decays → ratio decreases with time.",
+      "Production rate ≈ decay rate in atmosphere → steady-state ¹⁴C concentration (~1 ppt)."
+    ],
+    formula: "¹⁴₇N + ¹₀n → ¹⁴₆C + ¹₁H  (formation)\n¹⁴₆C → ¹⁴₇N + β⁻ + ν̄ₑ  (decay, t½ = 5730 yr)\nLiving: ¹⁴C activity ≈ 0.226 Bq/g C",
+    summary: "¹⁴C is continuously produced in the stratosphere by cosmic neutron bombardment of ¹⁴N. It enters the biosphere via CO₂ → photosynthesis → food chain. Living organisms maintain equilibrium ¹⁴C/¹²C ratio. Death ends this exchange; subsequent ¹⁴C decay (t½ = 5,730 yr) creates the decreasing ratio that radiocarbon dating measures."
+  },
+  {
+    id: 42,
+    scenario: "Archaeologists recover wooden artifacts from an ancient settlement. They measure remaining carbon-14 content and compare with modern atmospheric levels. The decay constant and half-life of C-14 are known. The organism stopped exchanging carbon after death.",
+    task: "Analyze the process by which the age of the artifact can be determined and justify how the decay principle enables chronological estimation.",
+    keywords: ["Age calculation", "Radiocarbon dating", "Decay equation", "Half-life of C-14", "AMS dating"],
+    answer: `<p>The age determination uses the <kw>radiocarbon dating principle</kw> based on the radioactive decay law:</p>
+<p><strong>Assumptions:</strong> (1) At death, ¹⁴C/¹²C ratio equals the atmospheric ratio (A₀ = initial activity per gram carbon). (2) After death, ¹⁴C decays with no replacement. (3) The system is closed — no contamination. (4) Atmospheric ¹⁴C was similar to today (corrected using calibration curves).</p>
+<p><strong>Step-by-step process:</strong></p>
+<p>1. Measure current ¹⁴C <kw>specific activity</kw> (A) of the artifact (Bq/g C), using AMS or proportional counting.</p>
+<p>2. Determine initial activity (A₀) from modern wood standard or calibration curve.</p>
+<p>3. Apply decay formula: <fm>A = A₀ · e^(−λt)</fm>, solve for t:</p>
+<p><fm>t = (1/λ) · ln(A₀/A) = (t½/0.693) · ln(A₀/A)</fm></p>
+<p>4. Apply IntCal calibration to convert radiocarbon years to calendar years.</p>
+<p>Example: If current activity = A₀/4, then t = 2 × t½ = 2 × 5730 = 11,460 years.</p>`,
+    keypoints: [
+      "At death: A₀ (initial ¹⁴C activity) = modern atmospheric level (~0.226 Bq/g C).",
+      "Age formula: t = (1/λ)·ln(A₀/A) = 1.443·t½·ln(A₀/A).",
+      "λ = 0.693/5730 yr⁻¹ = 1.21 × 10⁻⁴ yr⁻¹.",
+      "AMS (accelerator mass spectrometry): directly counts ¹⁴C atoms, needs only ~1 mg sample.",
+      "Final age calibrated using IntCal23 curve for calendar year conversion."
+    ],
+    formula: "A(t) = A₀·e^(−λt)\nt = (1/λ)·ln(A₀/A) = (t½/0.693)·ln(A₀/A)\nt½ = 5730 yr; λ = 1.21×10⁻⁴ yr⁻¹\nExample: A = A₀/8 → t = 3·t½ = 17,190 yr",
+    summary: "Radiocarbon dating determines artifact age by measuring residual ¹⁴C activity (A) and comparing to the known initial activity (A₀). Using t = (1/λ)·ln(A₀/A), the time since death (carbon exchange cessation) is calculated. The result is then calibrated using the IntCal curve to give calendar years — the gold standard for dating organic materials up to ~50,000 years old."
+  }
+];
+
+// ── Build nav list and cards ──
+const navList = document.getElementById('nav-list');
+const container = document.getElementById('questions-container');
+
+// Short topic labels for sidebar
+const topicMap = {
+  1: "Neutron excess & stability",2:"Isotopes & chemical behavior",3:"Mass defect & binding energy",4:"Isotopes in diagnostics",5:"Band of stability",
+  6:"U-235 vs U-238",7:"Carbon isotopes",8:"Graham's Law of diffusion",9:"Isotope boiling point",10:"Isotope tracers in soil",
+  11:"Gas centrifuge separation",12:"Kinetic isotope effect",13:"Effusion & isotope separation",14:"Chlorine isotopes",15:"Decay series",
+  16:"Gamma radiation",17:"Beta-minus decay",18:"Alpha radiation",19:"Gamma in medical imaging",20:"Beta-minus mechanism",
+  21:"Alpha decay transformation",22:"Mean life & half-life",23:"One-fourth activity",24:"Decay independence",25:"Exponential decay graph",
+  26:"Age from half-life",27:"Half-life & decay constant",28:"Decay law & constant",29:"Fission vs Fusion",30:"Critical mass",
+  31:"Mass-energy equivalence",32:"Nuclear reactor components",33:"Nuclear transmutation",34:"Nuclear fusion energy",35:"Fission chain reaction",
+  36:"Isotopes in pollution tracing",37:"Pipeline leak detection",38:"Geological isotope dating",39:"Medical isotope tracers",40:"Radiocarbon dating limits",
+  41:"C-14 formation cycle",42:"Artifact age calculation"
+};
+
+questions.forEach(q => {
+  // Nav item
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="#q${q.id}" data-id="${q.id}"><span class="qnum">Q${q.id}</span>${topicMap[q.id]||''}</a>`;
+  navList.appendChild(li);
+
+  // Card
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = `q${q.id}`;
+  card.setAttribute('data-search', `${q.scenario} ${q.task} ${q.keywords.join(' ')}`);
+
+  const formulaHTML = q.formula
+    ? `<div class="ans-block"><div class="ans-label">Formulae &amp; Equations</div><div class="formula-box">${q.formula.replace(/\n/g,'<br>')}</div></div>`
+    : '';
+
+  card.innerHTML = `
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">Q${q.id}</div>
+      <div class="q-scenario">
+        <div class="label">Scenario</div>
+        <p>${q.scenario}</p>
+        <p class="q-task"><strong>Task:</strong> ${q.task}</p>
+      </div>
+      <span class="q-chevron">▼</span>
+    </div>
+    <div class="q-answer">
+      <div class="ans-toolbar">
+        <button class="btn btn-accent" onclick="copyAnswer(this, ${q.id})">📋 Copy Answer</button>
+        <span style="font-size:.75rem;color:var(--text2);padding-left:4px;">Keywords: ${q.keywords.map(k=>`<kw>${k}</kw>`).join(', ')}</span>
+      </div>
+      <div class="ans-block">
+        <div class="ans-label">Answer</div>
+        <div class="ans-text">${q.answer}</div>
+      </div>
+      ${formulaHTML}
+      <div class="ans-block">
+        <div class="ans-label">Key Points</div>
+        <div class="keypoints"><ul>${q.keypoints.map(p=>`<li>${p}</li>`).join('')}</ul></div>
+      </div>
+      <div class="ans-block">
+        <div class="summary-tag">Exam Summary</div>
+        <div class="summary-box">${q.summary}</div>
+      </div>
+    </div>`;
+  container.appendChild(card);
+});
+
+// ── Toggle card ──
+function toggleCard(header) {
+  const card = header.parentElement;
+  card.classList.toggle('open');
+  // Update active nav
+  document.querySelectorAll('#nav-list a').forEach(a => a.classList.remove('active'));
+  const id = card.id;
+  const navA = document.querySelector(`#nav-list a[href="#${id}"]`);
+  if (navA) navA.classList.add('active');
+}
+
+function expandAll() {
+  document.querySelectorAll('.q-card').forEach(c => c.classList.add('open'));
+}
+function collapseAll() {
+  document.querySelectorAll('.q-card').forEach(c => c.classList.remove('open'));
+}
+
+// ── Dark/Light toggle ──
+let dark = true;
+function toggleDark() {
+  dark = !dark;
+  document.body.classList.toggle('light', !dark);
+  document.getElementById('dark-btn').textContent = dark ? '☀ Light' : '🌙 Dark';
+}
+
+// ── Sidebar toggle ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ── Copy answer ──
+function copyAnswer(btn, id) {
+  const q = questions.find(x => x.id === id);
+  const text = `Q${q.id}: ${q.task}\n\n${q.answer.replace(/<[^>]+>/g,'')}\n\nKey Points:\n${q.keypoints.map(p=>'• '+p).join('\n')}\n\nSummary: ${q.summary}`;
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  });
+}
+
+// ── Search ──
+document.getElementById('search-input').addEventListener('input', function() {
+  const query = this.value.toLowerCase().trim();
+  document.querySelectorAll('#nav-list li').forEach(li => {
+    const text = li.textContent.toLowerCase();
+    li.style.display = !query || text.includes(query) ? '' : 'none';
+  });
+  document.querySelectorAll('.q-card').forEach(card => {
+    const searchData = card.getAttribute('data-search').toLowerCase();
+    const scenario = card.querySelector('.q-scenario p').textContent.toLowerCase();
+    card.style.display = !query || searchData.includes(query) || scenario.includes(query) ? '' : 'none';
+  });
+});
+
+// ── Highlight active nav on scroll ──
+window.addEventListener('scroll', () => {
+  const cards = document.querySelectorAll('.q-card');
+  let current = '';
+  cards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    if (rect.top <= 120) current = card.id;
+  });
+  document.querySelectorAll('#nav-list a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>22CH203 – Engineering Chemistry II | Unit 1 Answer Key</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,600;1,400&display=swap');
+
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --sidebar-bg: #1a1f2e;
+    --sidebar-text: #c8cfe0;
+    --sidebar-active: #4fd1c5;
+    --accent: #2d6a4f;
+    --accent2: #4fd1c5;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #e2e5ec;
+    --keyword-bg: #e0f4ef;
+    --keyword: #1a5c42;
+    --equation-bg: #f0f4ff;
+    --equation: #2a3d7c;
+    --card-shadow: 0 2px 16px rgba(30,40,80,0.07);
+    --q-badge: #2d6a4f;
+    --highlight: #fff3cd;
+    --sidebar-width: 280px;
+    --header-h: 60px;
+    --radius: 10px;
+    --transition: 0.22s cubic-bezier(.4,0,.2,1);
+  }
+
+  [data-theme="dark"] {
+    --bg: #0f1117;
+    --surface: #1a1f2e;
+    --sidebar-bg: #080c14;
+    --sidebar-text: #8892a4;
+    --sidebar-active: #4fd1c5;
+    --accent: #4fd1c5;
+    --accent2: #63e6be;
+    --text: #e8edf5;
+    --muted: #8892a4;
+    --border: #232b3e;
+    --keyword-bg: #0d3327;
+    --keyword: #4fd1c5;
+    --equation-bg: #0d1533;
+    --equation: #94b4f8;
+    --card-shadow: 0 2px 20px rgba(0,0,0,0.35);
+    --q-badge: #4fd1c5;
+    --highlight: #2a2408;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background var(--transition), color var(--transition);
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: var(--header-h);
+    background: var(--sidebar-bg);
+    display: flex; align-items: center; gap: 12px;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .topbar-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 700;
+    color: var(--sidebar-active);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .topbar-sub {
+    font-size: 11px; color: var(--sidebar-text);
+    display: none;
+  }
+  @media(min-width:600px){ .topbar-sub { display: block; } }
+  .topbar-search {
+    flex: 1; max-width: 380px; margin-left: auto;
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 0 12px; height: 36px;
+  }
+  .topbar-search input {
+    background: none; border: none; outline: none;
+    color: #e8edf5; font-size: 13px; width: 100%;
+  }
+  .topbar-search input::placeholder { color: #5a6478; }
+  .search-icon { color: #5a6478; font-size: 14px; flex-shrink: 0; }
+  .btn-toggle {
+    margin-left: 8px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #c8cfe0; cursor: pointer;
+    border-radius: 8px; padding: 6px 12px; font-size: 13px;
+    display: flex; align-items: center; gap: 6px;
+    transition: background var(--transition);
+    white-space: nowrap;
+  }
+  .btn-toggle:hover { background: rgba(79,209,197,0.15); color: var(--sidebar-active); }
+  .hamburger {
+    display: none; background: none; border: none; cursor: pointer;
+    color: #c8cfe0; font-size: 20px; padding: 4px;
+  }
+  @media(max-width:768px){ .hamburger { display: block; } }
+
+  /* ── LAYOUT ── */
+  .layout { display: flex; padding-top: var(--header-h); min-height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-width); flex-shrink: 0;
+    position: fixed; top: var(--header-h); bottom: 0; left: 0;
+    background: var(--sidebar-bg);
+    overflow-y: auto; overflow-x: hidden;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    transition: transform var(--transition);
+    z-index: 100;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+  @media(max-width:768px){
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+  }
+  .sidebar-header {
+    padding: 18px 20px 10px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: #3a4560; text-transform: uppercase;
+  }
+  .sidebar-item {
+    display: block; padding: 9px 20px; text-decoration: none;
+    color: var(--sidebar-text); font-size: 12.5px;
+    border-left: 3px solid transparent;
+    transition: all var(--transition);
+    cursor: pointer;
+    border: none; background: none; width: 100%; text-align: left;
+  }
+  .sidebar-item:hover { background: rgba(79,209,197,0.08); color: var(--sidebar-active); border-left-color: rgba(79,209,197,0.3); }
+  .sidebar-item.active { background: rgba(79,209,197,0.12); color: var(--sidebar-active); border-left-color: var(--sidebar-active); font-weight: 600; }
+  .sidebar-item .q-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #3a4560; margin-right: 6px; }
+  .sidebar-item.active .q-num { color: var(--sidebar-active); }
+  .sidebar-count {
+    padding: 10px 20px 6px;
+    font-size: 11px; color: #3a4560;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 6px;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: 36px 24px 60px;
+    max-width: 900px;
+  }
+  @media(max-width:768px){ .main { margin-left: 0; padding: 24px 16px 50px; } }
+
+  .page-hero {
+    margin-bottom: 36px;
+    padding: 28px 32px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #2d6a4f, #4fd1c5);
+  }
+  .page-hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .page-hero h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(20px, 3vw, 28px); font-weight: 600;
+    line-height: 1.25; color: var(--text); margin-bottom: 8px;
+  }
+  .page-hero p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .hero-stats {
+    display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap;
+  }
+  .hero-stat {
+    display: flex; flex-direction: column;
+    font-size: 12px; color: var(--muted);
+  }
+  .hero-stat strong { font-size: 22px; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+
+  /* ── SEARCH HIGHLIGHT ── */
+  .no-results { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 15px; }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 28px;
+    overflow: hidden;
+    transition: box-shadow var(--transition), border-color var(--transition);
+  }
+  .q-card:hover { box-shadow: 0 4px 28px rgba(30,40,80,0.12); border-color: rgba(79,209,197,0.25); }
+  .q-card.hidden { display: none; }
+
+  .q-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 18px 22px 16px;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .q-header:hover { background: rgba(79,209,197,0.04); }
+  .q-header-left { display: flex; align-items: flex-start; gap: 12px; flex: 1; }
+  .q-badge {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    background: var(--accent);
+    color: #fff; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    margin-top: 1px;
+  }
+  .q-title { font-size: 13.5px; color: var(--text); line-height: 1.55; font-weight: 500; }
+  .q-meta { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+  .q-marks {
+    font-size: 11px; font-weight: 600;
+    background: var(--keyword-bg); color: var(--keyword);
+    padding: 3px 8px; border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .q-chevron { font-size: 14px; color: var(--muted); transition: transform var(--transition); }
+  .q-card.expanded .q-chevron { transform: rotate(180deg); }
+
+  .q-body { padding: 22px 22px 20px; display: none; }
+  .q-card.expanded .q-body { display: block; }
+
+  /* ── ANSWER SECTIONS ── */
+  .ans-section { margin-bottom: 18px; }
+  .ans-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.3px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 8px; font-family: 'JetBrains Mono', monospace;
+  }
+  .ans-text {
+    font-size: 14px; line-height: 1.75; color: var(--text);
+  }
+  .ans-text p { margin-bottom: 10px; }
+  .ans-text p:last-child { margin-bottom: 0; }
+
+  strong, b { color: var(--keyword); font-weight: 600; }
+  [data-theme="dark"] strong, [data-theme="dark"] b { color: var(--accent2); }
+
+  /* ── EQUATION BOX ── */
+  .equation {
+    background: var(--equation-bg);
+    border-left: 3px solid var(--equation);
+    padding: 10px 16px; margin: 10px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px; color: var(--equation);
+    border-radius: 0 6px 6px 0;
+    overflow-x: auto;
+  }
+
+  /* ── KEY POINTS ── */
+  .key-points {
+    background: var(--keyword-bg);
+    border: 1px solid rgba(45,106,79,0.2);
+    border-radius: 8px; padding: 14px 18px; margin-top: 14px;
+  }
+  .key-points-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--keyword);
+    margin-bottom: 10px; font-family: 'JetBrains Mono', monospace;
+  }
+  .key-points ul { padding-left: 18px; }
+  .key-points li { font-size: 13.5px; line-height: 1.65; color: var(--text); margin-bottom: 5px; }
+  .key-points li:last-child { margin-bottom: 0; }
+
+  /* ── SUMMARY BOX ── */
+  .summary-box {
+    background: linear-gradient(135deg, rgba(45,106,79,0.08), rgba(79,209,197,0.08));
+    border: 1px solid rgba(79,209,197,0.3);
+    border-radius: 8px; padding: 12px 16px; margin-top: 14px;
+  }
+  .summary-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--accent2);
+    margin-bottom: 6px; font-family: 'JetBrains Mono', monospace;
+  }
+  .summary-text { font-size: 13px; color: var(--text); line-height: 1.6; font-style: italic; }
+
+  /* ── ACTION BAR ── */
+  .q-actions {
+    display: flex; gap: 8px; margin-top: 16px;
+    padding-top: 14px; border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .btn-action {
+    font-size: 12px; padding: 6px 14px; border-radius: 6px;
+    cursor: pointer; border: 1px solid var(--border);
+    background: var(--bg); color: var(--muted);
+    display: flex; align-items: center; gap: 5px;
+    transition: all var(--transition); font-family: 'Inter', sans-serif;
+  }
+  .btn-action:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-action.copied { background: #16a34a; color: #fff; border-color: #16a34a; }
+
+  /* ── PRINT BTN ── */
+  .print-bar {
+    display: flex; justify-content: flex-end; margin-bottom: 20px;
+  }
+  .btn-print {
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 8px; padding: 9px 20px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; gap: 7px;
+    transition: background var(--transition);
+  }
+  .btn-print:hover { background: #1e5035; }
+
+  /* ── OVERLAY ── */
+  .overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5); z-index: 99;
+  }
+  .overlay.show { display: block; }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    .topbar, .sidebar, .q-actions, .print-bar, .overlay, .hamburger { display: none !important; }
+    .main { margin-left: 0 !important; padding: 10px !important; max-width: 100% !important; }
+    .layout { padding-top: 0 !important; }
+    .q-card { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; }
+    .q-body { display: block !important; }
+    body { background: #fff !important; color: #000 !important; }
+  }
+</style>
+</head>
+<body data-theme="light">
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">☰</button>
+  <span class="topbar-brand">22CH203</span>
+  <span class="topbar-sub">Engineering Chemistry II</span>
+  <div class="topbar-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search questions or keywords…">
+  </div>
+  <button class="btn-toggle" id="themeToggle">🌙 Dark</button>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">Unit 1 Questions</div>
+    <button class="sidebar-item active" onclick="scrollTo('q1')"><span class="q-num">Q1</span> EMF Origin – Zinc/Copper Cell</button>
+    <button class="sidebar-item" onclick="scrollTo('q2')"><span class="q-num">Q2</span> Nernst Equation &amp; Concentration</button>
+    <button class="sidebar-item" onclick="scrollTo('q3')"><span class="q-num">Q3</span> Cell Notation &amp; Sign Conventions</button>
+    <button class="sidebar-item" onclick="scrollTo('q4')"><span class="q-num">Q4</span> Reference Electrode &amp; SHE</button>
+    <button class="sidebar-item" onclick="scrollTo('q5')"><span class="q-num">Q5</span> Interfacial Potential &amp; Equilibrium</button>
+    <button class="sidebar-item" onclick="scrollTo('q6')"><span class="q-num">Q6</span> Ionic Movement &amp; Charge Balance</button>
+    <button class="sidebar-item" onclick="scrollTo('q7')"><span class="q-num">Q7</span> Electrolyte – Why Essential?</button>
+    <button class="sidebar-item" onclick="scrollTo('q8')"><span class="q-num">Q8</span> Open-Circuit vs Load Potential</button>
+    <button class="sidebar-item" onclick="scrollTo('q9')"><span class="q-num">Q9</span> Concentration, Temp &amp; Pressure on EMF</button>
+    <button class="sidebar-item" onclick="scrollTo('q10')"><span class="q-num">Q10</span> Reversibility &amp; Gibbs Free Energy</button>
+    <button class="sidebar-item" onclick="scrollTo('q11')"><span class="q-num">Q11</span> SHE &amp; Electrochemical Series</button>
+    <button class="sidebar-item" onclick="scrollTo('q12')"><span class="q-num">Q12</span> Standard EMF Significance</button>
+    <button class="sidebar-item" onclick="scrollTo('q13')"><span class="q-num">Q13</span> EMF Measurement Limitation</button>
+    <button class="sidebar-item" onclick="scrollTo('q14')"><span class="q-num">Q14</span> Positive EMF &amp; Gibbs Energy</button>
+    <button class="sidebar-item" onclick="scrollTo('q15')"><span class="q-num">Q15</span> Electrical Double Layer Models</button>
+    <button class="sidebar-item" onclick="scrollTo('q16')"><span class="q-num">Q16</span> Potential Gradient &amp; Capacitance</button>
+    <button class="sidebar-item" onclick="scrollTo('q17')"><span class="q-num">Q17</span> Solvent Orientation &amp; Ion Adsorption</button>
+    <button class="sidebar-item" onclick="scrollTo('q18')"><span class="q-num">Q18</span> EDL &amp; Electrode Kinetics</button>
+    <button class="sidebar-item" onclick="scrollTo('q19')"><span class="q-num">Q19</span> Electrocapillary Effects</button>
+    <button class="sidebar-item" onclick="scrollTo('q20')"><span class="q-num">Q20</span> Ionic Strength &amp; Diffuse Layer</button>
+    <button class="sidebar-item" onclick="scrollTo('q21')"><span class="q-num">Q21</span> EDL Capacitance – Concentrated Solutions</button>
+    <button class="sidebar-item" onclick="scrollTo('q22')"><span class="q-num">Q22</span> Migration &amp; Diffusion – Li-ion Battery</button>
+    <button class="sidebar-item" onclick="scrollTo('q23')"><span class="q-num">Q23</span> Concentration vs Conductivity</button>
+    <button class="sidebar-item" onclick="scrollTo('q24')"><span class="q-num">Q24</span> Concentration Polarization</button>
+    <button class="sidebar-item" onclick="scrollTo('q25')"><span class="q-num">Q25</span> Transport Numbers</button>
+    <button class="sidebar-item" onclick="scrollTo('q26')"><span class="q-num">Q26</span> Internal Resistance &amp; Battery Aging</button>
+    <button class="sidebar-item" onclick="scrollTo('q27')"><span class="q-num">Q27</span> Convection in Ion Transport</button>
+    <button class="sidebar-item" onclick="scrollTo('q28')"><span class="q-num">Q28</span> Nernst-Planck Framework</button>
+    <button class="sidebar-item" onclick="scrollTo('q29')"><span class="q-num">Q29</span> Daniell Cell – Salt Bridge &amp; Junction</button>
+    <button class="sidebar-item" onclick="scrollTo('q30')"><span class="q-num">Q30</span> Electrolytic Cell – Efficiency &amp; Design</button>
+    <button class="sidebar-item" onclick="scrollTo('q31')"><span class="q-num">Q31</span> Cell Notation Fe/Fe²⁺ || Ag⁺/Ag</button>
+    <button class="sidebar-item" onclick="scrollTo('q32')"><span class="q-num">Q32</span> Salt Bridge vs Metallic Wire</button>
+    <button class="sidebar-item" onclick="scrollTo('q33')"><span class="q-num">Q33</span> Fuel Cell Operation &amp; Efficiency</button>
+    <button class="sidebar-item" onclick="scrollTo('q34')"><span class="q-num">Q34</span> Lead-Acid Battery Degradation</button>
+    <button class="sidebar-item" onclick="scrollTo('q35')"><span class="q-num">Q35</span> Gas Electrode – Role of Platinum</button>
+    <button class="sidebar-item" onclick="scrollTo('q36')"><span class="q-num">Q36</span> Galvanic Cell – Zn/Cu Spontaneity</button>
+    <button class="sidebar-item" onclick="scrollTo('q37')"><span class="q-num">Q37</span> Concentration Cell &amp; Nernst Equation</button>
+    <button class="sidebar-item" onclick="scrollTo('q38')"><span class="q-num">Q38</span> EMF to Equilibrium Constant</button>
+    <button class="sidebar-item" onclick="scrollTo('q39')"><span class="q-num">Q39</span> Temperature Effect on EMF</button>
+    <button class="sidebar-item" onclick="scrollTo('q40')"><span class="q-num">Q40</span> Electrochemical Series – Displacement</button>
+    <button class="sidebar-item" onclick="scrollTo('q41')"><span class="q-num">Q41</span> Electrode Potentials &amp; Corrosion</button>
+    <button class="sidebar-item" onclick="scrollTo('q42')"><span class="q-num">Q42</span> Cell Potential as Sensor</button>
+    <div class="sidebar-count">42 questions · Unit 1 only</div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main" id="mainContent">
+
+    <div class="page-hero">
+      <div class="page-hero-eyebrow">Bannari Amman Institute of Technology</div>
+      <h1>Unit 1 — Complete Answer Key</h1>
+      <p>22CH203 Engineering Chemistry II · S2 Semester · Exam-oriented answers (4–8 mark format)</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>42</strong>Questions</div>
+        <div class="hero-stat"><strong>5</strong>Topic Areas</div>
+        <div class="hero-stat"><strong>4–8</strong>Marks Each</div>
+      </div>
+    </div>
+
+    <div class="print-bar">
+      <button class="btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
+    </div>
+
+    <div id="qContainer">
+
+<!-- ═══════════════════════════════════ Q1 ═══ -->
+<div class="q-card" id="q1">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left">
+      <div class="q-badge">1</div>
+      <div class="q-title">Analyze the origin of the observed potential difference in a Zinc-Copper electrochemical cell and infer how chemical reactions establish a driving force for electron movement while maintaining charge balance.</div>
+    </div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section">
+      <div class="ans-label">Answer</div>
+      <div class="ans-text">
+        <p>The setup described is the classic <strong>Daniell Cell</strong>, one of the earliest practical electrochemical cells. The potential difference originates from a difference in the <strong>tendency to lose electrons (oxidation potential)</strong> between zinc and copper.</p>
+        <p><strong>At the Zinc electrode (Anode – Oxidation):</strong><br>
+        Zinc has a higher tendency to oxidize. Zinc metal atoms lose electrons and dissolve into the solution as Zn²⁺ ions.</p>
+        <div class="equation">Zn(s) → Zn²⁺(aq) + 2e⁻  (E° = +0.76 V vs SHE)</div>
+        <p><strong>At the Copper electrode (Cathode – Reduction):</strong><br>
+        The electrons released at the zinc electrode travel through the external circuit to the copper electrode, where Cu²⁺ ions from solution are reduced and deposited as copper metal.</p>
+        <div class="equation">Cu²⁺(aq) + 2e⁻ → Cu(s)  (E° = +0.34 V vs SHE)</div>
+        <p><strong>Cell EMF:</strong></p>
+        <div class="equation">E°cell = E°cathode − E°anode = +0.34 − (−0.76) = +1.10 V</div>
+        <p><strong>Charge Balance via Salt Bridge:</strong><br>
+        As Zn²⁺ ions accumulate in the anode compartment, the solution would become positively charged, stopping the reaction. The <strong>salt bridge</strong> (containing KNO₃ or KCl) allows ion migration — anions (NO₃⁻) move into the anode compartment and cations (K⁺) move into the cathode compartment — thus maintaining <strong>electrical neutrality</strong> in both half-cells.</p>
+        <p>The <strong>driving force</strong> for electron movement is the difference in <strong>Gibbs free energy (ΔG)</strong> between the two half-reactions, which translates into an electrical potential difference (EMF).</p>
+        <div class="equation">ΔG = −nFE°cell  where n = electrons transferred, F = Faraday's constant (96485 C/mol)</div>
+      </div>
+    </div>
+    <div class="key-points">
+      <div class="key-points-title">Key Points</div>
+      <ul>
+        <li><strong>Anode</strong>: oxidation (zinc dissolves); <strong>Cathode</strong>: reduction (copper deposits)</li>
+        <li><strong>EMF</strong> arises due to difference in electrode potentials</li>
+        <li><strong>Salt bridge</strong> completes the circuit by ionic conduction, maintains charge neutrality</li>
+        <li>No external power supply needed — energy from spontaneous redox reaction</li>
+        <li><strong>ΔG = −nFE</strong>: negative ΔG confirms spontaneity</li>
+      </ul>
+    </div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">The EMF in a Zn-Cu cell originates from the difference in oxidation tendencies of the two metals. Electrons flow from Zn (anode) to Cu (cathode) through the external circuit, while ions migrate through the salt bridge to maintain charge balance, enabling sustained current flow.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q2 ═══ -->
+<div class="q-card" id="q2">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">2</div>
+    <div class="q-title">Determine how variations in chemical conditions influence electrode potential and justify the thermodynamic basis for potential generation in electrochemical systems (Nernst Equation).</div></div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p>The electrode potential of a half-cell is not fixed — it depends on the <strong>concentration (activity) of the ions</strong> in solution, temperature, and pressure. This relationship is described by the <strong>Nernst Equation</strong>.</p>
+      <p><strong>Nernst Equation for a half-cell:</strong></p>
+      <div class="equation">E = E° − (RT/nF) × ln[Q]</div>
+      <p>At 298 K (25°C), using log₁₀:</p>
+      <div class="equation">E = E° − (0.0591/n) × log[Q]</div>
+      <p>Where: <strong>E°</strong> = standard electrode potential, <strong>R</strong> = 8.314 J/mol·K, <strong>T</strong> = temperature in Kelvin, <strong>n</strong> = number of electrons transferred, <strong>F</strong> = 96485 C/mol, <strong>Q</strong> = reaction quotient.</p>
+      <p><strong>Thermodynamic Basis:</strong> The driving force for a redox reaction is the <strong>Gibbs free energy change (ΔG)</strong>. Under non-standard conditions:</p>
+      <div class="equation">ΔG = ΔG° + RT ln Q</div>
+      <p>Since <strong>ΔG = −nFE</strong> and <strong>ΔG° = −nFE°</strong>, substituting:</p>
+      <div class="equation">−nFE = −nFE° + RT ln Q  ⟹  E = E° − (RT/nF) ln Q</div>
+      <p><strong>Effect of Concentration:</strong> Increasing the concentration of products decreases E; increasing reactant (ion) concentration increases E. For example, in the Zn²⁺/Zn half-cell, increasing [Zn²⁺] makes the electrode potential more positive (less negative), reducing the tendency to oxidize.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Nernst Equation</strong>: E = E° − (0.0591/n) log Q at 298 K</li>
+      <li>Higher <strong>ion concentration</strong> → higher electrode potential (for cation-dependent reactions)</li>
+      <li><strong>ΔG = −nFE</strong> is the thermodynamic basis</li>
+      <li>At equilibrium, E = 0 and Q = K (equilibrium constant)</li>
+      <li>Both cells compared in the problem differ only in <strong>ion concentrations</strong>, explaining the EMF difference</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Electrode potential varies with ion concentration as described by the Nernst Equation. The thermodynamic basis is ΔG = −nFE; deviations from standard conditions shift Q, altering EMF. This accounts for the significant potential difference observed between the two cells in the problem.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q3 ═══ -->
+<div class="q-card" id="q3">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">3</div>
+    <div class="q-title">Interpret the correct representation of an electrochemical cell using cell notation and infer how sign conventions determine electron flow direction and reaction feasibility.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Cell Notation Convention (IUPAC):</strong></p>
+      <div class="equation">Anode (oxidation) | Anode solution || Cathode solution | Cathode (reduction)</div>
+      <p>Example for Daniell Cell:</p>
+      <div class="equation">Zn(s) | Zn²⁺(aq) || Cu²⁺(aq) | Cu(s)</div>
+      <p><strong>Rules:</strong></p>
+      <p>• A single vertical line (<strong>|</strong>) represents a <strong>phase boundary</strong> (electrode-electrolyte interface).<br>
+      • A double vertical line (<strong>||</strong>) represents the <strong>salt bridge</strong>.<br>
+      • The <strong>anode (oxidation) is always written on the left</strong>; cathode (reduction) on the right.<br>
+      • Electrons flow from <strong>left (anode) to right (cathode)</strong> through the external circuit.</p>
+      <p><strong>Sign Convention for EMF:</strong></p>
+      <div class="equation">E°cell = E°cathode − E°anode</div>
+      <p>• If <strong>E°cell &gt; 0</strong>: reaction is <strong>spontaneous</strong>, electrons flow from anode to cathode.<br>
+      • If <strong>E°cell &lt; 0</strong>: reaction is <strong>non-spontaneous</strong>; cell cannot operate without external energy.<br>
+      • Misinterpreting the sign leads to wrong prediction of electron flow direction.</p>
+      <p><strong>Student Error:</strong> If the student incorrectly places the cathode on the left, E°cell will appear negative, wrongly suggesting non-spontaneity and reversed electron flow. The IUPAC convention must be strictly followed.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Anode on left, cathode on right</strong> — IUPAC convention</li>
+      <li>Single line = phase boundary; Double line = salt bridge</li>
+      <li><strong>E°cell = E°cathode − E°anode</strong></li>
+      <li>Positive EMF → spontaneous reaction → electrons flow left to right</li>
+      <li>Sign convention errors → wrong electron flow direction prediction</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Cell notation uses IUPAC conventions: anode on left, cathode on right, with | and || symbols. EMF sign (positive = spontaneous) determines electron flow direction. Misinterpreting cell notation leads to incorrect conclusions about spontaneity and current direction.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q4 ═══ -->
+<div class="q-card" id="q4">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">4</div>
+    <div class="q-title">Analyze why a reference electrode is necessary and determine how the Standard Hydrogen Electrode (SHE) enables measurement of electrode potential.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Why Absolute Potential Cannot Be Measured:</strong><br>
+      The absolute potential of a single electrode cannot be measured because all potential measurements require a <strong>complete circuit</strong> with two electrodes. We can only measure the <strong>potential difference</strong> between two half-cells.</p>
+      <p><strong>Standard Hydrogen Electrode (SHE) as Reference:</strong><br>
+      The SHE is universally accepted as the reference electrode and is assigned a potential of <strong>exactly 0.00 V</strong>. It consists of a platinum electrode in contact with hydrogen gas at <strong>1 atm pressure</strong> and an aqueous solution with H⁺ activity = 1 M (pH = 0).</p>
+      <div class="equation">2H⁺(aq, 1M) + 2e⁻ ⇌ H₂(g, 1 atm)   E° = 0.00 V</div>
+      <p><strong>Measurement Procedure:</strong><br>
+      When the unknown electrode is connected to SHE and the cell EMF (E°cell) is measured:<br>
+      • If the unknown electrode is the cathode: E°unknown = E°cell<br>
+      • If the unknown electrode is the anode: E°unknown = −E°cell</p>
+      <p><strong>Role of Platinum in SHE:</strong> Platinum is inert (does not participate in the reaction) but acts as a <strong>catalyst</strong> to facilitate the reversible oxidation/reduction of hydrogen, ensuring accurate equilibrium potential is established.</p>
+      <p>By measuring all electrode potentials against SHE, we can compare them on a <strong>universal scale</strong> — the electrochemical series.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Absolute electrode potential cannot be measured; only <strong>relative potential</strong> possible</li>
+      <li>SHE is assigned <strong>E° = 0.00 V</strong> at standard conditions</li>
+      <li>SHE conditions: Pt electrode, [H⁺] = 1 M, P(H₂) = 1 atm, 298 K</li>
+      <li>E°unknown = E°cell (when SHE is anode) or −E°cell (when SHE is cathode)</li>
+      <li>Enables creation of the <strong>electrochemical series</strong></li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">The SHE provides a universal zero reference (E° = 0.00 V) against which all electrode potentials are measured. By coupling the unknown electrode with SHE and measuring the cell EMF, the standard electrode potential of any half-cell can be determined.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q5 ═══ -->
+<div class="q-card" id="q5">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">5</div>
+    <div class="q-title">Interpret the origin of interfacial potential at a metal-electrolyte interface and infer the role of equilibrium in its formation.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Origin of Interfacial Potential:</strong><br>
+      When a metal electrode is immersed in an electrolyte containing its own ions, a dynamic equilibrium is established at the interface:</p>
+      <div class="equation">M(s) ⇌ Mⁿ⁺(aq) + ne⁻</div>
+      <p>Initially, metal atoms at the surface tend to oxidize and dissolve into solution as cations (tendency depends on the metal's <strong>ionization tendency</strong>). As metal ions enter the solution, the metal surface acquires a <strong>negative charge</strong> (excess electrons). This negative charge attracts cations from solution back to the surface, setting up an <strong>electrical double layer</strong>.</p>
+      <p><strong>Helmholtz Double Layer:</strong> The interface consists of:<br>
+      • A layer of negative charge on the metal surface<br>
+      • A layer of positive ions in the solution adjacent to the metal</p>
+      <p>This charge separation creates an <strong>electric potential difference</strong> across the interface — called the <strong>electrode potential</strong> or <strong>Galvani potential</strong>.</p>
+      <p><strong>Role of Equilibrium:</strong><br>
+      At equilibrium, the rate of metal dissolution equals the rate of ion deposition. No net current flows, yet a stable, measurable potential exists across the interface. This is the <strong>equilibrium electrode potential</strong>. It is a thermodynamic property determined by the <strong>activity of ions</strong> in solution and temperature.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Interfacial potential arises from <strong>charge separation</strong> at the metal-electrolyte interface</li>
+      <li>Metal oxidizes → negative charge on metal; positive ions accumulate in solution</li>
+      <li>This forms the <strong>electrical double layer</strong></li>
+      <li>At equilibrium: forward rate = backward rate; net current = 0, but potential ≠ 0</li>
+      <li>Potential is a <strong>thermodynamic quantity</strong> — related to ion activity by Nernst equation</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Interfacial potential arises from the tendency of metal atoms to oxidize, creating a charge separation (double layer) at the interface. At equilibrium, dissolution and deposition rates are equal, no net current flows, yet a stable potential exists — determined by ion activity and temperature.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q6 ═══ -->
+<div class="q-card" id="q6">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">6</div>
+    <div class="q-title">Determine how ionic movement supports sustained electron flow in a closed electrochemical circuit.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p>In an electrochemical cell, current flows through two pathways simultaneously:</p>
+      <p><strong>1. Electronic conduction (external circuit):</strong><br>
+      Electrons produced at the anode (oxidation) flow through the metallic wire to the cathode (reduction). This constitutes the <strong>conventional external current</strong>.</p>
+      <p><strong>2. Ionic conduction (through electrolyte):</strong><br>
+      As oxidation at the anode releases cations into solution (e.g., Zn → Zn²⁺), the anode compartment becomes positively charged. Simultaneously, at the cathode, cations (Cu²⁺) are deposited, making the cathode compartment negatively charged. To prevent charge buildup:</p>
+      <p>• <strong>Cations</strong> in the electrolyte migrate toward the cathode (toward negative charge)<br>
+      • <strong>Anions</strong> migrate toward the anode (toward positive charge)</p>
+      <p>This ionic migration through the salt bridge or electrolyte maintains <strong>electrical neutrality</strong> and allows the circuit to be completed. Without ionic movement, charge imbalance would immediately stop electron flow. Thus, <strong>electron flow and ionic flow are coupled</strong> — neither can sustain without the other.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Two types of current: <strong>electronic</strong> (external wire) and <strong>ionic</strong> (electrolyte)</li>
+      <li>Cations move toward cathode; anions move toward anode</li>
+      <li>Salt bridge ensures <strong>charge neutrality</strong> in both compartments</li>
+      <li>Without ionic movement → charge accumulation → reaction stops</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Ionic movement through the electrolyte/salt bridge completes the electrical circuit. Cations migrate toward the cathode and anions toward the anode, maintaining charge neutrality and enabling sustained electron flow through the external circuit.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q7 ═══ -->
+<div class="q-card" id="q7">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">7</div>
+    <div class="q-title">Infer why an electrolyte is essential for current generation in electrochemical systems when two different metals are connected without an electrolyte.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p>When two different metals are connected by a wire only (no electrolyte), <strong>no current flows</strong> despite a potential difference existing between them. This is because:</p>
+      <p><strong>1. Incomplete circuit:</strong><br>
+      For current to flow in an electrochemical cell, the circuit must be complete — both electronically (through the wire) and <strong>ionically (through the electrolyte)</strong>. Without an electrolyte, the ionic part of the circuit is absent.</p>
+      <p><strong>2. No redox reaction:</strong><br>
+      Electrochemical reactions (oxidation at anode, reduction at cathode) require an <strong>ionic medium</strong> to accept or release ions. Without electrolyte, the metal cannot dissolve (no acceptor for metal ions) and no reduction can occur (no ions to be reduced).</p>
+      <p><strong>3. No charge transfer:</strong><br>
+      The electrolyte provides <strong>ions</strong> that physically carry charge between the two electrodes, balancing the electron flow through the wire. Without ions, charge accumulates and reaction halts.</p>
+      <p>Conclusion: The electrolyte serves as the <strong>ionic conductor</strong> that completes the circuit, enables redox reactions, and allows sustained current generation.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Electrolyte = ionic conductor; essential to complete the circuit</li>
+      <li>Without electrolyte: no ionic conduction → no complete circuit → no current</li>
+      <li>Electrolyte enables <strong>oxidation and reduction</strong> reactions at respective electrodes</li>
+      <li>Metal alone cannot sustain charge balance without ionic medium</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">An electrolyte is essential because it provides the ionic conduction pathway to complete the circuit. Without it, the redox reactions at the electrodes cannot proceed, charge balance cannot be maintained, and no sustained current can flow.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q8 ═══ -->
+<div class="q-card" id="q8">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">8</div>
+    <div class="q-title">Analyze the difference between measured potentials under open-circuit and load conditions and determine the role of internal resistance and system equilibrium.</div></div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Open-Circuit Potential (OCP):</strong><br>
+      When no current is drawn, the cell operates at <strong>thermodynamic equilibrium</strong>. The measured voltage equals the true <strong>EMF</strong> of the cell. No overpotentials or IR drops are present.</p>
+      <div class="equation">V_OCP = EMF = E°cell (under standard conditions)</div>
+      <p><strong>Terminal Voltage Under Load:</strong><br>
+      When current (I) is drawn through an external load, the voltage drops below the OCP due to:</p>
+      <p><strong>1. Internal Resistance (r):</strong><br>
+      Every practical cell has internal resistance due to electrolyte resistance, electrode resistance, and contact resistance. When current flows, a voltage drop occurs across this resistance:</p>
+      <div class="equation">V_terminal = EMF − I × r</div>
+      <p><strong>2. Polarization (Overpotential):</strong><br>
+      During current flow, the electrode reactions deviate from equilibrium. This deviation is called <strong>overpotential (η)</strong>. Three types occur:<br>
+      • <strong>Activation overpotential</strong> — energy barrier for charge transfer<br>
+      • <strong>Concentration overpotential</strong> — ion concentration gradient near electrode<br>
+      • <strong>Ohmic overpotential</strong> — resistance losses</p>
+      <p>The total terminal voltage:</p>
+      <div class="equation">V_terminal = EMF − η_anode − η_cathode − I × r</div>
+      <p><strong>Role of Equilibrium:</strong><br>
+      At open circuit, both forward and reverse reactions occur equally — system is at equilibrium. Under load, the reactions are driven in one direction, breaking equilibrium and causing polarization losses.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Open-circuit voltage</strong> = true EMF (equilibrium state)</li>
+      <li><strong>Terminal voltage</strong> &lt; EMF due to internal resistance and overpotential</li>
+      <li><strong>V = EMF − Ir</strong> (simple form)</li>
+      <li>Higher current → larger IR drop → lower terminal voltage</li>
+      <li><strong>Overpotential</strong>: activation + concentration + ohmic types</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">OCP represents equilibrium EMF. Under load, terminal voltage drops due to internal resistance (V = EMF − Ir) and polarization effects (overpotentials). The greater the current drawn, the larger the deviation from the ideal EMF.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q9 ═══ -->
+<div class="q-card" id="q9">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">9</div>
+    <div class="q-title">Determine how variations in concentration, temperature, and pressure influence the observed EMF and justify the combined effect using electrochemical reasoning.</div></div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p>The EMF of a cell depends on temperature (T), concentration (C), and pressure (P) as described by the <strong>Nernst Equation</strong>:</p>
+      <div class="equation">E = E° − (RT/nF) ln Q</div>
+      <p><strong>1. Effect of Concentration:</strong><br>
+      For a reaction: aA + bB → cC + dD</p>
+      <div class="equation">Q = [C]ᶜ[D]ᵈ / [A]ᵃ[B]ᵇ</div>
+      <p>• Increasing <strong>reactant concentration</strong> → Q decreases → E increases (higher EMF)<br>
+      • Increasing <strong>product concentration</strong> → Q increases → E decreases (lower EMF)<br>
+      • In the industrial setup, continuous consumption of reactants increases Q over time, reducing EMF.</p>
+      <p><strong>2. Effect of Temperature:</strong><br>
+      Temperature affects EMF in two ways:<br>
+      • Directly through the RT/nF term in Nernst equation — higher T increases the correction term<br>
+      • Through the temperature coefficient of EMF:</p>
+      <div class="equation">ΔS = nF × (∂E/∂T)_P</div>
+      <p>For endothermic reactions (ΔH &gt; 0), EMF increases with temperature. For exothermic reactions, EMF decreases with temperature.</p>
+      <p><strong>3. Effect of Pressure (for gas electrodes):</strong><br>
+      For gas electrodes (e.g., H₂ electrode), pressure affects the activity of the gas:</p>
+      <div class="equation">E = E° − (RT/nF) ln [1/(P_H₂)]  →  E increases with increasing P_H₂</div>
+      <p>Combined: All three factors simultaneously influence the reaction quotient Q and hence the EMF. In the industrial setup described, all three fluctuate together, causing continuous variation in measured cell potential.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Concentration</strong>: ↑ reactant → ↑ EMF; ↑ product → ↓ EMF (Nernst equation)</li>
+      <li><strong>Temperature</strong>: effect depends on sign of ΔS; endothermic → EMF ↑ with T</li>
+      <li><strong>Pressure</strong>: affects gas electrode potentials; ↑ P_H₂ → ↑ EMF for H₂ electrode</li>
+      <li>All three factors modify <strong>Q</strong> in the Nernst equation</li>
+      <li>Industrial cells show EMF fluctuations due to all three varying simultaneously</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">EMF depends on concentration (via Q in Nernst equation), temperature (via RT/nF term and ΔS), and pressure (affects gas electrode activities). All three simultaneously modify the reaction quotient, causing the observed EMF fluctuations in industrial electrochemical setups.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q10 ═══ -->
+<div class="q-card" id="q10">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">10</div>
+    <div class="q-title">Analyze the differences between reversible and irreversible cells and infer how these differences affect the relationship between EMF and Gibbs free energy.</div></div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Reversible Electrochemical Cell:</strong><br>
+      A cell is thermodynamically reversible when it operates infinitely slowly, maintaining equilibrium at every step. Characteristics:<br>
+      • Infinitesimally small current flows<br>
+      • No energy loss as heat<br>
+      • The reaction can be completely reversed by applying the same EMF in the opposite direction<br>
+      • Maximum electrical work is obtained</p>
+      <p><strong>Irreversible Cell:</strong><br>
+      In rapid discharge, the system deviates from equilibrium. Characteristics:<br>
+      • Large current flows → significant IR drops and overpotentials<br>
+      • Energy is dissipated as heat<br>
+      • Reaction cannot be exactly reversed<br>
+      • Actual electrical work output &lt; maximum work</p>
+      <p><strong>Relationship with Gibbs Free Energy:</strong></p>
+      <div class="equation">For reversible cell: ΔG = −nFE_rev  (maximum work obtainable)</div>
+      <div class="equation">For irreversible cell: W_actual &lt; −ΔG</div>
+      <p>The Gibbs free energy represents the <strong>maximum useful work</strong> that a system can perform at constant T and P. Only a perfectly reversible cell can fully convert ΔG into electrical work.</p>
+      <div class="equation">−ΔG = nFE (reversible)  →  Efficiency = W_actual / −ΔG × 100%</div>
+      <p>For the two cells compared: the slowly operated reversible cell has higher EMF and efficiency; the rapidly discharged irreversible cell shows lower voltage due to polarization losses and energy dissipation as heat.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Reversible cell</strong>: slow process, equilibrium maintained, max work = −ΔG = nFE</li>
+      <li><strong>Irreversible cell</strong>: fast, energy lost as heat, actual work &lt; −ΔG</li>
+      <li><strong>ΔG = −nFE</strong> strictly holds only for reversible processes</li>
+      <li>Efficiency = actual work / −ΔG × 100%</li>
+      <li>All real cells are irreversible to some degree</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Reversible cells operate at equilibrium with maximum efficiency: ΔG = −nFE. Irreversible cells involve energy losses (heat, overpotential), so actual work &lt; −ΔG. The degree of irreversibility determines how far the cell's practical output deviates from the thermodynamic maximum.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q11 ═══ -->
+<div class="q-card" id="q11">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">11</div>
+    <div class="q-title">Interpret how the measured EMF from coupling SHE with an unknown metal electrode positions the metal in the electrochemical series and infers its reactivity.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Electrochemical Series:</strong><br>
+      The electrochemical series (activity series) is an arrangement of metals in order of their <strong>standard electrode potentials (E°)</strong> measured against SHE at standard conditions (25°C, 1M, 1 atm).</p>
+      <p><strong>Measurement:</strong><br>
+      The unknown metal (M) is coupled with SHE. The measured E°cell gives E° of the metal:</p>
+      <div class="equation">E°cell = E°cathode − E°anode</div>
+      <p>If M acts as cathode (more noble): E°M = E°cell<br>
+      If M acts as anode (more reactive): E°M = −E°cell</p>
+      <p><strong>Position in Series &amp; Reactivity:</strong></p>
+      <p>• <strong>More negative E°</strong>: Metal is placed higher in the series (more reactive, stronger reducing agent, greater tendency to oxidize/corrode)<br>
+      Example: Li (−3.04 V), K (−2.93 V), Zn (−0.76 V)</p>
+      <p>• <strong>More positive E°</strong>: Metal is more noble (less reactive, weaker reducing agent)<br>
+      Example: Ag (+0.80 V), Au (+1.50 V)</p>
+      <p><strong>Predictive Use:</strong><br>
+      • A metal higher in series displaces metals lower in series from their salt solutions<br>
+      • Used to predict <strong>corrosion tendency</strong>, <strong>displacement reactions</strong>, and <strong>cell feasibility</strong></p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>More negative E°</strong> → more reactive, placed higher in electrochemical series</li>
+      <li>SHE provides the universal reference (E° = 0.00 V)</li>
+      <li>Series predicts: displacement reactions, corrosion, cell spontaneity</li>
+      <li>Metal with lower E° (more negative) acts as <strong>anode</strong> in galvanic cell</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">EMF measured vs SHE gives the standard electrode potential of the unknown metal. More negative E° = more reactive, placed higher in electrochemical series. The series predicts reactivity, displacement reactions, and corrosion tendency.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q12 ═══ -->
+<div class="q-card" id="q12">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">12</div>
+    <div class="q-title">Determine the significance of Standard EMF and justify its role in comparing electrochemical systems.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Standard EMF (E°cell)</strong> is the EMF measured when all species are at <strong>unit activity</strong> (1 M concentration for solutions, 1 atm for gases, pure solids/liquids) at <strong>298 K</strong>.</p>
+      <div class="equation">E°cell = E°cathode − E°anode</div>
+      <p><strong>Significance of Standard EMF:</strong></p>
+      <p><strong>1. Predicts Spontaneity:</strong></p>
+      <div class="equation">ΔG° = −nFE°cell  →  If E°cell &gt; 0, ΔG° &lt; 0 → reaction is spontaneous</div>
+      <p><strong>2. Calculates Equilibrium Constant:</strong></p>
+      <div class="equation">ln K = nFE°cell / RT  →  log K = nE°cell / 0.0591 (at 298 K)</div>
+      <p><strong>3. Universal Comparison Basis:</strong><br>
+      Because all non-standard conditions can be corrected using the Nernst equation, E° provides a <strong>consistent reference</strong> for comparing any two electrochemical systems, regardless of actual lab conditions.</p>
+      <p><strong>4. Predicts Battery Voltage:</strong><br>
+      E°cell directly indicates the maximum voltage a battery can deliver under standard conditions.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Standard conditions: 1M, 1 atm, 298 K, unit activity</li>
+      <li>E°cell &gt; 0 → spontaneous; E°cell &lt; 0 → non-spontaneous</li>
+      <li>Used to calculate <strong>ΔG°</strong> and <strong>equilibrium constant K</strong></li>
+      <li>Provides universal basis for comparing cells</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Standard EMF provides a universal reference for comparing electrochemical systems at unit activity conditions. It directly relates to ΔG° and K, enabling prediction of reaction spontaneity and equilibrium position without needing to run the actual experiment.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q13 ═══ -->
+<div class="q-card" id="q13">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">13</div>
+    <div class="q-title">Identify the limitation of measuring EMF using a voltmeter directly on a working cell and infer a more appropriate method for accurate EMF determination.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Limitation of Voltmeter Method:</strong><br>
+      A voltmeter draws a small but finite current when connected to a cell. When current flows:</p>
+      <div class="equation">V_measured = EMF − I × r   (terminal voltage, not true EMF)</div>
+      <p>Since r &gt; 0 and I &gt; 0, V_measured &lt; EMF. The voltage drop across internal resistance gives an <strong>inaccurate (lower) reading</strong>. Additionally, when the cell is simultaneously supplying current to a load, the true equilibrium condition is disturbed, causing <strong>polarization</strong> and further reducing the measured value.</p>
+      <p><strong>Accurate Method: Potentiometer Method</strong><br>
+      The <strong>Poggendorff potentiometer</strong> measures EMF by a <strong>null deflection method</strong> — at balance point, no current is drawn from the cell. Since I = 0:</p>
+      <div class="equation">V_measured = EMF − I×r = EMF − 0 = EMF</div>
+      <p>The potentiometer opposes the cell EMF with an equal and opposite known EMF until the galvanometer reads zero. At this null point, the measured voltage equals the true EMF without any IR drop. This gives an <strong>accurate, reproducible EMF value</strong>.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Voltmeter draws current → V = EMF − Ir → <strong>underestimates EMF</strong></li>
+      <li>Under load, additional polarization further reduces reading</li>
+      <li><strong>Potentiometer (null method)</strong>: no current drawn → true EMF measured</li>
+      <li>Null deflection condition: galvanometer reads zero</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">A voltmeter gives inaccurate EMF because it draws current, causing an IR drop. The potentiometer (null method) draws no current at balance, giving V_measured = EMF exactly, making it the preferred method for accurate EMF determination.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q14 ═══ -->
+<div class="q-card" id="q14">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">14</div>
+    <div class="q-title">Interpret the significance of positive EMF in relation to Gibbs free energy and reaction feasibility.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p>The relationship between EMF and Gibbs free energy is:</p>
+      <div class="equation">ΔG = −nFE</div>
+      <p>Where: n = moles of electrons, F = 96485 C/mol (Faraday's constant), E = cell EMF</p>
+      <p><strong>When EMF &gt; 0 (Positive EMF):</strong></p>
+      <div class="equation">ΔG = −nF(+E) = negative value → ΔG &lt; 0</div>
+      <p>• <strong>ΔG &lt; 0</strong>: The reaction is <strong>thermodynamically spontaneous</strong> — it proceeds on its own without external energy input.<br>
+      • The cell can <strong>do useful electrical work</strong> on the surroundings.<br>
+      • Maximum work obtained: W_max = nFE</p>
+      <p><strong>When EMF &lt; 0 (Negative EMF):</strong><br>
+      ΔG &gt; 0 → non-spontaneous → requires external energy (electrolytic cell)</p>
+      <p><strong>When EMF = 0:</strong><br>
+      ΔG = 0 → system at <strong>equilibrium</strong> → no net reaction</p>
+      <p>The magnitude of EMF tells us the amount of electrical energy available per mole of reaction. Higher E means more energy available and greater driving force for the reaction.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>ΔG = −nFE</strong> is the fundamental relationship</li>
+      <li>E &gt; 0 → ΔG &lt; 0 → <strong>spontaneous reaction</strong></li>
+      <li>E &lt; 0 → ΔG &gt; 0 → non-spontaneous (needs external energy)</li>
+      <li>E = 0 → ΔG = 0 → equilibrium</li>
+      <li>W_max = nFE (maximum electrical work)</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Positive EMF means ΔG &lt; 0 (via ΔG = −nFE), confirming the reaction is spontaneous and capable of producing electrical work. The magnitude of EMF determines the energy available; higher EMF = greater driving force and more useful work output.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q15 ═══ -->
+<div class="q-card" id="q15">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">15</div>
+    <div class="q-title">Analyze how different theoretical models interpret the structure of the electrical double layer and justify which model best reconciles compact and diffuse charge distributions.</div></div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p>The <strong>Electrical Double Layer (EDL)</strong> is the region at the electrode-electrolyte interface where charge separation occurs. Three key models describe its structure:</p>
+      <p><strong>1. Helmholtz Model (1853):</strong><br>
+      The earliest model — treats the double layer as a <strong>simple parallel plate capacitor</strong>. The electrode has a charge σ and an equal but opposite layer of ions lines up exactly at a fixed distance (Helmholtz plane) in solution.</p>
+      <div class="equation">C = ε₀εᵣA/d  (capacitance like a parallel plate capacitor)</div>
+      <p><strong>Limitation:</strong> Ignores thermal motion; fails at high temperatures; cannot explain diffuse behavior of ions.</p>
+      <p><strong>2. Gouy-Chapman Model (1910–1913):</strong><br>
+      Accounts for <strong>thermal motion</strong> of ions. Ions are distributed diffusely (Boltzmann distribution) rather than in a fixed layer. Concentration of ions decreases exponentially from the surface into the bulk.</p>
+      <p><strong>Limitation:</strong> Overestimates capacitance at high potentials; treats ions as point charges (unrealistic at high concentrations).</p>
+      <p><strong>3. Stern Model (1924) — Best Model:</strong><br>
+      Combines both models. The EDL has <strong>two regions</strong>:<br>
+      • <strong>Compact (Stern) layer</strong>: fixed ions adsorbed close to electrode (like Helmholtz)<br>
+      • <strong>Diffuse layer</strong>: thermally distributed ions extending into bulk (like Gouy-Chapman)</p>
+      <div class="equation">1/C_total = 1/C_Stern + 1/C_diffuse</div>
+      <p>The Stern model best reconciles both compact and diffuse behavior, especially at varying temperatures and concentrations. At high temperatures, the diffuse layer expands; at low temperatures/high concentrations, the Stern (compact) layer dominates.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Helmholtz</strong>: rigid parallel layers; fails at high T</li>
+      <li><strong>Gouy-Chapman</strong>: diffuse distribution; fails at high concentrations</li>
+      <li><strong>Stern model</strong>: combines both — compact + diffuse layers; most accurate</li>
+      <li>EDL capacitance: 1/C = 1/C_Stern + 1/C_diffuse</li>
+      <li>Higher temperature → thicker diffuse layer</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">The Stern model is the most comprehensive, combining Helmholtz's compact layer with Gouy-Chapman's diffuse layer. It correctly predicts EDL behavior under varying temperature and concentration conditions, explaining why the rigid layer assumption fails at high temperatures.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q16 ═══ -->
+<div class="q-card" id="q16">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">16</div>
+    <div class="q-title">Determine how the potential gradient develops across the electrical double layer and evaluate its relationship with charge distribution and capacitance at the interface.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Potential Gradient Across EDL:</strong><br>
+      The potential drops most steeply in the <strong>compact (Stern) layer</strong> near the electrode surface, where the electric field is strongest. In the <strong>diffuse layer</strong>, the potential drops exponentially toward the bulk solution value (zero or the reference potential).</p>
+      <div class="equation">φ(x) = φ₀ × e^(−κx)  (in the diffuse layer, Debye-Hückel approximation)</div>
+      <p>Where κ = Debye-Hückel parameter (inverse Debye length); higher ionic concentration → larger κ → thinner diffuse layer → steeper potential drop.</p>
+      <p><strong>Charge Distribution:</strong><br>
+      • High charge density in the compact layer (adsorbed ions)<br>
+      • Exponentially decaying charge density in the diffuse layer<br>
+      • Total surface charge = integral of charge in both layers (electroneutrality)</p>
+      <p><strong>Double Layer Capacitance:</strong><br>
+      The EDL behaves as a capacitor. Capacitance C is related to charge Q and potential φ:</p>
+      <div class="equation">C = dQ/dφ  (differential capacitance)</div>
+      <p>For Stern model, the total capacitance is a series combination. The non-linear potential profile near the electrode explains the <strong>non-linear capacitance vs. potential curve</strong> (electrocapillary curve — minimum at potential of zero charge, PZC).</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Steepest potential drop</strong> in compact Stern layer near electrode</li>
+      <li><strong>Exponential decay</strong> of potential in diffuse layer</li>
+      <li>Debye length (1/κ) characterizes thickness of diffuse layer</li>
+      <li>High ionic strength → thin diffuse layer, high capacitance</li>
+      <li>C = dQ/dφ (differential capacitance)</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">The potential gradient is steepest in the compact Stern layer and decays exponentially in the diffuse layer. Higher electrolyte concentration compresses the diffuse layer (shorter Debye length), increases capacitance, and creates a steeper overall potential drop near the electrode.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q17 ═══ -->
+<div class="q-card" id="q17">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">17</div>
+    <div class="q-title">Interpret the combined influence of solvent orientation and specific ion adsorption on the effective structure and behavior of the electrical double layer.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Solvent Orientation (Inner Helmholtz Layer — IHL):</strong><br>
+      Polar solvent molecules (e.g., water) have permanent dipole moments. Near a charged electrode surface, these dipoles orient preferentially:<br>
+      • Near a negatively charged electrode: water molecules orient with their <strong>positive end (H) toward</strong> the electrode<br>
+      • Near a positively charged electrode: <strong>oxygen end</strong> faces the electrode</p>
+      <p>This ordered solvent layer — the <strong>Inner Helmholtz Plane (IHP)</strong> — forms even before ions adsorb, creating an additional dielectric layer that modifies the effective capacitance and potential distribution.</p>
+      <p><strong>Specific Ion Adsorption:</strong><br>
+      Certain ions (especially large, polarizable anions like Cl⁻, I⁻, SCN⁻) can specifically adsorb onto the electrode surface, penetrating the solvent layer and contacting the metal directly. This is called <strong>specific adsorption</strong> or <strong>contact adsorption</strong>.</p>
+      <p>Effects of specific adsorption:<br>
+      • Alters <strong>effective surface charge</strong> of electrode<br>
+      • Shifts the <strong>potential of zero charge (PZC)</strong><br>
+      • Can cause <strong>overcharge</strong> — the adsorbed anions may make a net negatively charged surface appear positive in the diffuse layer<br>
+      • Modifies EDL capacitance and affects electrode kinetics</p>
+      <p><strong>Combined Effect:</strong> Solvent dipoles + specifically adsorbed ions together define the <strong>Inner Helmholtz Plane (IHP)</strong>, while hydrated (non-specifically adsorbed) ions define the <strong>Outer Helmholtz Plane (OHP)</strong>. Beyond OHP is the diffuse layer.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Water dipoles orient near charged electrode → forms <strong>IHP</strong></li>
+      <li><strong>Specific adsorption</strong>: direct contact of polarizable ions with electrode surface</li>
+      <li>Specifically adsorbed ions alter effective surface charge and shift <strong>PZC</strong></li>
+      <li>IHP (solvent + adsorbed ions) → OHP (hydrated ions) → Diffuse layer</li>
+      <li>Can cause charge reversal in the diffuse layer</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Solvent orientation forms the IHP and modifies dielectric properties near the electrode. Specific ion adsorption alters effective surface charge and shifts PZC. Together, they define the compact layer structure (IHP + OHP), fundamentally modifying EDL behavior beyond what simple models predict.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q18 ═══ -->
+<div class="q-card" id="q18">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">18</div>
+    <div class="q-title">Analyze how changes in the electrical double layer influence electrode kinetics and reaction rates when electrolyte concentration is varied.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p>The electrical double layer (EDL) directly controls the <strong>rate of electrode reactions</strong> through three mechanisms:</p>
+      <p><strong>1. Frumkin Effect (Double Layer Effect on Kinetics):</strong><br>
+      The reacting species must cross the EDL to reach the electrode surface. The potential within the diffuse layer (φ₂ potential at OHP) acts as an additional barrier or driving force for charged reactants. This modifies the <strong>effective activation energy</strong> for electron transfer.</p>
+      <div class="equation">i = i₀ × exp[αF(E − φ₂)/RT]  (corrected Butler-Volmer equation)</div>
+      <p><strong>2. EDL Thickness vs. Concentration:</strong><br>
+      • Low electrolyte concentration → thick diffuse layer → higher φ₂ → larger Frumkin correction → reduced reaction rate<br>
+      • High concentration → thin diffuse layer → φ₂ ≈ 0 → kinetics approach ideal Butler-Volmer behavior → faster electron transfer</p>
+      <p><strong>3. Reactant Accessibility:</strong><br>
+      The EDL creates an <strong>ionic atmosphere</strong> near the electrode. Changes in EDL structure affect how easily reactant species can approach the electrode surface. Compact, thick EDL acts as a physical barrier; thinner EDL at high concentration improves accessibility.</p>
+      <p><strong>Observed Behavior:</strong><br>
+      Varying electrolyte concentration changes the Debye length (1/κ), compressing or expanding the diffuse layer, which directly alters φ₂ and thus the apparent rate constant of the reaction.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Frumkin effect</strong>: φ₂ potential at OHP modifies apparent activation energy</li>
+      <li>High concentration → thin EDL → lower φ₂ → faster kinetics</li>
+      <li>EDL thickness (Debye length) controls accessibility of reactants</li>
+      <li>EDL effects must be corrected in accurate kinetic measurements</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">EDL structure directly affects electrode kinetics through the Frumkin effect — the diffuse layer potential (φ₂) modifies the effective activation barrier. Increasing electrolyte concentration compresses the diffuse layer, reduces φ₂, and accelerates electron transfer rates.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q19 ═══ -->
+<div class="q-card" id="q19">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">19</div>
+    <div class="q-title">Evaluate the relationship between surface charge density and electrocapillary effects at the metal-electrolyte interface.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Electrocapillary Effect:</strong><br>
+      Surface tension (γ) of a metal-electrolyte interface changes with applied electrode potential (E). This phenomenon is called the <strong>electrocapillary effect</strong>, studied classically using a <strong>mercury dropping electrode</strong>.</p>
+      <p><strong>Lippmann Equation:</strong><br>
+      The fundamental equation relating surface tension to electrode charge:</p>
+      <div class="equation">−dγ/dE = σ  (surface charge density)</div>
+      <p>Or equivalently: <strong>dγ = −σ dE − Σ Γᵢ dμᵢ</strong></p>
+      <p><strong>Electrocapillary Curve:</strong><br>
+      When γ is plotted against E:<br>
+      • The curve shows a <strong>maximum</strong> at the <strong>Potential of Zero Charge (PZC)</strong> — where surface charge σ = 0<br>
+      • At E &lt; PZC: surface is negatively charged (σ &lt; 0), γ increases as E increases toward PZC<br>
+      • At E &gt; PZC: surface is positively charged (σ &gt; 0), γ decreases as E increases</p>
+      <p><strong>Relationship Summary:</strong><br>
+      • PZC is identified at maximum surface tension<br>
+      • Surface charge density = slope of electrocapillary curve<br>
+      • EDL capacitance = −d²γ/dE² = dσ/dE</p>
+      <div class="equation">C_dl = −d²γ/dE²</div>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Lippmann equation</strong>: −dγ/dE = σ (surface charge)</li>
+      <li>Maximum surface tension occurs at <strong>PZC (Potential of Zero Charge)</strong></li>
+      <li>Capacitance = d²γ/dE² (curvature of electrocapillary curve)</li>
+      <li>Electrocapillary measurements reveal EDL structure without direct current</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">The Lippmann equation (−dγ/dE = σ) relates surface tension to surface charge density. The electrocapillary curve peaks at the PZC. Its slope gives the charge density and its curvature gives the EDL capacitance, providing key thermodynamic information about the interface.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q20 ═══ -->
+<div class="q-card" id="q20">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">20</div>
+    <div class="q-title">Infer how ionic strength affects the structure of the electrical double layer when increasing ionic strength reduces the thickness of the diffuse layer significantly.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Ionic Strength and Debye Length:</strong><br>
+      The thickness of the diffuse layer is characterized by the <strong>Debye length (λ_D)</strong>:</p>
+      <div class="equation">λ_D = 1/κ = √(ε₀εᵣRT / 2F²I)</div>
+      <p>Where I = ionic strength = ½Σcᵢzᵢ²</p>
+      <p><strong>Effect of Increasing Ionic Strength:</strong><br>
+      As ionic strength (I) increases:<br>
+      • κ increases → Debye length λ_D decreases<br>
+      • The diffuse layer becomes <strong>thinner and more compressed</strong> toward the electrode<br>
+      • The potential in the diffuse layer (φ₂) drops more steeply and reaches zero at a shorter distance</p>
+      <p><strong>Structural Consequences:</strong><br>
+      • More ions are packed into a thinner diffuse layer → higher charge density<br>
+      • <strong>EDL capacitance increases</strong> (thinner layer acts like a thinner capacitor)<br>
+      • Frumkin corrections become smaller (φ₂ → 0) → electrode kinetics become more ideal<br>
+      • At very high ionic strength, the diffuse layer essentially collapses into the compact Stern layer</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Debye length</strong> = 1/√(2F²I/ε₀εᵣRT) — decreases with ↑ ionic strength</li>
+      <li>Higher I → thinner diffuse layer → compressed EDL</li>
+      <li>Higher capacitance with higher concentration</li>
+      <li>Frumkin effect reduced at high I → more ideal kinetics</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Increasing ionic strength compresses the diffuse layer (shorter Debye length) because more counterions are available to screen the electrode charge. This increases EDL capacitance and reduces the Frumkin correction, pushing electrode kinetics toward ideal Butler-Volmer behavior.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q21 ═══ -->
+<div class="q-card" id="q21">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">21</div>
+    <div class="q-title">Determine the reason for increased double layer capacitance when an electrode is placed in a concentrated electrolyte compared to a dilute one.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p>The <strong>double layer capacitance (C_dl)</strong> depends on the effective distance and dielectric properties of the EDL. A capacitor's capacitance is:</p>
+      <div class="equation">C = ε₀εᵣA/d</div>
+      <p>Where d = separation between charge layers.</p>
+      <p><strong>In Dilute Electrolyte:</strong><br>
+      • Low ionic strength → large Debye length → thick diffuse layer<br>
+      • Effective charge separation distance (d) is large<br>
+      • <strong>C_dl is low</strong></p>
+      <p><strong>In Concentrated Electrolyte:</strong><br>
+      • High ionic strength → small Debye length → thin, compressed diffuse layer<br>
+      • Effective charge separation distance (d) is small<br>
+      • More counterions available to neutralize electrode charge within very short distance<br>
+      • C_dl is <strong>inversely proportional to Debye length</strong>:</p>
+      <div class="equation">C_diffuse ∝ √I  (increases with ionic strength)</div>
+      <p>Also, in concentrated solutions, the Stern layer capacitance dominates, and adsorbed counterions are closer to the electrode, further reducing d and increasing C. Hence, concentrated electrolytes exhibit significantly <strong>higher double layer capacitance</strong>.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>C_dl = ε₀εᵣ/d — smaller d → larger C</li>
+      <li>Concentrated solution → smaller Debye length → smaller d</li>
+      <li>C_diffuse ∝ √I (Gouy-Chapman model)</li>
+      <li>Higher concentration → more counterions → more efficient charge screening → higher C</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Higher electrolyte concentration compresses the diffuse layer (reduces d in C = ε₀ε/d), directly increasing EDL capacitance. The diffuse layer capacitance scales with √I, so concentrated solutions show significantly higher capacitance due to efficient charge screening near the electrode.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q22 ═══ -->
+<div class="q-card" id="q22">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">22</div>
+    <div class="q-title">Analyze how migration and diffusion govern ion distribution in a Li-ion battery under high discharge and determine the dominant transport mechanism.</div></div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Ion Transport Mechanisms:</strong></p>
+      <p><strong>1. Migration (Electromigration):</strong><br>
+      Ions move in response to the applied <strong>electric field</strong>. Cations move toward the cathode; anions toward the anode. Migration flux is:</p>
+      <div class="equation">J_mig = −z_i F c_i μ_i (dφ/dx)</div>
+      <p>Where z_i = charge, c_i = concentration, μ_i = mobility, dφ/dx = electric field.</p>
+      <p><strong>2. Diffusion:</strong><br>
+      Ions move from regions of <strong>high concentration to low concentration</strong> (Fick's first law):</p>
+      <div class="equation">J_diff = −D_i (dc_i/dx)</div>
+      <p><strong>Observed Behavior in the Battery:</strong><br>
+      Under high discharge, Li⁺ ions migrate rapidly toward the cathode due to the electric field (migration dominates). This creates a <strong>depletion zone</strong> near the anode and an <strong>accumulation zone</strong> near the cathode.</p>
+      <p>Once the concentration gradient is established, <strong>diffusion opposes migration</strong> — trying to re-equalize concentrations. However, at high discharge rates, migration exceeds diffusion flux, maintaining the observed uneven distribution.</p>
+      <p><strong>Dominant Mechanism:</strong><br>
+      Under <strong>high discharge (high electric field)</strong> and without external stirring: <strong>migration dominates</strong>. Diffusion acts as a secondary, slower mechanism. The ratio of migration to diffusion is characterized by the <strong>transport number (t_i)</strong>.</p>
+      <div class="equation">t_Li⁺ = J_mig / J_total  (transport number of Li⁺)</div>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Migration</strong>: driven by electric field; cations → cathode; anions → anode</li>
+      <li><strong>Diffusion</strong>: driven by concentration gradient; opposes migration imbalance</li>
+      <li>Under high discharge: <strong>migration dominates</strong></li>
+      <li>Nernst-Planck equation combines both: J = J_mig + J_diff</li>
+      <li><strong>Transport number</strong> quantifies relative contribution of each ion to current</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Migration (driven by electric field) and diffusion (driven by concentration gradient) govern ion transport. Under high discharge, migration dominates, causing Li⁺ accumulation near the cathode and depletion near the anode. Diffusion acts as a slow equalizing force, characterized by transport numbers.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q23 ═══ -->
+<div class="q-card" id="q23">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">23</div>
+    <div class="q-title">Evaluate the relationship between electrolyte concentration and conductivity and determine why increased concentration leads to reduced efficiency beyond an optimal point.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Conductivity vs. Concentration:</strong><br>
+      At low concentrations, increasing electrolyte concentration increases the number of charge carriers (ions), increasing conductivity. However, beyond an optimal concentration, conductivity decreases due to ion-ion interactions.</p>
+      <p><strong>Kohlrausch's Law (Dilute Solutions):</strong></p>
+      <div class="equation">Λ_m = Λ°_m − K√C</div>
+      <p>Where Λ_m = molar conductivity, Λ°_m = limiting molar conductivity at infinite dilution, K = empirical constant, C = concentration.</p>
+      <p><strong>Reasons for Decreased Efficiency at High Concentration:</strong></p>
+      <p><strong>1. Ion-Ion Interactions:</strong><br>
+      At high concentrations, cations and anions are closer together. <strong>Electrostatic interactions</strong> between oppositely charged ions reduce their mobility (Debye-Hückel-Onsager effect). Each ion is surrounded by an <strong>ionic atmosphere</strong> of opposite charges that retards its movement.</p>
+      <p><strong>2. Viscosity Increase:</strong><br>
+      Higher concentration → more ion-solvent interactions → increased solution viscosity → reduced ionic mobility → reduced conductivity.</p>
+      <p><strong>3. Ion Pairing:</strong><br>
+      Oppositely charged ions form <strong>ion pairs</strong> that carry less charge effectively, reducing the number of free current-carrying ions.</p>
+      <p>Result: A <strong>conductivity maximum</strong> exists at an intermediate concentration. Beyond this, efficiency drops — explaining the reduced cell performance observed.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Conductivity ↑ initially with concentration (more ions), then ↓ beyond optimal</li>
+      <li><strong>Kohlrausch's law</strong>: Λ_m = Λ°_m − K√C (for dilute solutions)</li>
+      <li>High concentration: ion-ion interactions, ion pairing, increased viscosity reduce mobility</li>
+      <li>Optimal conductivity at intermediate concentration</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Conductivity increases with concentration due to more ions but decreases beyond the optimal point due to increased ion-ion interactions, ion pairing, and viscosity — all reducing ionic mobility. This explains the reduced cell efficiency at high electrolyte concentrations.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q24 ═══ -->
+<div class="q-card" id="q24">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">24</div>
+    <div class="q-title">Determine how concentration polarization develops in a fuel cell and assess its impact on overall cell performance.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Concentration Polarization:</strong><br>
+      When a fuel cell operates continuously, electrochemical reactions consume reactants at the electrode surface faster than they can be replenished by transport. Simultaneously, reaction products accumulate near the electrode. This creates a <strong>local concentration gradient</strong> — the phenomenon is called <strong>concentration polarization</strong>.</p>
+      <p><strong>Mechanism:</strong><br>
+      At the cathode: O₂ is consumed faster than diffusion/convection can supply it → local [O₂] falls below bulk value<br>
+      At the anode: products (e.g., H₂O) accumulate → local [H₂] effectively reduced</p>
+      <p>By the Nernst equation, the local electrode potential differs from bulk potential:</p>
+      <div class="equation">E_local = E°− (RT/nF) ln (c_surface/c_bulk)</div>
+      <p><strong>Concentration Overpotential (η_conc):</strong></p>
+      <div class="equation">η_conc = (RT/nF) ln (i_L / (i_L − i))</div>
+      <p>Where i_L = limiting current density (maximum current at which concentration reaches zero at surface)</p>
+      <p><strong>Impact on Performance:</strong><br>
+      • Reduces effective EMF → lower cell voltage<br>
+      • At high currents, approaches limiting current → voltage drops sharply<br>
+      • Product buildup blocks active sites → further reduces efficiency<br>
+      • Builds up progressively during prolonged operation (as described in the problem)</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Concentration polarization</strong>: reactant depletion + product accumulation at electrode surface</li>
+      <li>Creates local concentration gradient → modifies local electrode potential (Nernst)</li>
+      <li><strong>Limiting current (i_L)</strong>: maximum current before complete surface depletion</li>
+      <li>η_conc increases sharply as i → i_L</li>
+      <li>Reduces cell voltage and overall efficiency during prolonged operation</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Concentration polarization develops when reactant supply cannot keep pace with consumption, creating local concentration gradients near the electrode. This reduces the effective electrode potential (Nernst effect) and causes concentration overpotential, progressively dropping cell voltage during prolonged operation.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q25 ═══ -->
+<div class="q-card" id="q25">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">25</div>
+    <div class="q-title">Analyze how transport numbers arise when cations move faster than anions in an electrolyte under an applied electric field and determine their significance in current distribution.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Transport Number (Transference Number):</strong><br>
+      When an electric field is applied across an electrolyte, both cations and anions carry current. However, they do not necessarily carry equal fractions of the total current. The <strong>transport number (t)</strong> of an ion is the fraction of total current carried by that ion.</p>
+      <div class="equation">t₊ = I₊ / I_total = u₊ / (u₊ + u₋)</div>
+      <div class="equation">t₋ = I₋ / I_total = u₋ / (u₊ + u₋)</div>
+      <div class="equation">t₊ + t₋ = 1  (always)</div>
+      <p>Where u₊ and u₋ are the ionic mobilities (drift velocity per unit electric field).</p>
+      <p><strong>Why Cations Move Faster (in the given problem):</strong><br>
+      Cations (e.g., H⁺, Li⁺) are often smaller and have fewer solvent molecules in their hydration shell compared to larger anions. This gives them <strong>higher mobility</strong> → they carry a larger fraction of current → t₊ &gt; t₋.</p>
+      <p><strong>Significance of Transport Numbers:</strong><br>
+      • Determines <strong>how current is distributed</strong> between cation and anion migration<br>
+      • Important in calculating <strong>liquid junction potential</strong> (at interfaces between solutions of different concentrations)<br>
+      • Explains <strong>Hittorf's method</strong> for measuring transport numbers by observing concentration changes near electrodes<br>
+      • Affects <strong>electrolyte design</strong>: ideal electrolyte has t₊ ≈ t₋ = 0.5 for balanced transport</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Transport number</strong>: fraction of total current carried by each ion</li>
+      <li>t₊ + t₋ = 1 (always)</li>
+      <li>t = u / (u₊ + u₋); higher mobility → higher transport number</li>
+      <li>Smaller ions (H⁺, Li⁺) have higher mobility → higher t</li>
+      <li>Used in calculating <strong>junction potential</strong> and designing electrolytes</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Transport numbers quantify each ion's contribution to current. Since cations are smaller and more mobile, they carry a larger fraction of current (t₊ > t₋). Transport numbers are fundamental to understanding junction potentials, electrolyte design, and analyzing concentration changes during electrolysis.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q26 ═══ -->
+<div class="q-card" id="q26">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">26</div>
+    <div class="q-title">Evaluate the factors contributing to increased internal resistance in an aging battery and infer its effect on battery performance.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p>Internal resistance in a battery arises from multiple sources and increases with aging due to:</p>
+      <p><strong>1. Electrolyte Degradation:</strong><br>
+      Over time, electrolyte conductivity decreases slightly (as stated in the problem). Decomposition products, increased viscosity, or loss of solvent (evaporation) reduce ionic mobility → higher <strong>electrolyte resistance</strong>.</p>
+      <p><strong>2. Solid Electrolyte Interface (SEI) Layer Growth:</strong><br>
+      Repeated cycling causes growth of the SEI layer on electrode surfaces. This insulating layer increases <strong>interfacial resistance</strong>.</p>
+      <p><strong>3. Active Material Degradation:</strong><br>
+      Electrode materials crack, expand/contract with cycling → increased <strong>contact resistance</strong> between particles and current collector.</p>
+      <p><strong>4. Current Collector Corrosion:</strong><br>
+      Metal current collectors corrode over time → higher <strong>electronic resistance</strong>.</p>
+      <p><strong>Effect on Battery Performance:</strong></p>
+      <div class="equation">V_terminal = EMF − I × r_internal</div>
+      <p>• Higher r_internal → greater voltage drop under load → lower delivered voltage<br>
+      • More energy wasted as <strong>heat (I²r)</strong> → reduced efficiency<br>
+      • Faster voltage cutoff during discharge → <strong>reduced capacity</strong><br>
+      • Longer charging time required<br>
+      • At high currents, IR drop becomes dominant → sharp performance degradation</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Aging factors: electrolyte degradation, SEI growth, electrode cracking, current collector corrosion</li>
+      <li><strong>V = EMF − Ir</strong>: higher r → lower terminal voltage</li>
+      <li>Heat loss = I²r; increases with aging</li>
+      <li>Higher internal resistance → reduced power delivery, lower capacity</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Internal resistance increases with battery aging due to SEI growth, electrolyte degradation, electrode cracking, and current collector corrosion. Higher resistance reduces terminal voltage (V = EMF − Ir), increases heat loss (I²r), and shortens battery capacity — degrading overall performance.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q27 ═══ -->
+<div class="q-card" id="q27">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">27</div>
+    <div class="q-title">Determine the role of convection in an electrochemical system that shows enhanced ion transport when stirred externally, even without changes to electric field or concentration.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Convection as a Transport Mechanism:</strong><br>
+      Ion transport in electrolytes occurs through three mechanisms: <strong>migration</strong> (electric field), <strong>diffusion</strong> (concentration gradient), and <strong>convection</strong> (bulk fluid motion). External stirring introduces convective transport.</p>
+      <p><strong>Role of Convection:</strong></p>
+      <p><strong>1. Disrupts Concentration Boundary Layer:</strong><br>
+      At the electrode surface, a stagnant <strong>diffusion boundary layer</strong> (Nernst diffusion layer, δ) normally limits ion transport. Convection physically sweeps away this depleted layer, replenishing fresh reactants at the surface.</p>
+      <div class="equation">i_L = nFDc_bulk / δ  →  Stirring reduces δ  →  i_L increases</div>
+      <p><strong>2. Reduces Concentration Polarization:</strong><br>
+      By constantly mixing the electrolyte, convection prevents the buildup of concentration gradients near the electrode, reducing concentration overpotential.</p>
+      <p><strong>3. Independent of Field and Concentration:</strong><br>
+      Even without applying additional electric field or changing bulk concentration, convection alone enhances mass transport to/from the electrode, increasing the effective reaction rate.</p>
+      <p>This is exploited in <strong>rotating disk electrodes (RDE)</strong> in research and in industrial cells with forced electrolyte circulation.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Convection</strong>: bulk fluid motion carrying ions physically</li>
+      <li>Reduces <strong>diffusion boundary layer (δ)</strong> → increases limiting current</li>
+      <li>Suppresses concentration polarization</li>
+      <li>i_L = nFDc/δ: smaller δ → larger limiting current</li>
+      <li>Used in RDE, industrial cells with electrolyte flow</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Convection enhances ion transport by disrupting the concentration boundary layer at the electrode surface. It reduces δ (diffusion layer thickness), increasing the limiting current and suppressing concentration polarization — independently of electric field or bulk concentration changes.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q28 ═══ -->
+<div class="q-card" id="q28">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">28</div>
+    <div class="q-title">Interpret how the Nernst-Planck framework integrates electric field and concentration gradient effects to govern ion movement simultaneously.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Nernst-Planck Equation:</strong><br>
+      When both an electric field (∂φ/∂x) and a concentration gradient (∂c_i/∂x) are present simultaneously, the total ion flux is given by the <strong>Nernst-Planck equation</strong>:</p>
+      <div class="equation">J_i = −D_i (∂c_i/∂x) − (z_i F / RT) D_i c_i (∂φ/∂x) + c_i v</div>
+      <p>Where:<br>
+      • Term 1: <strong>Diffusion flux</strong> — ions move from high to low concentration (Fick's law)<br>
+      • Term 2: <strong>Migration flux</strong> — ions move in response to electric field (with sign depending on charge z_i)<br>
+      • Term 3: <strong>Convection</strong> — bulk fluid velocity v (zero in stagnant systems)</p>
+      <p><strong>Integration of Both Effects:</strong><br>
+      In many practical situations, both driving forces act simultaneously and may either reinforce or oppose each other:</p>
+      <p>• If concentration gradient and electric field drive ions in the <strong>same direction</strong>: fluxes add → enhanced transport<br>
+      • If they act in <strong>opposite directions</strong>: net flux is reduced → transport limited</p>
+      <p><strong>Steady-State Condition:</strong><br>
+      At steady state (J = constant), the Nernst-Planck equation can be integrated to give a <strong>concentration profile</strong> across the electrolyte. This is fundamental for modeling battery charging/discharging, electrolysis, and sensor response.</p>
+      <div class="equation">At equilibrium: J = 0  →  D(∂c/∂x) = −(zF/RT)Dc(∂φ/∂x)  →  Nernst equation</div>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Nernst-Planck equation</strong>: J = −D(∂c/∂x) − (zFD c/RT)(∂φ/∂x) + cv</li>
+      <li>Three terms: diffusion + migration + convection</li>
+      <li>Diffusion: ∂c/∂x; Migration: ∂φ/∂x — can reinforce or oppose</li>
+      <li>At equilibrium, NP equation reduces to <strong>Nernst equation</strong></li>
+      <li>Used for modeling electrode processes, sensors, batteries</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">The Nernst-Planck equation integrates diffusion (∂c/∂x), migration (∂φ/∂x), and convection into a single expression for ion flux. It describes how multiple driving forces simultaneously govern ion movement; at equilibrium, it reduces to the Nernst equation, unifying mass transport and thermodynamics.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q29 ═══ -->
+<div class="q-card" id="q29">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">29</div>
+    <div class="q-title">Analyze the working mechanism of a Zn/ZnSO₄ || CuSO₄/Cu cell (Daniell Cell) by determining the role of each component and inferring reasons for voltage variation with junction behavior and ion movement.</div></div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Cell Construction and Notation:</strong></p>
+      <div class="equation">Zn | ZnSO₄(aq) || CuSO₄(aq) | Cu</div>
+      <p><strong>Role of Each Component:</strong></p>
+      <p><strong>1. Zinc Rod (Anode):</strong><br>
+      Oxidation occurs — Zn dissolves as Zn²⁺ ions, releasing electrons into the external circuit:</p>
+      <div class="equation">Zn(s) → Zn²⁺(aq) + 2e⁻</div>
+      <p><strong>2. Copper Rod (Cathode):</strong><br>
+      Reduction occurs — Cu²⁺ ions from solution accept electrons and deposit as copper metal:</p>
+      <div class="equation">Cu²⁺(aq) + 2e⁻ → Cu(s)</div>
+      <p><strong>3. ZnSO₄ Solution:</strong> Provides medium for Zn²⁺ ions produced; maintains ionic conduction in anode compartment.</p>
+      <p><strong>4. CuSO₄ Solution:</strong> Provides Cu²⁺ ions for reduction at cathode.</p>
+      <p><strong>5. Salt Bridge (KNO₃):</strong><br>
+      Maintains electrical neutrality: NO₃⁻ migrates to anode compartment (to balance excess Zn²⁺); K⁺ migrates to cathode compartment (to replace deposited Cu²⁺).</p>
+      <p><strong>Overall Cell Reaction:</strong></p>
+      <div class="equation">Zn(s) + Cu²⁺(aq) → Zn²⁺(aq) + Cu(s)   E° = 1.10 V</div>
+      <p><strong>Reason for Voltage Variation Over Time (Junction Potential):</strong><br>
+      As the cell operates, [Zn²⁺] increases and [Cu²⁺] decreases, changing the reaction quotient Q. By Nernst equation, increasing Q decreases the cell EMF. Additionally, at the salt bridge junction, a <strong>liquid junction potential</strong> develops due to different mobilities of K⁺ and NO₃⁻ ions. This junction potential adds to or subtracts from the cell EMF, causing gradual voltage variation.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Anode: Zn → Zn²⁺ + 2e⁻; Cathode: Cu²⁺ + 2e⁻ → Cu</li>
+      <li>Salt bridge provides ionic conduction and charge neutrality</li>
+      <li>E° = 1.10 V (standard); varies with concentration (Nernst)</li>
+      <li><strong>Voltage drops over time</strong>: Q increases as [Cu²⁺] decreases</li>
+      <li><strong>Junction potential</strong> at salt bridge-solution interface affects voltage</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">The Daniell cell converts chemical energy (Zn oxidation + Cu reduction) to electrical energy. The salt bridge maintains neutrality via ion migration. Voltage decreases over time due to changing ion concentrations (increasing Q via Nernst equation) and liquid junction potential development at the salt bridge boundary.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q30 ═══ -->
+<div class="q-card" id="q30">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">30</div>
+    <div class="q-title">Evaluate the operational inefficiencies in an electrolytic cell using inert platinum anode for metal coating and recommend how system design influences performance.</div></div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Electrolytic Cell Operation (Electroplating):</strong><br>
+      In electroplating, an external DC power source drives a non-spontaneous reaction. Metal ions from solution are reduced at the cathode (workpiece) and deposited as a coating.</p>
+      <p><strong>Role of Inert Platinum Anode:</strong><br>
+      Platinum is chemically inert — it does not dissolve during electrolysis. Instead, it catalyzes oxidation of water or electrolyte anions at the anode:</p>
+      <div class="equation">2H₂O → O₂ + 4H⁺ + 4e⁻  (at Pt anode)</div>
+      <p>This means the metal ion concentration in solution continuously <strong>decreases</strong> as metal is deposited, while the anode does not replenish ions. This leads to:</p>
+      <p><strong>Inefficiencies Observed:</strong></p>
+      <p><strong>1. Uneven Deposition:</strong><br>
+      As [metal ion] decreases over time, ion flux to cathode surface becomes uneven due to concentration gradients. Areas with restricted ion access (edges, recesses) receive less deposition → <strong>uneven coating thickness</strong>.</p>
+      <p><strong>2. Increased Energy Consumption:</strong><br>
+      As metal ion concentration decreases, the Nernst equation shows the deposition potential becomes more negative → requires higher applied voltage → <strong>increased energy consumption</strong>.</p>
+      <p><strong>Design Improvements:</strong><br>
+      • Use a <strong>soluble anode</strong> (same metal as depositing) — replenishes metal ions continuously, maintaining constant concentration<br>
+      • Use <strong>agitation/stirring</strong> — reduces concentration polarization<br>
+      • Optimize current density — avoid exceeding limiting current<br>
+      • Use <strong>complexing agents</strong> in bath — improve deposition uniformity</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Inert Pt anode: does not replenish metal ions → decreasing [metal²⁺] over time</li>
+      <li>Decreasing [metal²⁺] → higher applied voltage needed (Nernst) → <strong>energy waste</strong></li>
+      <li><strong>Uneven deposition</strong> due to concentration gradients</li>
+      <li>Solution: use soluble anode, stirring, optimal current density</li>
+      <li>Current efficiency = (actual mass deposited / theoretical mass) × 100%</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">An inert Pt anode fails to replenish metal ions, causing continuous depletion of metal²⁺ concentration. This increases required voltage (Nernst effect), causes uneven deposition, and reduces energy efficiency. Using a soluble anode of the plating metal and electrolyte agitation are key design improvements.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q31 ═══ -->
+<div class="q-card" id="q31">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">31</div>
+    <div class="q-title">Interpret the cell notation Fe | Fe²⁺ || Ag⁺ | Ag by determining electrode roles, direction of electron transfer, and reconstruct the half-cell reactions.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Cell Notation:</strong></p>
+      <div class="equation">Fe | Fe²⁺(aq) || Ag⁺(aq) | Ag</div>
+      <p><strong>Interpretation of Each Symbol:</strong><br>
+      • <strong>Fe | Fe²⁺</strong>: Iron electrode in contact with Fe²⁺ solution — <strong>left side = anode (oxidation)</strong><br>
+      • <strong>||</strong>: Salt bridge separating the two half-cells<br>
+      • <strong>Ag⁺ | Ag</strong>: Silver ions in contact with silver electrode — <strong>right side = cathode (reduction)</strong></p>
+      <p><strong>Half-Cell Reactions:</strong></p>
+      <div class="equation">Anode (oxidation): Fe(s) → Fe²⁺(aq) + 2e⁻     E° = +0.44 V (oxidation)</div>
+      <div class="equation">Cathode (reduction): Ag⁺(aq) + e⁻ → Ag(s)      E° = +0.80 V (reduction)</div>
+      <p>Since 2 electrons must be balanced:</p>
+      <div class="equation">Cathode (×2): 2Ag⁺(aq) + 2e⁻ → 2Ag(s)</div>
+      <p><strong>Overall Cell Reaction:</strong></p>
+      <div class="equation">Fe(s) + 2Ag⁺(aq) → Fe²⁺(aq) + 2Ag(s)</div>
+      <p><strong>Cell EMF:</strong></p>
+      <div class="equation">E°cell = E°cathode − E°anode = +0.80 − (−0.44) = +1.24 V</div>
+      <p><strong>Electron Flow Direction:</strong><br>
+      Electrons flow from Fe electrode (anode) through the external circuit to Ag electrode (cathode) — left to right in the notation. Conventional current flows in the opposite direction (right to left).</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Left = anode (Fe, oxidation); Right = cathode (Ag, reduction)</li>
+      <li>Electrons flow: Fe → external circuit → Ag</li>
+      <li>Overall: Fe + 2Ag⁺ → Fe²⁺ + 2Ag</li>
+      <li>E°cell = +1.24 V → spontaneous</li>
+      <li>Electron balance: multiply Ag half-reaction by 2</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">In Fe | Fe²⁺ || Ag⁺ | Ag: Fe is oxidized (anode, left), Ag⁺ is reduced (cathode, right). Electrons flow from Fe to Ag through external circuit. Overall reaction: Fe + 2Ag⁺ → Fe²⁺ + 2Ag, E° = +1.24 V (spontaneous).</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q32 ═══ -->
+<div class="q-card" id="q32">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">32</div>
+    <div class="q-title">Determine the cause of system failure when a salt bridge is replaced with a metallic wire between two half-cells by analyzing the role of ionic conduction.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Why a Salt Bridge is Essential:</strong><br>
+      The salt bridge serves a unique and critical function: it provides <strong>ionic conduction</strong> between the two half-cells while keeping the solutions physically separated.</p>
+      <p><strong>What Happens with a Metallic Wire:</strong><br>
+      A metallic wire conducts <strong>electrons</strong>, not ions. When used to connect the two solutions directly:</p>
+      <p><strong>1. Short Circuit:</strong><br>
+      The wire connects both electrodes directly — the two electrode potentials are immediately equalized. This creates a <strong>short circuit</strong>, causing a brief surge of current that quickly dissipates any potential difference.</p>
+      <p><strong>2. No Ionic Charge Balance:</strong><br>
+      As the anode generates cations (e.g., Zn²⁺) and the cathode consumes cations (e.g., Cu²⁺), charge imbalances build up rapidly in each compartment. Since the metallic wire cannot transfer ions, <strong>electrical neutrality cannot be maintained</strong>. The anode compartment becomes positively charged, repelling further oxidation; the cathode compartment becomes negatively charged, repelling further reduction → reaction stops.</p>
+      <p>The salt bridge, by contrast, allows ions to flow ionically while keeping the solutions separate, maintaining neutrality and enabling sustained operation.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Salt bridge</strong>: ionic conductor maintaining charge neutrality in both half-cells</li>
+      <li>Metallic wire: electronic conductor only — cannot transfer ions</li>
+      <li>Without ionic path: charge accumulation → electric repulsion → reaction stops</li>
+      <li>Metallic wire also causes short circuit — instantly equalizes potentials</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Replacing the salt bridge with a metallic wire causes failure because: (1) it creates a short circuit dissipating the EMF, and (2) it cannot maintain ionic charge balance. Without ionic conduction, charge accumulation rapidly terminates the electrochemical reaction.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q33 ═══ -->
+<div class="q-card" id="q33">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">33</div>
+    <div class="q-title">Analyze the operational principle of a hydrogen-oxygen fuel cell and infer how electrode surface conditions influence overall efficiency.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Fuel Cell Operating Principle:</strong><br>
+      A fuel cell converts chemical energy of fuel (H₂) and oxidant (O₂) directly to electrical energy through electrochemical reactions — without combustion.</p>
+      <p><strong>Electrode Reactions (Acidic electrolyte):</strong></p>
+      <div class="equation">Anode: H₂(g) → 2H⁺(aq) + 2e⁻</div>
+      <div class="equation">Cathode: ½O₂(g) + 2H⁺(aq) + 2e⁻ → H₂O(l)</div>
+      <div class="equation">Overall: H₂ + ½O₂ → H₂O   E° = 1.23 V</div>
+      <p><strong>Role of Porous Electrodes:</strong><br>
+      Porous electrodes maximize the <strong>three-phase boundary</strong> (gas-liquid-solid) where gas, electrolyte, and electrode catalyst all meet. This is essential for reaction to occur — gas must contact the electrolyte with catalyst present.</p>
+      <p><strong>How Electrode Surface Contamination Reduces Efficiency:</strong><br>
+      • <strong>Catalyst poisoning</strong>: CO, sulfur compounds, or heavy metal impurities adsorb onto Pt catalyst sites, blocking them for H₂/O₂ reactions → increased activation overpotential<br>
+      • <strong>Flooding</strong>: Excess water in pores blocks gas access → concentration polarization<br>
+      • <strong>Oxide formation</strong> on Pt surface at cathode reduces O₂ reduction kinetics<br>
+      All these effects increase overpotential losses, reducing the actual cell voltage below the theoretical 1.23 V, decreasing efficiency.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>H₂-O₂ fuel cell: H₂ → 2H⁺ + 2e⁻ (anode); O₂ + H⁺ + e⁻ → H₂O (cathode)</li>
+      <li>E° = 1.23 V; direct conversion of chemical to electrical energy</li>
+      <li>Porous electrodes maximize <strong>three-phase boundary</strong></li>
+      <li><strong>Catalyst poisoning</strong>, flooding, oxide formation reduce efficiency</li>
+      <li>Contamination increases activation and concentration overpotentials</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Fuel cells convert H₂ + O₂ → H₂O electrochemically (E° = 1.23 V). Porous electrodes maximize the three-phase reaction zone. Surface contamination (catalyst poisoning, flooding, oxide formation) increases overpotentials and reduces actual efficiency well below the theoretical maximum.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q34 ═══ -->
+<div class="q-card" id="q34">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">34</div>
+    <div class="q-title">Infer the chemical changes responsible for gradual performance degradation in a lead-acid battery under repeated charging and discharging cycles and relate them to electrode reactions.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Lead-Acid Battery Electrode Reactions:</strong></p>
+      <div class="equation">Anode (discharge): Pb + SO₄²⁻ → PbSO₄ + 2e⁻</div>
+      <div class="equation">Cathode (discharge): PbO₂ + SO₄²⁻ + 4H⁺ + 2e⁻ → PbSO₄ + 2H₂O</div>
+      <div class="equation">Overall: Pb + PbO₂ + 2H₂SO₄ → 2PbSO₄ + 2H₂O   E° = 2.0 V</div>
+      <p><strong>Chemical Changes Causing Degradation:</strong></p>
+      <p><strong>1. Sulfation:</strong><br>
+      PbSO₄ (lead sulfate) deposits on both electrodes during discharge. Under repeated deep discharge or incomplete charging, PbSO₄ crystals grow large and hard (<strong>irreversible sulfation</strong>). This:<br>
+      • Blocks active electrode surface → reduces effective electrode area<br>
+      • Increases internal resistance<br>
+      • Cannot be reconverted to Pb/PbO₂ during charging</p>
+      <p><strong>2. Active Material Shedding:</strong><br>
+      PbO₂ on the positive plate expands and contracts during charge/discharge cycles → mechanical stress → <strong>active material crumbles</strong> and falls off → loss of capacity.</p>
+      <p><strong>3. Water Loss (Gassing):</strong><br>
+      Overcharging causes electrolysis of water → H₂ and O₂ gas evolution → electrolyte level drops → H₂SO₄ concentration increases → plates may dry out.</p>
+      <p><strong>4. Grid Corrosion:</strong><br>
+      Pb grid (positive plate) corrodes to PbO₂ during charging → structural weakening → electrical disconnection.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Both electrodes form <strong>PbSO₄</strong> during discharge</li>
+      <li><strong>Sulfation</strong>: hard PbSO₄ crystals block electrode surface → major degradation cause</li>
+      <li>Active material shedding from PbO₂ plate → capacity loss</li>
+      <li>Water loss (gassing) during overcharge → electrolyte concentration change</li>
+      <li>Grid corrosion reduces structural integrity</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Lead-acid battery degradation results from sulfation (irreversible PbSO₄ crystal growth), PbO₂ shedding, water electrolysis during overcharge, and grid corrosion. These reduce active surface area, increase resistance, and deplete active materials — progressively reducing capacity and voltage output.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q35 ═══ -->
+<div class="q-card" id="q35">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">35</div>
+    <div class="q-title">Determine the role of platinum in a gas electrode (hydrogen electrode) and infer how this electrode enables redox reactions.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Gas Electrode Setup:</strong><br>
+      Hydrogen gas at 1 atm is bubbled over a platinum wire/foil in contact with an acidic solution (H⁺ = 1 M). The electrode reaction:</p>
+      <div class="equation">2H⁺(aq) + 2e⁻ ⇌ H₂(g)   E° = 0.00 V (at standard conditions)</div>
+      <p><strong>Role of Platinum:</strong></p>
+      <p><strong>1. Inertness:</strong><br>
+      Platinum is chemically inert — it does not participate in the reaction, does not dissolve in acid, and does not form a competing electrode reaction. It serves purely as a <strong>solid substrate</strong> for gas adsorption and electron transfer.</p>
+      <p><strong>2. Catalytic Role:</strong><br>
+      Platinum catalyzes the <strong>adsorption and dissociation of H₂ gas</strong> on its surface:<br>
+      H₂(g) → 2H_ads (adsorbed hydrogen atoms on Pt surface)<br>
+      These adsorbed atoms then oxidize: H_ads → H⁺ + e⁻<br>
+      Without platinum's catalytic activity, this equilibrium would be established too slowly to give a reproducible, stable potential.</p>
+      <p><strong>3. Electrical Conduction:</strong><br>
+      Platinum conducts electrons from the H₂ oxidation reaction to the external circuit, completing the electrode function.</p>
+      <p>In summary, Pt provides an inert, catalytically active surface that establishes the H⁺/H₂ equilibrium rapidly and reproducibly — essential for the SHE to function as a reliable reference.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Pt is <strong>chemically inert</strong> — does not dissolve or react</li>
+      <li>Pt <strong>catalyzes</strong> H₂ adsorption/dissociation on its surface</li>
+      <li>H₂ → 2H_ads → 2H⁺ + 2e⁻ (mechanism on Pt surface)</li>
+      <li>Pt conducts electrons to external circuit</li>
+      <li>Essential for establishing reproducible H⁺/H₂ equilibrium potential</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Platinum serves as an inert, catalytically active electron conductor. It adsorbs H₂ gas on its surface, catalyzing the H⁺/H₂ equilibrium needed for the gas electrode to function. Without Pt's catalytic activity, the equilibrium would be too slow and irreproducible for a reliable reference electrode.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q36 ═══ -->
+<div class="q-card" id="q36">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">36</div>
+    <div class="q-title">Analyze the Zn/Cu galvanic cell (Zn²⁺/Zn = −0.76 V, Cu²⁺/Cu = +0.34 V) and determine electron flow direction, overall cell reaction, and spontaneity.</div></div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Given Data:</strong><br>
+      E°(Zn²⁺/Zn) = −0.76 V, E°(Cu²⁺/Cu) = +0.34 V, [Zn²⁺] = [Cu²⁺] = 1 M (standard conditions)</p>
+      <p><strong>Identifying Anode and Cathode:</strong><br>
+      The electrode with <strong>lower (more negative)</strong> standard electrode potential acts as the anode (oxidation):<br>
+      • Zn: E° = −0.76 V → <strong>Anode (Oxidized)</strong><br>
+      • Cu: E° = +0.34 V → <strong>Cathode (Reduced)</strong></p>
+      <p><strong>Half-Cell Reactions:</strong></p>
+      <div class="equation">Anode: Zn(s) → Zn²⁺(aq) + 2e⁻</div>
+      <div class="equation">Cathode: Cu²⁺(aq) + 2e⁻ → Cu(s)</div>
+      <p><strong>Overall Cell Reaction:</strong></p>
+      <div class="equation">Zn(s) + Cu²⁺(aq) → Zn²⁺(aq) + Cu(s)</div>
+      <p><strong>Cell EMF:</strong></p>
+      <div class="equation">E°cell = E°cathode − E°anode = +0.34 − (−0.76) = +1.10 V</div>
+      <p><strong>Direction of Electron Flow:</strong><br>
+      Electrons flow from <strong>Zn (anode) → external wire → Cu (cathode)</strong>. In terms of conventional current: Cu → wire → Zn.</p>
+      <p><strong>Spontaneity Check:</strong></p>
+      <div class="equation">ΔG° = −nFE°cell = −2 × 96485 × 1.10 = −212,267 J/mol = −212.3 kJ/mol</div>
+      <p>Since E°cell &gt; 0 and ΔG° &lt; 0, the reaction is <strong>thermodynamically spontaneous</strong> at standard conditions.</p>
+      <p><strong>Cell Notation:</strong></p>
+      <div class="equation">Zn | Zn²⁺(1M) || Cu²⁺(1M) | Cu</div>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Zn = anode (more negative E°); Cu = cathode (more positive E°)</li>
+      <li>E°cell = E°cat − E°an = +1.10 V</li>
+      <li>Electron flow: Zn → external circuit → Cu</li>
+      <li>ΔG° = −212.3 kJ/mol → spontaneous</li>
+      <li>Overall: Zn + Cu²⁺ → Zn²⁺ + Cu</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">In the Zn/Cu galvanic cell: Zn is oxidized at the anode; Cu²⁺ is reduced at the cathode. E° = 1.10 V; ΔG° = −212.3 kJ/mol. Electrons flow from Zn to Cu through the external circuit. The reaction is spontaneous at standard conditions.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q37 ═══ -->
+<div class="q-card" id="q37">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">37</div>
+    <div class="q-title">Determine how concentration difference (0.01 M and 1 M) influences EMF of a concentration cell using the Nernst equation and evaluate the role of reaction quotient in predicting direction of cell operation.</div></div>
+    <div class="q-meta"><span class="q-marks">8 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Concentration Cell:</strong><br>
+      A concentration cell uses the <strong>same metal and same ion</strong> on both sides, but at different concentrations. The EMF arises purely from the concentration difference.</p>
+      <p>Let the metal be M (e.g., Cu), with M²⁺ at 0.01 M (anode side) and 1 M (cathode side).</p>
+      <p><strong>Cell Notation:</strong></p>
+      <div class="equation">M | M²⁺(0.01M) || M²⁺(1M) | M</div>
+      <p><strong>Nernst Equation for the Cell:</strong><br>
+      Since E°cell = 0 (same electrode materials), the entire EMF comes from the concentration difference:</p>
+      <div class="equation">E = E° − (0.0591/n) log Q  =  0 − (0.0591/2) log ([dilute]/[concentrated])</div>
+      <div class="equation">E = −(0.0591/2) × log (0.01/1)  =  −(0.02955) × log(0.01)</div>
+      <div class="equation">E = −(0.02955) × (−2)  =  +0.0591 V ≈ 0.059 V</div>
+      <p><strong>Reaction Quotient Q and Direction:</strong><br>
+      Q = [M²⁺]_dilute / [M²⁺]_concentrated = 0.01/1 = 0.01</p>
+      <p>Since Q &lt; 1, log Q &lt; 0, which makes E &gt; 0 → reaction is spontaneous in the direction as written.<br>
+      The cell operates by <strong>dissolving metal at the dilute side (anode)</strong> and <strong>depositing metal at the concentrated side (cathode)</strong> — tending to equalize concentrations.</p>
+      <p>At equilibrium, both concentrations would equalize, Q = 1, and E → 0 (cell stops).</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Concentration cell: same metal, same ion, different concentrations; E° = 0</li>
+      <li>E = −(0.0591/n) log ([dilute]/[concentrated])</li>
+      <li>For n=2, [0.01M vs 1M]: E = +0.059 V</li>
+      <li>Q &lt; 1 → E &gt; 0 → spontaneous; cell operates to equalize concentrations</li>
+      <li>Dilute side = anode; concentrated side = cathode</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">A concentration cell generates EMF from concentration difference alone (E° = 0). Using Nernst: E = (0.0591/n) × log(c_high/c_low) = 0.059 V for n=2 with 100× concentration ratio. The cell operates spontaneously to equalize concentrations — dilute side oxidizes, concentrated side reduces.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q38 ═══ -->
+<div class="q-card" id="q38">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">38</div>
+    <div class="q-title">Formulate the relationship between EMF and equilibrium constant and determine the equilibrium constant for a cell with E = 0.59 V, n = 2, T = 298 K.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Derivation of EMF-Equilibrium Constant Relationship:</strong><br>
+      At equilibrium, the Nernst equation gives E = 0, and Q = K (equilibrium constant):</p>
+      <div class="equation">0 = E° − (RT/nF) ln K</div>
+      <div class="equation">E° = (RT/nF) ln K  →  ln K = nFE°/RT</div>
+      <p>At T = 298 K, using log₁₀:</p>
+      <div class="equation">log K = nE° / 0.0591</div>
+      <p><strong>Calculation for Given Data:</strong><br>
+      E° = 0.59 V, n = 2</p>
+      <div class="equation">log K = (2 × 0.59) / 0.0591 = 1.18 / 0.0591 = 19.97 ≈ 20</div>
+      <div class="equation">K = 10²⁰  =  1 × 10²⁰</div>
+      <p><strong>Interpretation:</strong><br>
+      K = 10²⁰ is an extremely large value, indicating the reaction is <strong>virtually complete</strong> — products are overwhelmingly favored at equilibrium. This corresponds to ΔG°:</p>
+      <div class="equation">ΔG° = −nFE° = −2 × 96485 × 0.59 = −113,852 J/mol ≈ −113.9 kJ/mol</div>
+      <p>The large negative ΔG° and large K confirm strong thermodynamic favorability for the forward reaction.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>At equilibrium: E = 0, Q = K → <strong>log K = nE°/0.0591</strong> (at 298 K)</li>
+      <li>For E° = 0.59 V, n = 2: K = 10²⁰ (extremely large → reaction essentially complete)</li>
+      <li>ΔG° = −nFE° = −113.9 kJ/mol</li>
+      <li>Large positive E° → large K → product-favored equilibrium</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">The relationship log K = nE°/0.0591 (at 298 K) connects EMF to equilibrium. For E° = 0.59 V, n = 2: K = 10²⁰, indicating near-complete conversion to products. This confirms high thermodynamic favorability (ΔG° = −113.9 kJ/mol) for the reaction.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q39 ═══ -->
+<div class="q-card" id="q39">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">39</div>
+    <div class="q-title">Analyze how temperature variation influences cell potential when concentrations remain constant but the reaction involves heat absorption, and infer its effect using thermodynamic reasoning.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Temperature Coefficient of EMF:</strong><br>
+      The variation of EMF with temperature at constant pressure is given by the <strong>temperature coefficient (dE/dT)</strong>. This is related to thermodynamic quantities by:</p>
+      <div class="equation">ΔG = ΔH − TΔS  and  ΔG = −nFE</div>
+      <div class="equation">Therefore: −nFE = ΔH − TΔS</div>
+      <div class="equation">Differentiating: −nF(dE/dT) = −ΔS</div>
+      <div class="equation">∴ dE/dT = ΔS / (nF)  →  Temperature coefficient of EMF</div>
+      <p><strong>Effect for Heat-Absorbing (Endothermic) Reaction:</strong><br>
+      In an endothermic reaction: <strong>ΔH &gt; 0</strong>. For the reaction to be spontaneous (ΔG &lt; 0), it must have a large positive entropy change (ΔS &gt; 0):</p>
+      <div class="equation">If ΔS &gt; 0  →  dE/dT = ΔS/nF &gt; 0  →  EMF increases with temperature</div>
+      <p>This means the cell produces <strong>more voltage at higher temperature</strong> for endothermic reactions — the cell absorbs heat from surroundings and converts it to electrical energy.</p>
+      <p><strong>Practical Observation:</strong><br>
+      As stated, the reaction absorbs heat → ΔS &gt; 0 → dE/dT &gt; 0 → increasing temperature increases EMF, even though concentrations are unchanged. The change is governed purely by entropy and Gibbs energy temperature dependence.</p>
+      <div class="equation">ΔS = nF × (dE/dT)  can be calculated from experimental dE/dT</div>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li><strong>Temperature coefficient</strong>: dE/dT = ΔS/(nF)</li>
+      <li>Endothermic reaction (ΔH &gt; 0): ΔS &gt; 0 → dE/dT &gt; 0 → EMF ↑ with T</li>
+      <li>Exothermic (ΔH &lt; 0): usually ΔS &lt; 0 → dE/dT &lt; 0 → EMF ↓ with T</li>
+      <li>ΔG = ΔH − TΔS = −nFE (at all temperatures)</li>
+      <li>Temperature affects EMF even at constant concentration</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Temperature changes EMF via dE/dT = ΔS/(nF). For the endothermic reaction described (ΔS > 0), EMF increases with temperature — the cell absorbs heat and converts it to additional electrical energy. This effect is independent of concentration changes.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q40 ═══ -->
+<div class="q-card" id="q40">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">40</div>
+    <div class="q-title">Determine how the electrochemical series can be used to infer reaction feasibility and metal displacement behavior when metal A is placed higher than metal B.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Electrochemical Series (Activity Series):</strong><br>
+      Metals are arranged in order of decreasing <strong>standard reduction potential (E°)</strong> from top (most negative, most reactive) to bottom (most positive, least reactive).</p>
+      <p><strong>If Metal A is placed Higher than Metal B:</strong><br>
+      • A has a <strong>more negative E°</strong> than B<br>
+      • A has a greater tendency to <strong>oxidize (lose electrons)</strong> than B<br>
+      • A is a <strong>stronger reducing agent</strong> than B</p>
+      <p><strong>Displacement Reaction Prediction:</strong><br>
+      A metal higher in the series displaces a metal lower in the series from its salt solution:</p>
+      <div class="equation">A(s) + B^n⁺(aq) → A^n⁺(aq) + B(s)  [feasible if E°A &lt; E°B]</div>
+      <p>Example: Zn (−0.76 V) displaces Cu (from CuSO₄ solution) because Zn has more negative E°. But Cu cannot displace Zn from ZnSO₄.</p>
+      <p><strong>Reaction Feasibility:</strong><br>
+      The cell formed by A (anode) and B (cathode) would have:</p>
+      <div class="equation">E°cell = E°B − E°A &gt; 0  (since E°A &lt; E°B)  →  ΔG &lt; 0  →  spontaneous</div>
+      <p>Reverse reaction (B displacing A) has E°cell &lt; 0 → non-spontaneous.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Higher in series = more negative E° = more reactive = stronger reducing agent</li>
+      <li>Metal A (higher) displaces metal B (lower) from B's salt solution</li>
+      <li>E°cell = E°lower − E°higher &gt; 0 → spontaneous displacement</li>
+      <li>Reverse displacement (B displacing A) is non-spontaneous</li>
+      <li>Examples: Zn displaces Cu; Fe displaces Cu; Cu cannot displace Zn</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">A metal higher in the electrochemical series (more negative E°) displaces metals below it from their salt solutions. This is because E°cell = E°lower − E°higher > 0, making ΔG < 0 (spontaneous). The reverse displacement is always non-spontaneous.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q41 ═══ -->
+<div class="q-card" id="q41">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">41</div>
+    <div class="q-title">Evaluate how electrode potentials help in predicting corrosion susceptibility of a metal structure exposed to moisture with an example.</div></div>
+    <div class="q-meta"><span class="q-marks">6 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Electrode Potentials and Corrosion:</strong><br>
+      Corrosion is an electrochemical process — it occurs when a metal acts as an anode and undergoes oxidation. The tendency of a metal to corrode is directly related to its <strong>standard electrode potential (E°)</strong>.</p>
+      <p><strong>Prediction Rules:</strong><br>
+      • Metals with <strong>more negative E°</strong> have greater tendency to oxidize → <strong>higher corrosion susceptibility</strong><br>
+      • Metals with <strong>more positive E°</strong> are noble and resist corrosion</p>
+      <p><strong>Example — Iron Rusting:</strong><br>
+      Iron exposed to moisture undergoes corrosion. The electrochemical reactions:</p>
+      <div class="equation">Anode (corrosion): Fe → Fe²⁺ + 2e⁻     E° = −0.44 V</div>
+      <div class="equation">Cathode: O₂ + 2H₂O + 4e⁻ → 4OH⁻       E° = +0.40 V</div>
+      <div class="equation">Cell EMF = +0.40 − (−0.44) = +0.84 V  →  spontaneous → corrosion occurs</div>
+      <p>The rust formed is hydrated iron(III) oxide (Fe₂O₃·xH₂O).</p>
+      <p><strong>Galvanic Corrosion:</strong><br>
+      When two different metals are in contact in an electrolyte, the more active metal (lower E°) acts as anode and corrodes preferentially. Example: Zinc (−0.76 V) corrodes faster than copper (+0.34 V) when connected — this forms the basis of <strong>sacrificial anode protection</strong>.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>More negative E° → greater corrosion susceptibility</li>
+      <li>Iron (E° = −0.44 V) corrodes easily in moist conditions</li>
+      <li>Corrosion EMF = E°cathode − E°anode; positive value → spontaneous corrosion</li>
+      <li><strong>Galvanic corrosion</strong>: less noble metal corrodes in dissimilar metal contact</li>
+      <li>Noble metals (Au, Pt) do not corrode under normal conditions</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Metals with more negative E° corrode more readily. Iron (E° = −0.44 V) corrodes spontaneously in moisture (cell EMF = +0.84 V with O₂ reduction). Electrode potentials predict galvanic corrosion in dissimilar metal pairs — the metal with lower E° acts as anode and corrodes preferentially.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ Q42 ═══ -->
+<div class="q-card" id="q42">
+  <div class="q-header" onclick="toggle(this)">
+    <div class="q-header-left"><div class="q-badge">42</div>
+    <div class="q-title">Determine how cell potential variation enables sensing functionality in electrochemical sensor devices that detect ion concentration changes.</div></div>
+    <div class="q-meta"><span class="q-marks">4 Marks</span><span class="q-chevron">▼</span></div>
+  </div>
+  <div class="q-body">
+    <div class="ans-section"><div class="ans-label">Answer</div><div class="ans-text">
+      <p><strong>Electrochemical Sensing Principle:</strong><br>
+      Electrochemical sensors use the dependence of electrode potential on ion concentration (Nernst equation) to measure ion activity. The cell EMF changes measurably with each change in analyte concentration.</p>
+      <p><strong>Nernst Equation — The Sensing Basis:</strong></p>
+      <div class="equation">E = E° − (0.0591/n) log [analyte ion]</div>
+      <p>For every <strong>10-fold change in concentration</strong>, the potential changes by 0.0591/n volts (Nernstian response). For a monovalent ion (n=1): 59.1 mV per decade change in concentration.</p>
+      <p><strong>Example — Glass pH Electrode:</strong><br>
+      A glass membrane electrode senses H⁺ concentration (pH). As [H⁺] increases (pH decreases), the measured potential changes by −59.1 mV per pH unit:</p>
+      <div class="equation">E = E°ref − 0.0591 × pH</div>
+      <p><strong>Ion-Selective Electrodes (ISE):</strong><br>
+      By using membranes selective to specific ions (Na⁺, K⁺, Ca²⁺, F⁻, etc.), the device responds only to the target ion. The output voltage is directly correlated to the ion's activity, enabling <strong>quantitative detection</strong> without need for complicated chemical analysis.</p>
+      <p>This is the basis for blood analyzers, water quality sensors, and industrial process control instruments.</p>
+    </div></div>
+    <div class="key-points"><div class="key-points-title">Key Points</div><ul>
+      <li>Nernst equation: E = E° − (0.0591/n) log [ion] → voltage changes with concentration</li>
+      <li>59.1 mV/decade change for monovalent ions at 298 K</li>
+      <li><strong>Ion-selective electrodes (ISE)</strong>: respond only to target ion</li>
+      <li>Applications: pH meter, blood analyzers, water quality monitors</li>
+      <li>Output voltage directly indicates ion activity — enables quantitative sensing</li>
+    </ul></div>
+    <div class="summary-box"><div class="summary-label">Summary</div><div class="summary-text">Electrochemical sensors exploit the Nernst equation (E changes logarithmically with ion concentration). Ion-selective electrodes produce a voltage proportional to log[ion], enabling quantitative detection. A 10-fold concentration change gives a 59.1/n mV response — the foundation of pH meters, blood analyzers, and process sensors.</div></div>
+    <div class="q-actions"><button class="btn-action" onclick="copyAnswer(this)">📋 Copy Answer</button></div>
+  </div>
+</div>
+
+<!-- END Q CONTAINER -->
+    </div><!-- /#qContainer -->
+
+    <div class="no-results" id="noResults" style="display:none;">
+      No questions matched your search. Try different keywords.
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ── THEME TOGGLE ──
+const themeBtn = document.getElementById('themeToggle');
+themeBtn.addEventListener('click', () => {
+  const curr = document.body.getAttribute('data-theme');
+  if (curr === 'dark') {
+    document.body.setAttribute('data-theme', 'light');
+    themeBtn.textContent = '🌙 Dark';
+  } else {
+    document.body.setAttribute('data-theme', 'dark');
+    themeBtn.textContent = '☀️ Light';
+  }
+});
+
+// ── HAMBURGER ──
+const hamburger = document.getElementById('hamburger');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+hamburger.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+});
+
+// ── SCROLL TO QUESTION ──
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({ top, behavior: 'smooth' });
+  // auto-expand
+  if (!el.classList.contains('expanded')) {
+    el.classList.add('expanded');
+  }
+  // update sidebar active
+  document.querySelectorAll('.sidebar-item').forEach(btn => btn.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  if (window.innerWidth <= 768) {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+}
+
+// ── TOGGLE EXPAND/COLLAPSE ──
+function toggle(header) {
+  const card = header.closest('.q-card');
+  card.classList.toggle('expanded');
+}
+
+// ── COPY ANSWER ──
+function copyAnswer(btn) {
+  const card = btn.closest('.q-card');
+  const text = card.querySelector('.q-body').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy Answer';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ── SEARCH ──
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  const cards = document.querySelectorAll('.q-card');
+  let found = 0;
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    if (!q || text.includes(q)) {
+      card.classList.remove('hidden');
+      found++;
+      if (q) {
+        card.classList.add('expanded');
+      }
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+  document.getElementById('noResults').style.display = found === 0 ? 'block' : 'none';
+});
+
+// ── SIDEBAR ACTIVE ON SCROLL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      document.querySelectorAll('.sidebar-item').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(id)) {
+          btn.classList.add('active');
+        }
+      });
+    }
+  });
+}, { rootMargin: '-60px 0px -70% 0px' });
+
+document.querySelectorAll('.q-card').forEach(card => observer.observe(card));
+</script>
+</body>
+</html>

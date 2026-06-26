@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>22CH203 — Unit 3 Corrosion | Answer Key</title>
+<style>
+:root{
+  --rust-50:#fbf4ee;
+  --rust-100:#f3e2d3;
+  --rust-400:#c4703a;
+  --rust-500:#a8542a;
+  --rust-600:#8a4220;
+  --steel-900:#1c2024;
+  --steel-800:#262b30;
+  --steel-700:#343b42;
+  --steel-600:#454e57;
+  --paper:#f7f4ee;
+  --ink:#22201c;
+  --ink-soft:#5b574e;
+  --line:#dcd5c6;
+  --teal:#2f6e62;
+  --bg:var(--paper);
+  --surface:#ffffff;
+  --surface-2:#f1ece1;
+  --text:var(--ink);
+  --text-soft:var(--ink-soft);
+  --border:var(--line);
+  --accent:var(--rust-500);
+  --accent-2:var(--teal);
+  --code-bg:#2a2520;
+  --shadow:0 1px 2px rgba(34,32,28,.06), 0 8px 24px -8px rgba(34,32,28,.10);
+  --font-display:'Spectral',Georgia,'Times New Roman',serif;
+  --font-body:'Source Sans 3','Segoe UI',Arial,sans-serif;
+  --font-mono:'IBM Plex Mono','Courier New',monospace;
+}
+[data-theme="dark"]{
+  --bg:#15171a;
+  --surface:#1d2024;
+  --surface-2:#262a2f;
+  --text:#ece8e0;
+  --text-soft:#a9a39a;
+  --border:#33373d;
+  --accent:#e08a4f;
+  --accent-2:#4fae9c;
+  --code-bg:#0f1113;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -10px rgba(0,0,0,.6);
+}
+@font-face{font-family:'system-fallback';src:local('Georgia');}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  transition:background .25s ease,color .25s ease;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent-2);text-decoration:none;}
+
+/* ===== Layout shell ===== */
+.app{display:flex;min-height:100vh;}
+
+/* ===== Top bar ===== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:64px;z-index:50;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;
+  padding:0 18px;
+  box-shadow:var(--shadow);
+}
+.topbar .brand{
+  display:flex;align-items:center;gap:10px;font-family:var(--font-display);
+  font-weight:600;font-size:1.05rem;white-space:nowrap;
+}
+.brand .mark{
+  width:34px;height:34px;border-radius:7px;
+  background:linear-gradient(155deg,var(--accent) 0%, var(--rust-600) 100%);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-size:.78rem;font-weight:700;
+  flex:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);
+}
+.brand .sub{font-family:var(--font-body);font-weight:500;font-size:.72rem;color:var(--text-soft);display:block;}
+.menu-toggle{
+  display:none;background:none;border:1px solid var(--border);border-radius:8px;
+  width:38px;height:38px;color:var(--text);font-size:1.1rem;cursor:pointer;flex:none;
+}
+.search-wrap{
+  flex:1;max-width:520px;position:relative;margin-left:auto;
+}
+.search-wrap input{
+  width:100%;padding:9px 14px 9px 36px;border-radius:9px;border:1px solid var(--border);
+  background:var(--surface-2);color:var(--text);font-size:.92rem;font-family:var(--font-body);
+}
+.search-wrap input:focus{outline:2px solid var(--accent-2);outline-offset:1px;}
+.search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--text-soft);}
+.search-count{font-size:.72rem;color:var(--text-soft);white-space:nowrap;display:none;}
+.topbar-actions{display:flex;align-items:center;gap:8px;flex:none;}
+.icon-btn{
+  background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+  width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1rem;transition:.15s;flex:none;
+}
+.icon-btn:hover{border-color:var(--accent-2);color:var(--accent-2);}
+.icon-btn svg{width:18px;height:18px;}
+
+/* ===== Sidebar ===== */
+.sidebar{
+  position:fixed;top:64px;left:0;bottom:0;width:280px;
+  background:var(--surface);border-right:1px solid var(--border);
+  overflow-y:auto;padding:18px 14px 40px;z-index:40;
+  transition:transform .25s ease;
+}
+.sidebar h3{
+  font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.08em;
+  font-size:.68rem;color:var(--text-soft);margin:18px 6px 8px;font-weight:600;
+}
+.sidebar h3:first-child{margin-top:4px;}
+.unit-banner{
+  background:linear-gradient(155deg,var(--steel-900),var(--steel-700));
+  color:#f1ece1;border-radius:10px;padding:14px 14px 12px;margin-bottom:6px;
+}
+[data-theme="dark"] .unit-banner{background:linear-gradient(155deg,#0e1012,#23272c);}
+.unit-banner .eyebrow{font-family:var(--font-mono);font-size:.65rem;letter-spacing:.1em;color:var(--rust-400);text-transform:uppercase;}
+.unit-banner h2{font-family:var(--font-display);font-size:1.18rem;margin:4px 0 6px;font-weight:600;}
+.unit-banner p{font-size:.78rem;color:#cfc8bc;margin:0;line-height:1.45;}
+.nav-list{list-style:none;margin:0;padding:0;}
+.nav-list li{margin-bottom:2px;}
+.nav-list a{
+  display:flex;gap:10px;align-items:flex-start;padding:7px 8px;border-radius:7px;
+  color:var(--text);font-size:.84rem;line-height:1.35;
+}
+.nav-list a:hover{background:var(--surface-2);}
+.nav-list a.active{background:var(--rust-100);color:var(--rust-600);font-weight:600;}
+[data-theme="dark"] .nav-list a.active{background:#3a2a1f;color:var(--accent);}
+.nav-list .qnum{
+  font-family:var(--font-mono);font-size:.7rem;color:var(--text-soft);flex:none;
+  min-width:22px;padding-top:1px;
+}
+.nav-list a.active .qnum{color:var(--rust-500);}
+.nav-list .qtitle{flex:1;}
+.sidebar-foot{
+  margin-top:22px;padding:12px;border:1px dashed var(--border);border-radius:9px;
+  font-size:.74rem;color:var(--text-soft);
+}
+.backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:39;}
+
+/* ===== Main ===== */
+.main{
+  margin-left:280px;margin-top:64px;flex:1;min-width:0;
+  padding:34px 40px 100px;max-width:980px;
+}
+.page-head{margin-bottom:28px;border-bottom:2px solid var(--border);padding-bottom:20px;}
+.page-head .eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.page-head h1{font-family:var(--font-display);font-size:2.1rem;margin:.3em 0 .25em;font-weight:600;letter-spacing:-.01em;}
+.page-head p.lede{color:var(--text-soft);font-size:1rem;max-width:680px;}
+.stat-row{display:flex;gap:22px;margin-top:16px;flex-wrap:wrap;}
+.stat{font-family:var(--font-mono);font-size:.78rem;color:var(--text-soft);}
+.stat b{color:var(--text);font-size:1rem;display:block;font-family:var(--font-display);font-weight:600;}
+
+.no-results{display:none;text-align:center;padding:60px 20px;color:var(--text-soft);}
+.no-results.show{display:block;}
+
+/* ===== Question Card ===== */
+.qcard{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  margin-bottom:22px;padding:0;overflow:hidden;box-shadow:var(--shadow);
+  scroll-margin-top:80px;
+}
+.qcard-head{
+  display:flex;align-items:flex-start;gap:14px;padding:18px 22px;
+  border-bottom:1px solid var(--border);background:var(--surface-2);
+}
+.qbadge{
+  font-family:var(--font-mono);font-weight:700;font-size:.82rem;flex:none;
+  width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(155deg,var(--rust-500),var(--rust-600));color:#fff;
+}
+.qcard-head .qmeta{flex:1;min-width:0;}
+.qscenario{font-size:.95rem;color:var(--text);margin:0 0 6px;}
+.qscenario b{color:var(--accent-2);}
+.qask{font-style:italic;color:var(--text-soft);font-size:.88rem;margin:0;}
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.tag{
+  font-family:var(--font-mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.04em;
+  padding:3px 8px;border-radius:5px;background:rgba(47,110,98,.12);color:var(--accent-2);border:1px solid rgba(47,110,98,.25);
+}
+.qcard-body{padding:20px 22px 22px;}
+.qcard-body h4{
+  font-family:var(--font-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--accent);margin:18px 0 8px;font-weight:700;
+}
+.qcard-body h4:first-child{margin-top:0;}
+.qcard-body p{margin:0 0 10px;}
+.qcard-body ul,.qcard-body ol{margin:0 0 10px;padding-left:22px;}
+.qcard-body li{margin-bottom:5px;}
+mark{
+  background:rgba(196,112,58,.22);color:var(--text);padding:0 3px;border-radius:3px;
+  box-shadow:inset 0 -1px 0 var(--accent);
+}
+[data-theme="dark"] mark{background:rgba(224,138,79,.25);}
+.kterm{color:var(--accent-2);font-weight:700;}
+.diagram{
+  font-family:var(--font-mono);font-size:.8rem;white-space:pre;overflow-x:auto;
+  background:var(--code-bg);color:#e8e2d6;padding:14px 16px;border-radius:9px;line-height:1.5;
+  margin:10px 0 14px;border:1px solid #000;
+}
+.eqn{
+  font-family:var(--font-mono);background:var(--surface-2);border-left:3px solid var(--accent-2);
+  padding:8px 12px;border-radius:0 7px 7px 0;margin:8px 0;font-size:.88rem;
+}
+.keypoints{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-top:8px;
+}
+.keypoints h4{margin-top:0;}
+.keypoints ul{margin-bottom:0;}
+.summary-box{
+  background:linear-gradient(155deg, rgba(47,110,98,.08), rgba(47,110,98,.02));
+  border:1px solid rgba(47,110,98,.3);border-radius:10px;padding:12px 16px;margin-top:14px;
+}
+[data-theme="dark"] .summary-box{background:linear-gradient(155deg, rgba(79,174,156,.1), rgba(79,174,156,.02));}
+.summary-box h4{color:var(--accent-2);margin-top:0;}
+.qcard-foot{
+  display:flex;justify-content:flex-end;padding:10px 22px;border-top:1px solid var(--border);
+  background:var(--surface-2);
+}
+.copy-btn{
+  font-family:var(--font-mono);font-size:.72rem;border:1px solid var(--border);background:var(--surface);
+  color:var(--text-soft);padding:6px 12px;border-radius:7px;cursor:pointer;display:flex;align-items:center;gap:6px;
+  transition:.15s;
+}
+.copy-btn:hover{color:var(--accent-2);border-color:var(--accent-2);}
+.copy-btn svg{width:13px;height:13px;}
+.copy-btn.copied{color:#2f6e62;border-color:#2f6e62;}
+
+mark.search-hit{background:var(--accent);color:#fff;}
+
+/* highlight.js-free emphasis for chemical formulas */
+.chem{font-family:var(--font-mono);}
+
+/* ===== Print ===== */
+@media print{
+  .topbar,.sidebar,.backdrop,.qcard-foot,.search-wrap,.no-print{display:none !important;}
+  .main{margin:0;padding:0;max-width:100%;}
+  .qcard{box-shadow:none;border:1px solid #999;break-inside:avoid;margin-bottom:14px;}
+  body{background:#fff;color:#000;}
+  .qcard-head{background:#f2f2f2;}
+}
+
+/* ===== Responsive ===== */
+@media (max-width:980px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);box-shadow:0 0 0 9999px rgba(0,0,0,0);}
+  .main{margin-left:0;padding:26px 18px 90px;}
+  .menu-toggle{display:flex;align-items:center;justify-content:center;}
+  .backdrop.show{display:block;}
+  .brand .sub{display:none;}
+}
+@media (max-width:600px){
+  .search-wrap{max-width:none;}
+  .topbar{padding:0 10px;gap:8px;}
+  .page-head h1{font-size:1.6rem;}
+  .qcard-head{flex-direction:column;}
+  .qbadge{position:absolute;}
+}
+
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:6px;}
+
+.skip-link{position:absolute;left:-9999px;}
+.skip-link:focus{left:10px;top:70px;background:var(--accent);color:#fff;padding:8px 12px;border-radius:6px;z-index:200;}
+
+:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px;}
+</style>
+</head>
+<body data-theme="light">
+
+<a class="skip-link" href="#main">Skip to answers</a>
+
+<header class="topbar">
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle question list">☰</button>
+  <div class="brand">
+    <span class="mark">U3</span>
+    <span>
+      22CH203 — Unit 3
+      <span class="sub">Corrosion Science · Answer Key</span>
+    </span>
+  </div>
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="searchInput" type="text" placeholder="Search questions or keywords (e.g. pitting, galvanic, anode)…" aria-label="Search questions">
+  </div>
+  <span class="search-count" id="searchCount"></span>
+  <div class="topbar-actions">
+    <button class="icon-btn" id="printBtn" title="Print answer key" aria-label="Print">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    </button>
+    <button class="icon-btn" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="backdrop" id="backdrop"></div>
+
+<div class="app">
+<nav class="sidebar" id="sidebar" aria-label="Question navigation">
+  <div class="unit-banner">
+    <span class="eyebrow">Engineering Chemistry II</span>
+    <h2>Unit 3 · Corrosion</h2>
+    <p>42 worked answers — anodic/cathodic action, types of corrosion, galvanic series, passivity, and cathodic protection.</p>
+  </div>
+  <h3>Jump to question</h3>
+  <ul class="nav-list" id="navList"></ul>
+  <div class="sidebar-foot">Tip: use <b>Ctrl/Cmd + F</b> style search above — it filters cards live and highlights matches.</div>
+</nav>
+
+<main class="main" id="main">
+  <div class="page-head">
+    <span class="eyebrow">Answer Key</span>
+    <h1>Unit 3 — Corrosion: Complete Solutions</h1>
+    <p class="lede">Every Unit 3 scenario question answered in exam-ready form: simple English, the core concept highlighted, a text diagram where it helps, key points, and a one-line summary.</p>
+    <div class="stat-row">
+      <div class="stat"><b>42</b>Questions answered</div>
+      <div class="stat"><b>5</b>Core themes</div>
+      <div class="stat"><b>100%</b>Coverage</div>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults">No questions match your search. Try a different keyword like "anode", "rust", "passivity" or "cathodic protection".</div>
+
+  <div id="cardsContainer"></div>
+</main>
+</div>
+
+<script>
+/* ================= DATA: Unit 3 — all 42 questions ================= */
+const questions = [
+{
+  n:1,
+  title:"Oxidation vs reduction in corrosion (Zinc example)",
+  tags:["Basics","Redox"],
+  scenario:"A student observes that when zinc reacts in a solution, it loses electrons while another species gains electrons.",
+  ask:"Determine the distinction between oxidation and reduction processes in this context and relate it to corrosion.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Corrosion is basically an <mark>electrochemical redox reaction</mark>. The metal always behaves as the <span class="kterm">anode</span> (loses electrons = oxidation) and a part of the environment behaves as the <span class="kterm">cathode</span> (gains electrons = reduction).</p>
+  <h4>Explanation</h4>
+  <p>Zinc loses 2 electrons and turns into Zn²⁺ ions. This is <mark>oxidation</mark>:</p>
+  <div class="eqn">Zn → Zn²⁺ + 2e⁻ &nbsp; (Anodic / Oxidation reaction)</div>
+  <p>The electrons released are accepted by another species (commonly O₂ or H⁺ in solution). This is <mark>reduction</mark>:</p>
+  <div class="eqn">O₂ + 2H₂O + 4e⁻ → 4OH⁻ &nbsp; (Cathodic / Reduction reaction)</div>
+  <p>Corrosion is simply the metal's continuous oxidation (anodic dissolution), paired with a reduction reaction happening somewhere else on or near the same surface so that electrons keep flowing.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li><mark>Oxidation</mark> = loss of electrons = happens at the <b>anode</b> = metal dissolves here.</li>
+      <li><mark>Reduction</mark> = gain of electrons = happens at the <b>cathode</b> = no metal loss here.</li>
+      <li>Corrosion can only continue if both reactions occur together — it is a coupled redox process.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Corrosion = metal oxidation (anode) + environmental reduction (cathode) happening simultaneously, linked by electron flow.</p></div>
+  `
+},
+{
+  n:2,
+  title:"Essential components for corrosion (immersed metal strip)",
+  tags:["Basics","Requirements"],
+  scenario:"A metal strip is partially immersed in an electrolyte solution, and corrosion is observed only in the immersed region.",
+  ask:"Infer the essential components required for corrosion to occur in this setup and justify their interaction.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>For any electrochemical corrosion cell to work, <mark>four essential components</mark> must be present together — exactly like a tiny galvanic cell.</p>
+  <h4>Why only the immersed part corrodes</h4>
+  <p>The part of the strip in air has no <span class="kterm">electrolyte</span> contact, so ions cannot move and the circuit is incomplete — no corrosion there. The immersed part has all 4 requirements satisfied.</p>
+  <div class="diagram">
+   AIR  (no corrosion)
+  ───────────────────
+   METAL STRIP
+  ───────────────────
+   ELECTROLYTE  → anodic + cathodic areas form here
+   (corrosion occurs only below this line)
+  </div>
+  <div class="keypoints">
+    <h4>Key Points — The 4 Essentials</h4>
+    <ul>
+      <li><b>Anode</b> — region where metal oxidises (dissolves).</li>
+      <li><b>Cathode</b> — region where reduction occurs (no metal loss).</li>
+      <li><b>Electrolyte</b> — provides path for ion movement (here: the solution).</li>
+      <li><b>Electrical contact</b> — anode and cathode must be electrically connected (same metal strip provides this).</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Corrosion needs anode + cathode + electrolyte + electrical connection; remove any one and corrosion stops — which is why the dry part of the strip stays intact.</p></div>
+  `
+},
+{
+  n:3,
+  title:"Uniform rusting on a coastal bridge — Type of corrosion",
+  tags:["Types","Uniform Corrosion"],
+  scenario:"A metallic bridge exposed to coastal conditions shows uniform rusting across large areas.",
+  ask:"Analyze the type of corrosion occurring and determine the contributing factors that lead to its uniform nature.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is <mark>Uniform (General) Corrosion</mark> — the whole exposed surface acts like millions of tiny, evenly distributed anodic and cathodic sites that keep shifting position.</p>
+  <h4>Why it is uniform</h4>
+  <ul>
+    <li>The metal surface composition is fairly homogeneous, so no single spot is consistently more anodic than another.</li>
+    <li>Coastal air carries <span class="kterm">salt (chloride) + moisture + oxygen</span> evenly over the whole surface.</li>
+    <li>Anodic/cathodic micro-areas keep swapping roles rapidly → attack spreads evenly instead of concentrating.</li>
+  </ul>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Also called <b>atmospheric corrosion</b> when caused by humid, salty air.</li>
+      <li>Rate is fairly predictable and can be estimated using weight-loss methods.</li>
+      <li>Coastal salinity + humidity + temperature are the main accelerating factors.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Even exposure to a uniformly corrosive coastal atmosphere causes uniform corrosion, the most common but most predictable form of metal loss.</p></div>
+  `
+},
+{
+  n:4,
+  title:"Buried pipeline — corrosion cells from soil variation",
+  tags:["Types","Concentration Cell"],
+  scenario:"A buried pipeline experiences corrosion at certain sections where soil moisture and composition vary.",
+  ask:"Determine how variations in environmental conditions lead to formation of corrosion cells within the same metal and infer the roles of different regions.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is a <mark>Differential Environment / Concentration Cell</mark> corrosion. Even though the pipe is one continuous metal, different soil patches create different local conditions, splitting the pipe into separate anodic and cathodic zones.</p>
+  <h4>Explanation</h4>
+  <p>Sections in moist, ion-rich, low-oxygen soil become <span class="kterm">anodic</span> (corrode faster). Sections in drier, more oxygenated soil become <span class="kterm">cathodic</span> (protected, little corrosion).</p>
+  <div class="diagram">
+   Soil patch A          Soil patch B
+   (wet, low O2)         (dry, high O2)
+        │                     │
+     ANODE  ───── pipe ─────  CATHODE
+   (corrodes fast)        (protected)
+  </div>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Low oxygen / high moisture area → anode.</li>
+      <li>High oxygen area → cathode (this is the basis of the <b>oxygen concentration cell</b>).</li>
+      <li>Soil resistivity and salt content control corrosion intensity.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Variation in soil moisture/composition along the pipeline creates localized anodic and cathodic zones on the same metal, driving uneven (concentration-cell) corrosion.</p></div>
+  `
+},
+{
+  n:5,
+  title:"Dissimilar metals in cooling water — Galvanic corrosion",
+  tags:["Types","Galvanic Series"],
+  scenario:"Two dissimilar metals are connected and immersed in circulating water with dissolved salts; one deteriorates while the other is unaffected.",
+  ask:"Evaluate how differences in electrode potentials influence corrosion behavior and determine which metal corrodes, justifying electron transfer.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is classic <mark>Galvanic Corrosion</mark>. When two different metals are electrically connected in an electrolyte, the metal with the <span class="kterm">more negative (lower) standard electrode potential</span> becomes the anode and corrodes.</p>
+  <h4>Explanation</h4>
+  <p>The less noble (more reactive/negative potential) metal loses electrons and dissolves. The more noble (less reactive) metal simply receives the electrons and stays protected.</p>
+  <div class="eqn">Less noble metal (anode): M → Mⁿ⁺ + ne⁻ (corrodes)</div>
+  <div class="eqn">More noble metal (cathode): just accepts electrons (no loss)</div>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Bigger the potential difference between the two metals → faster the corrosion.</li>
+      <li>This is the same principle behind sacrificial anode protection.</li>
+      <li>Salts in the water increase conductivity, speeding up galvanic attack.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>The metal lower in the electrochemical/galvanic series acts as anode and corrodes; the nobler metal acts as cathode and is protected.</p></div>
+  `
+},
+{
+  n:6,
+  title:"Aluminum — thermodynamic stability vs corrosion tendency",
+  tags:["Thermodynamics","Passivity"],
+  scenario:"Aluminum is stable in normal air but degrades in saline environment, despite being a reactive metal.",
+  ask:"Interpret the thermodynamic basis governing aluminum's stability and corrosion tendency and why environmental changes alter behavior.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Aluminum is thermodynamically very reactive (very negative electrode potential), but it survives in air because it forms a thin, tightly adhering, self-healing <mark>oxide film (Al₂O₃)</mark> — this is called <span class="kterm">passivity</span>.</p>
+  <h4>Why salt water breaks this protection</h4>
+  <p>Chloride ions (Cl⁻) in saline water <mark>penetrate and locally dissolve the oxide film</mark>, exposing fresh metal. Once exposed, the bare metal corrodes rapidly because aluminum is intrinsically very reactive.</p>
+  <div class="diagram">
+  Normal air:   Al metal | Al2O3 passive film | air  → STABLE
+  Saline water: Al metal | film BROKEN by Cl⁻ | seawater → CORRODES
+  </div>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li><b>Thermodynamic reactivity</b> (true tendency to corrode) ≠ <b>observed corrosion rate</b> (kinetics, controlled by the oxide film).</li>
+      <li>The oxide film gives <mark>passivity</mark> — a kinetic barrier, not a thermodynamic one.</li>
+      <li>Chloride ions are well known "film breakers" for passive metals.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Aluminum is reactive thermodynamically but appears stable due to its passive oxide film; saline (chloride) environments break this film, unmasking its true corrosion tendency.</p></div>
+  `
+},
+{
+  n:7,
+  title:"Steel tank — electrochemical corrosion under moist/acidic exposure",
+  tags:["Mechanism","Wet Corrosion"],
+  scenario:"Steel tank exposed to moist air with dissolved oxygen and trace acidic vapors; reddish-brown deposits and localized thinning.",
+  ask:"Analyze the electrochemical processes and how different regions function within a corrosion cell, justifying the role of environmental conditions.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is <mark>wet (electrochemical) corrosion of iron</mark>, i.e. rusting, governed by an oxygen absorption type corrosion cell.</p>
+  <h4>Mechanism (step-by-step)</h4>
+  <div class="eqn">Anodic region: Fe → Fe²⁺ + 2e⁻</div>
+  <div class="eqn">Cathodic region: O₂ + 2H₂O + 4e⁻ → 4OH⁻</div>
+  <div class="eqn">Overall: Fe²⁺ + 2OH⁻ → Fe(OH)₂ → (oxidised by O₂) → Fe₂O₃·xH₂O (rust, reddish-brown)</div>
+  <p>Areas with less oxygen access become anodic (thin faster); areas with more oxygen become cathodic. Trace acid vapors speed up the reaction by increasing H⁺ availability and conductivity.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Reddish-brown deposit = hydrated ferric oxide (rust).</li>
+      <li>Uneven exposure to moist air creates uneven anodic/cathodic zones → localized thinning.</li>
+      <li>Acidic vapors lower pH and accelerate the anodic reaction.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Moist, oxygenated, slightly acidic air drives an oxygen-absorption corrosion cell on the steel surface, producing rust and uneven (localized) metal thinning.</p></div>
+  `
+},
+{
+  n:8,
+  title:"Dissolved oxygen accelerates corrosion",
+  tags:["Mechanism","Oxygen Effect"],
+  scenario:"A metal structure in water with high dissolved oxygen corrodes faster than the same structure in deaerated water.",
+  ask:"Infer the role of dissolved oxygen in influencing electrochemical corrosion.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Dissolved oxygen acts as the main <mark>cathodic reactant</mark> (electron acceptor) in neutral/alkaline aqueous corrosion. More oxygen = faster removal of electrons from the anode = faster corrosion.</p>
+  <div class="eqn">Cathodic reaction (oxygen absorption): O₂ + 2H₂O + 4e⁻ → 4OH⁻</div>
+  <p>If oxygen is removed (deaerated water), this cathodic reaction slows drastically, electrons "pile up" at the metal surface, the anodic dissolution of the metal also slows down — so corrosion almost stops.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>O₂ is the rate-controlling reactant in most natural water corrosion.</li>
+      <li>Deaeration (boiler feed water treatment) is a real industrial method to reduce corrosion.</li>
+      <li>This explains why boiler water is often deoxygenated before use.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Dissolved oxygen speeds up corrosion by sustaining the cathodic reduction reaction; removing oxygen (deaeration) is a practical way to slow corrosion.</p></div>
+  `
+},
+{
+  n:9,
+  title:"Polarization reduces corrosion rate",
+  tags:["Polarization","Control"],
+  scenario:"A metal shows reduced corrosion rate after applying external current opposing the natural electrochemical reactions.",
+  ask:"Analyze how polarization influences corrosion rate.",
+  body:`
+  <h4>Core Concept</h4>
+  <p><mark>Polarization</mark> is the shift in electrode potential away from its natural (equilibrium) value when current flows. Here, an external current is applied to oppose the natural corrosion current — this is the basis of <span class="kterm">cathodic protection</span>.</p>
+  <h4>Explanation</h4>
+  <p>Applying an opposing current makes the metal more cathodic (drives electrons into it). This reduces the driving force for the anodic (oxidation) reaction, so the natural corrosion current — and hence the corrosion rate — drops.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Two main types: <b>Activation polarization</b> (slow reaction step) and <b>Concentration polarization</b> (slow diffusion of ions).</li>
+      <li>External cathodic current = "impressed current cathodic protection" technique.</li>
+      <li>Greater polarization resistance generally means lower corrosion rate.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Polarization opposes the natural corrosion reaction; an externally applied opposing current pushes the metal toward cathodic behaviour and lowers its corrosion rate.</p></div>
+  `
+},
+{
+  n:10,
+  title:"Differential oxygen leads to pitting in low-oxygen zones",
+  tags:["Types","Pitting"],
+  scenario:"Stagnant water on a metal surface develops low-oxygen and high-oxygen regions; pits form in the low-oxygen areas.",
+  ask:"Determine how differential oxygen availability leads to localized corrosion and infer the type of corrosion cell formed.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is a classic <mark>Oxygen (Differential Aeration) Concentration Cell</mark>, the main cause of <span class="kterm">pitting corrosion</span>.</p>
+  <h4>Mechanism</h4>
+  <p>Low-oxygen region becomes the <b>anode</b> (less protective oxide, metal dissolves). High-oxygen region becomes the <b>cathode</b> (well-oxygenated, protected). Once a pit starts, oxygen inside it gets even more depleted — making the pit progressively more anodic, so it keeps growing deeper (autocatalytic/self-accelerating).</p>
+  <div class="diagram">
+   stagnant water surface
+   ──────────────────────
+   high O2 (cathode) ←── electrons ──→ low O2 (anode = pit)
+                                              ↓
+                                       pit grows deeper
+  </div>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Type of cell: <b>Oxygen concentration / Differential aeration cell</b>.</li>
+      <li>Pitting is dangerous because attack is localized and penetrates deep, unlike uniform corrosion.</li>
+      <li>Common under deposits, gaskets, crevices, stagnant water pools.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Low-oxygen spots act as small anodes inside a differential aeration cell, leading to self-accelerating pitting corrosion.</p></div>
+  `
+},
+{
+  n:11,
+  title:"Temperature + conductivity effect on corrosion rate",
+  tags:["Factors","Kinetics"],
+  scenario:"A metal in acidic solution corrodes faster at higher temperature; resistance to current flow also drops due to increased ionic mobility.",
+  ask:"Interpret the combined influence of temperature and electrolyte conductivity on corrosion rate.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Both temperature and conductivity are well-known corrosion-accelerating factors that work together here.</p>
+  <h4>Explanation</h4>
+  <ul>
+    <li><span class="kterm">Higher temperature</span> → ions move faster, reaction kinetics speed up (like any chemical reaction), so both anodic and cathodic reactions proceed faster.</li>
+    <li><span class="kterm">Increased ionic mobility</span> → lower electrolyte resistance → current flows more easily between anode and cathode → higher corrosion current → faster corrosion.</li>
+  </ul>
+  <p>Both effects reinforce each other, so the corrosion rate increase is more than what either factor alone would cause.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Corrosion rate generally roughly doubles for every 10°C rise (similar to ordinary reaction rate rule of thumb).</li>
+      <li>Lower electrolyte resistance = higher corrosion current (Ohm's law applied to corrosion cells).</li>
+      <li>Acidic medium itself already speeds up the cathodic hydrogen evolution reaction.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Rising temperature speeds up reaction kinetics while increasing ionic mobility lowers electrolyte resistance — both combine to sharply raise the corrosion rate in acidic media.</p></div>
+  `
+},
+{
+  n:12,
+  title:"Zinc–Copper couple — standard electrode potential predicts corrosion",
+  tags:["Galvanic Series","Prediction"],
+  scenario:"Zinc and copper connected in electrolyte; zinc (more negative potential) shows material loss, copper is unaffected.",
+  ask:"Evaluate the role of standard electrode potentials in predicting corrosion tendency and justify the observed behavior.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Standard electrode potential (E°) tells us which metal will act as <mark>anode</mark> and which as <mark>cathode</mark> when two metals are coupled.</p>
+  <h4>Explanation</h4>
+  <p>Zn: E° = −0.76 V (more negative) → tends to lose electrons more easily → becomes <span class="kterm">anode</span> → corrodes.<br>
+  Cu: E° = +0.34 V (more positive) → tends to gain electrons → becomes <span class="kterm">cathode</span> → protected, no material loss.</p>
+  <div class="eqn">Zn → Zn²⁺ + 2e⁻ (anode, corrodes)</div>
+  <div class="eqn">Cu²⁺ + 2e⁻ → Cu, or H⁺ reduction at Cu surface (cathode, protected)</div>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Rule: the metal with <b>lower (more negative) E°</b> always corrodes preferentially.</li>
+      <li>This is the foundation of the entire <b>galvanic series</b> used in engineering material selection.</li>
+      <li>Same principle used deliberately in sacrificial anode protection.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>The more negative standard electrode potential metal (Zn) always becomes the anode and corrodes; the more positive one (Cu) is protected as the cathode.</p></div>
+  `
+},
+{
+  n:13,
+  title:"Half-cell reactions for rust formation (Fe²⁺, OH⁻ intermediates)",
+  tags:["Mechanism","Equations"],
+  scenario:"Iron tank exposed to oxygenated, salty water forms reddish-brown deposits; Fe²⁺ and OH⁻ identified as intermediates.",
+  ask:"Integrate the half-cell reactions involved and formulate the overall electrochemical reaction responsible for rust formation.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Rusting of iron is a textbook example of the <mark>oxygen absorption corrosion mechanism</mark>, built from two half-reactions.</p>
+  <h4>Step-by-step half reactions</h4>
+  <div class="eqn">Anodic (oxidation): Fe → Fe²⁺ + 2e⁻</div>
+  <div class="eqn">Cathodic (reduction): O₂ + 2H₂O + 4e⁻ → 4OH⁻</div>
+  <div class="eqn">Combine (×2 anode + ×1 cathode):
+2Fe + O₂ + 2H₂O → 2Fe²⁺ + 4OH⁻ → 2Fe(OH)₂</div>
+  <div class="eqn">Further oxidation: 4Fe(OH)₂ + O₂ + 2H₂O → 4Fe(OH)₃</div>
+  <div class="eqn">Dehydration → Fe₂O₃·xH₂O (rust, reddish-brown)</div>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Fe(OH)₂ (white-green, unstable) oxidises further in air to Fe(OH)₃.</li>
+      <li>Final rust is hydrated ferric oxide: <span class="chem">Fe₂O₃·xH₂O</span>.</li>
+      <li>Dissolved salts increase conductivity, speeding up both half-reactions.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Iron oxidation at the anode combines with oxygen reduction at the cathode to give Fe(OH)₂, which further oxidises to hydrated Fe₂O₃ — common rust.</p></div>
+  `
+},
+{
+  n:14,
+  title:"Anodic/cathodic regions in a buried pipeline (soil heterogeneity)",
+  tags:["Types","Soil Corrosion"],
+  scenario:"Buried steel pipeline shows uneven corrosion due to varying soil moisture, oxygen, and ionic content; anodic/cathodic regions found.",
+  ask:"Analyze the electrochemical basis for the formation of anodic and cathodic regions and how they drive corrosion progression.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is <mark>soil corrosion via a differential environment cell</mark> — environmental heterogeneity along the same metal surface creates separate anodic and cathodic regions.</p>
+  <h4>Explanation</h4>
+  <ul>
+    <li>Sections with high moisture, high salts, low oxygen → become <span class="kterm">anodic</span> (active, corrode faster).</li>
+    <li>Sections with low moisture, high oxygen, low ion content → become <span class="kterm">cathodic</span> (passive, protected).</li>
+  </ul>
+  <p>A measurable potential difference exists between these regions, driving a steady electron flow from anode to cathode through the pipe metal, and ionic current flow through the soil — sustaining continuous corrosion at the anodic spots.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Soil resistivity is the key factor controlling how strong this corrosion cell is.</li>
+      <li>This type is also called <b>long-line corrosion</b> when anode and cathode are far apart along a pipeline.</li>
+      <li>Cathodic protection (sacrificial anode/impressed current) is the standard remedy.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Variation in soil moisture, oxygen, and ion content along the pipeline creates fixed anodic and cathodic zones, and the resulting potential difference drives continuous localized corrosion.</p></div>
+  `
+},
+{
+  n:15,
+  title:"Ion accumulation near electrode under voltage",
+  tags:["Electrochemistry","Migration"],
+  scenario:"An electrochemical cell shows ion accumulation near one electrode when voltage is applied; concentration near electrode is higher than bulk.",
+  ask:"Interpret the cause of ion accumulation and its relation to electric potential.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is caused by <mark>ionic migration</mark> — the directed movement of charged ions under an applied electric field, towards the electrode of opposite charge.</p>
+  <h4>Explanation</h4>
+  <p>When voltage is applied, cations (+) move towards the cathode (−) and anions (−) move towards the anode (+). Since ions move in but the electrode reaction can't consume them instantly, they <span class="kterm">pile up</span> near the electrode surface, raising local concentration above the bulk value.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>This local concentration buildup is the root cause of <b>concentration polarization</b>.</li>
+      <li>Migration is one of the three transport modes, along with diffusion and convection.</li>
+      <li>Stirring (convection) can prevent excessive build-up by mixing the solution.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Applied potential drives ions to migrate toward the oppositely charged electrode; if they arrive faster than they react, they accumulate, raising local concentration above the bulk.</p></div>
+  `
+},
+{
+  n:16,
+  title:"Resistance increase in a current-carrying wire (atomic displacement)",
+  tags:["Mass Transport","Electromigration"],
+  scenario:"A thin metallic wire carries steady current; minor resistance increase detected due to atomic displacement.",
+  ask:"Infer the underlying mechanism responsible for resistance change and relate it to ion movement.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This describes <mark>electromigration</mark> — the gradual physical movement of metal atoms (as ions) caused by momentum transfer from the flowing electrons (the "electron wind").</p>
+  <h4>Explanation</h4>
+  <p>High current density pushes metal atoms slowly in the direction of electron flow. This creates microscopic <span class="kterm">voids</span> in some places (where atoms left) and <span class="kterm">accumulations</span> in others, slightly disrupting the regular lattice and increasing electrical resistance over time.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Electromigration is a major reliability concern in thin metal interconnects (e.g. in microchips).</li>
+      <li>Higher current density and higher temperature accelerate this process.</li>
+      <li>It is essentially ion transport driven by electron momentum, not by an external electric field directly.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Sustained current causes electromigration — gradual atomic/ion displacement that creates voids and resistance increase in the conductor.</p></div>
+  `
+},
+{
+  n:17,
+  title:"Convection + migration + diffusion in flowing cooling system",
+  tags:["Mass Transport","Convection"],
+  scenario:"Fluid flow over a metallic surface with applied electric potential; ion movement influenced by both field and fluid motion.",
+  ask:"Determine how convection interacts with migration and diffusion to alter corrosion behavior.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>All three mass transport mechanisms act together here: <span class="kterm">migration</span> (electric field driven), <span class="kterm">diffusion</span> (concentration gradient driven), and <span class="kterm">convection</span> (bulk fluid flow driven).</p>
+  <h4>Explanation</h4>
+  <p>Flowing fluid continuously sweeps away ions that have built up near the metal surface (which migration/diffusion alone would leave stagnant). This:</p>
+  <ul>
+    <li>Reduces local concentration build-up → reduces concentration polarization.</li>
+    <li>Can actually increase the overall corrosion rate by continuously bringing fresh oxygen/reactant to the surface (replenishment effect).</li>
+    <li>Creates uneven flow zones (eddies, stagnant pockets) → unexpected, patchy corrosion patterns (erosion-corrosion).</li>
+  </ul>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Convection often dominates over diffusion/migration in flowing systems.</li>
+      <li>Where flow is fast: more oxygen supply → can increase corrosion (erosion-corrosion).</li>
+      <li>Where flow is stagnant/turbulent eddies form: localized attack patterns appear.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>In flowing systems, convection works alongside migration and diffusion, replenishing reactants at the surface and producing complex, sometimes accelerated and patchy corrosion patterns.</p></div>
+  `
+},
+{
+  n:18,
+  title:"Selective thinning of metallic coating (ionic drift + diffusion)",
+  tags:["Mass Transport","Coatings"],
+  scenario:"A metallic coating under applied voltage shows thinning at specific regions over time as ions move through the electrolyte and interface.",
+  ask:"Analyze the role of ionic drift and diffusion in causing selective material loss in the coating.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Selective thinning happens because <mark>ionic drift (migration under the applied field)</mark> and <mark>diffusion (concentration-driven movement)</mark> are not uniform across the coating — some spots have weaker protection or higher field strength, so metal ions are pulled away faster there.</p>
+  <h4>Explanation</h4>
+  <p>At regions with thinner film, defects, or higher local field, drift velocity of metal ions is higher → faster dissolution → coating gets thinner there → which further increases local field (less resistance) → makes thinning worse (self-accelerating, like pitting).</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Ionic drift = migration component (field-driven).</li>
+      <li>Diffusion adds extra ion movement wherever a local concentration gradient exists (e.g. near defects).</li>
+      <li>Once a thin spot forms, it self-accelerates due to higher local current density.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Non-uniform ionic drift and diffusion at coating defects or thin spots cause those locations to lose metal faster, leading to selective, self-accelerating thinning.</p></div>
+  `
+},
+{
+  n:19,
+  title:"AC-induced copper interconnect degradation (multiple transport mechanisms)",
+  tags:["Mass Transport","Electronics"],
+  scenario:"Copper interconnects under AC conditions degrade gradually even though current direction keeps reversing.",
+  ask:"Formulate how multiple mass transport mechanisms collectively contribute to degradation under AC conditions and justify their relative significance.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Even under <span class="kterm">alternating current</span>, degradation continues because the transport mechanisms do not perfectly cancel out each half-cycle.</p>
+  <h4>Explanation</h4>
+  <ul>
+    <li><b>Migration</b> reverses direction with AC, but during each half-cycle some net atomic displacement still occurs (asymmetric due to local heating/defects).</li>
+    <li><b>Diffusion</b> (driven by concentration gradients from accumulated defects) does not reverse with current direction — it always moves material from high to low concentration, so each cycle adds a small net degradation.</li>
+    <li><b>Transient electric fields</b> during current reversal create brief high-stress moments that nucleate micro-voids.</li>
+  </ul>
+  <p>Over many AC cycles, these small unbalanced effects accumulate, weakening the interconnect structurally (similar to electromigration fatigue).</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Diffusion is the dominant net-degradation mechanism under AC (it doesn't reverse with current).</li>
+      <li>Migration largely cancels but not completely — residual asymmetry adds up.</li>
+      <li>This explains why even AC circuits suffer long-term reliability issues in microelectronics.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Although migration mostly reverses with AC, diffusion-driven transport does not cancel out, so repeated cycles accumulate structural damage in the interconnect.</p></div>
+  `
+},
+{
+  n:20,
+  title:"Stray currents and pipeline corrosion (interference corrosion)",
+  tags:["Types","Stray Current"],
+  scenario:"A buried pipeline exposed to stray currents from nearby power systems shows localized corrosion where current enters/exits the metal.",
+  ask:"Determine how ionic transport mechanisms interact with electric potential gradients to influence spatial variation in corrosion intensity.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is <mark>Stray Current (Interference) Corrosion</mark> — corrosion caused by an external electric current straying into the pipeline from an unrelated source (e.g. DC transit systems, nearby cathodic protection systems).</p>
+  <h4>Explanation</h4>
+  <p>Where stray current <span class="kterm">enters</span> the pipe (current flows from soil into metal) → that point becomes <b>cathodic</b> (protected).<br>
+  Where stray current <span class="kterm">leaves</span> the pipe (current flows from metal back into soil) → that point becomes <b>anodic</b> → severe corrosion occurs there, following Faraday's law (proportional to current magnitude).</p>
+  <div class="diagram">
+   current enters pipe → CATHODE (protected)
+   current exits pipe  → ANODE (rapid, severe corrosion)
+  </div>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Stray current corrosion can be far more severe than normal galvanic corrosion because currents can be large.</li>
+      <li>Corrosion intensity is highest exactly where the current discharges from the metal into soil.</li>
+      <li>Mitigated using electrical bonding, insulating joints, or careful grounding design.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Stray current makes the pipe locally cathodic where current enters and locally anodic (severely corroding) where it exits — corrosion intensity follows the spatial current pattern.</p></div>
+  `
+},
+{
+  n:21,
+  title:"Electromigration in aluminum interconnect (voids and hillocks)",
+  tags:["Mass Transport","Electromigration"],
+  scenario:"Aluminum microelectronic interconnect under high current density and elevated temperature shows voids near cathode and hillocks near anode.",
+  ask:"Analyze the governing transport mechanism and determine how electric field and temperature jointly influence this degradation.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is a textbook case of <mark>Electromigration</mark> driven jointly by the electric field (momentum transfer from electrons) and thermally-activated atomic diffusion.</p>
+  <h4>Explanation</h4>
+  <p>The "electron wind" pushes Al atoms in the direction of electron flow (from cathode towards anode). This leaves <span class="kterm">voids</span> near the cathode end (atoms have left) and causes pile-up / <span class="kterm">hillocks</span> near the anode end (atoms accumulate). Elevated temperature increases atomic mobility (Arrhenius-type dependence), making this transport much faster, eventually causing an open circuit (void growth) or short circuit (hillock growth).</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Governing mechanism: <b>Electromigration</b> (field + thermally activated diffusion).</li>
+      <li>Failure mode: <b>void formation</b> → open circuit; <b>hillock formation</b> → short circuit/extrusion.</li>
+      <li>Rate strongly depends on current density (J) and temperature (Arrhenius law).</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>High current density combined with elevated temperature drives electromigration in the aluminum interconnect, causing voids at the cathode and hillocks at the anode, ultimately leading to circuit failure.</p></div>
+  `
+},
+{
+  n:22,
+  title:"Acidic vs neutral solution — corrosion intensity with gas evolution",
+  tags:["Factors","Electrolyte Nature"],
+  scenario:"Two identical metal rods in neutral vs strongly acidic solution; acidic solution shows rapid corrosion with gas evolution.",
+  ask:"Infer the role of electrolyte composition in modifying electron transfer reactions and corrosion intensity.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>In acidic solutions, corrosion follows the <mark>hydrogen evolution mechanism</mark> instead of the slower oxygen absorption mechanism, making it much faster.</p>
+  <h4>Explanation</h4>
+  <div class="eqn">Anodic: M → Mⁿ⁺ + ne⁻</div>
+  <div class="eqn">Cathodic (acidic, low O2): 2H⁺ + 2e⁻ → H₂↑ (gas bubbles observed)</div>
+  <p>High H⁺ concentration in acid provides an easy, fast electron-accepting reaction at the cathode. In neutral solution, the cathodic reaction depends on slower-diffusing dissolved O₂, so the overall reaction is much slower with no gas evolution.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Acidic medium → <b>hydrogen evolution</b> mechanism (fast, gas seen).</li>
+      <li>Neutral/alkaline medium → <b>oxygen absorption</b> mechanism (slower, no gas).</li>
+      <li>Lower pH = more H⁺ available = faster cathodic reaction = faster corrosion.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Acidic electrolytes accelerate corrosion via the fast hydrogen-evolution cathodic reaction (producing visible gas), while neutral solutions rely on the slower oxygen-absorption mechanism.</p></div>
+  `
+},
+{
+  n:23,
+  title:"Slowing oxidation rate during oxide layer growth",
+  tags:["Mechanism","Oxidation"],
+  scenario:"A metal heated in oxygen-rich furnace forms a uniform oxide layer; growth rate slows over time.",
+  ask:"Determine how electron transfer contributes to the decreasing rate of oxidation over time.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is <mark>dry (chemical) oxidation</mark>. As the oxide layer thickens, both ions and electrons must travel a longer distance through the growing oxide film to reach the reaction front — this becomes the rate-limiting (slow) step.</p>
+  <h4>Explanation</h4>
+  <p>At the metal-oxide interface, metal atoms lose electrons (oxidise): <span class="kterm">M → Mⁿ⁺ + ne⁻</span>. These electrons must migrate through the oxide to the oxide-gas interface to reduce oxygen: <span class="kterm">O₂ + 4e⁻ → 2O²⁻</span>. As the layer thickens, electron (and ion) transport through it slows down — so the oxidation rate decreases with time (often following a parabolic growth law).</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Thin oxide → fast initial growth (electrons/ions move easily).</li>
+      <li>Thick oxide → diffusion of electrons/ions becomes rate-limiting → growth slows.</li>
+      <li>This behaviour is described by the <b>parabolic rate law</b> in dry oxidation theory (Wagner's theory).</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>As the protective oxide layer thickens, electron and ion transport through it becomes slower, naturally decreasing the oxidation rate over time.</p></div>
+  `
+},
+{
+  n:24,
+  title:"Localized defects accelerate corrosion kinetics",
+  tags:["Mechanism","Coating Defects"],
+  scenario:"A protective coating develops microscopic defects exposing small regions to corrosive electrolyte; these regions corrode faster.",
+  ask:"Analyze how localized defects influence electron transfer distribution and infer their role in accelerating corrosion kinetics.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is an example of the <mark>"small anode-large cathode" effect</mark>. Defects expose only a tiny area of bare metal (the anode), while the surrounding protected coating area effectively acts as a huge cathode.</p>
+  <h4>Explanation</h4>
+  <p>All the electron flow generated by the large cathodic (protected/coated) area must be consumed at the tiny exposed anodic spot. This concentrates a huge current density onto a very small area, making corrosion at the defect extremely fast and severe — much worse than if the whole surface were uniformly exposed.</p>
+  <div class="diagram">
+   ████████████████ (coating, large cathodic area)
+   ████████░████████  ← small defect = tiny anode
+                ↑
+        all current concentrates here → rapid pitting
+  </div>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Principle: <b>small anode / large cathode</b> → very high current density at the defect.</li>
+      <li>This is why a single scratch in paint/coating can cause deep, fast localized corrosion (pitting).</li>
+      <li>Coatings must be defect-free, or combined with cathodic protection for safety.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>A small coating defect creates a tiny anode surrounded by a large protected cathodic area, concentrating electron transfer there and causing rapid, localized corrosion.</p></div>
+  `
+},
+{
+  n:25,
+  title:"Moisture enables electron transfer continuity (humid vs dry air)",
+  tags:["Factors","Electrolyte Requirement"],
+  scenario:"Metal in humid air corrodes rapidly while the same metal in dry air shows negligible corrosion.",
+  ask:"Interpret how the presence of moisture alters electron transfer pathways and justify its impact on corrosion rate differences.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Moisture forms a thin <mark>electrolyte film</mark> on the metal surface, which is absolutely essential for completing the electrochemical (wet) corrosion circuit.</p>
+  <h4>Explanation</h4>
+  <p>In dry air, there is no continuous electrolyte path, so ions generated at the anode cannot reach the cathode, and the circuit is incomplete — corrosion is negligible (only very slow direct chemical oxidation, if any). In humid air, the moisture film provides an <span class="kterm">ionic conduction path</span>, allowing the corrosion cell (anode + cathode + electrolyte) to function continuously, sustaining electron transfer and ion movement.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>An electrolyte (even a thin moisture film) is one of the 4 essential requirements for electrochemical corrosion.</li>
+      <li>Dry air corrosion (if any) is purely chemical, very slow, no ionic current involved.</li>
+      <li>This is why corrosion control often focuses on keeping metal surfaces dry/sealed.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Moisture forms a conductive electrolyte film that completes the corrosion circuit; without it (dry air), ion transport is blocked and corrosion is negligible.</p></div>
+  `
+},
+{
+  n:26,
+  title:"Hydrogen evolution corrosion in oxygen-deficient acid",
+  tags:["Mechanism","Hydrogen Evolution"],
+  scenario:"Metal in low-pH solution without dissolved oxygen still corrodes, with hydrogen gas evolution observed.",
+  ask:"Analyze the hydrogen evolution mechanism as a cathodic process and determine how electron transfer sustains corrosion in oxygen-deficient environments.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This confirms the <mark>Hydrogen Evolution Mechanism</mark> of corrosion, which does not need dissolved oxygen at all — it relies on H⁺ ions as the electron acceptor.</p>
+  <h4>Explanation</h4>
+  <div class="eqn">Anodic: M → Mⁿ⁺ + ne⁻</div>
+  <div class="eqn">Cathodic: 2H⁺ + 2e⁻ → H₂↑ (gas evolved, no O2 needed)</div>
+  <p>The acidic solution supplies abundant H⁺ ions, which directly accept the electrons released by the metal at the anode. This sustains continuous electron transfer (and hence continuous corrosion) even though oxygen is absent.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Occurs typically in acidic, non-aerated environments (low pH, low/no O₂).</li>
+      <li>Hydrogen gas bubble evolution at the metal surface is the visible sign.</li>
+      <li>Different from oxygen absorption corrosion, which requires dissolved O₂.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>In oxygen-deficient acidic conditions, H⁺ ions act as the electron acceptor at the cathode (hydrogen evolution mechanism), allowing corrosion to proceed via gas evolution without needing dissolved oxygen.</p></div>
+  `
+},
+{
+  n:27,
+  title:"Wet corrosion of marine iron structure — oxygen concentration differences",
+  tags:["Types","Marine Corrosion"],
+  scenario:"Iron marine structure partially submerged in seawater; varying oxygen exposure causes some regions to corrode faster (rust) while others stay intact.",
+  ask:"Determine how electron transfer between anodic and cathodic regions drives wet corrosion and infer the role of oxygen concentration differences.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is the classic <mark>Waterline / Differential Aeration Corrosion</mark> seen in marine and partially submerged steel structures.</p>
+  <h4>Explanation</h4>
+  <p>Deeply submerged regions get less dissolved oxygen → become <span class="kterm">anodic</span> → corrode (rust forms there). Regions near the waterline/splash zone get more oxygen → become <span class="kterm">cathodic</span> → remain protected. Electrons flow from the deeply submerged anodic regions to the well-aerated cathodic regions through the metal, while ions move through the seawater electrolyte, completing the circuit and sustaining corrosion.</p>
+  <div class="diagram">
+   AIR (least attack, plenty of O2, often most cathodic just above line)
+   ═══════ WATERLINE ═══════  ← heaviest attack zone often just below this
+   high O2 zone (cathode-ish)
+        ↓ electrons flow down through metal
+   low O2, deep submerged zone (ANODE — rusts fastest)
+  </div>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Classic example: <b>ship hulls</b>, <b>jetty pilings</b>, partially buried/submerged steel.</li>
+      <li>Type of cell: <b>oxygen concentration (differential aeration) cell</b>.</li>
+      <li>Worst corrosion is typically just below the waterline / most oxygen-starved zone.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Uneven oxygen exposure on the partially submerged iron structure sets up anodic (low-O₂, fast-rusting) and cathodic (high-O₂, protected) zones, with electron flow through the metal sustaining wet corrosion.</p></div>
+  `
+},
+{
+  n:28,
+  title:"Dry corrosion of steel pipeline at elevated temperature (oxide scale)",
+  tags:["Mechanism","Dry Corrosion"],
+  scenario:"Steel pipeline carrying hot gases forms oxide scales in a completely dry environment; scale thickness increases with temperature.",
+  ask:"Analyze the electron transfer mechanism governing corrosion under dry conditions and determine how ionic and electronic movements influence oxidation rate.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is <mark>Dry (Chemical) Corrosion / High-Temperature Oxidation</mark>, governed by direct chemical reaction with the gas, no electrolyte involved.</p>
+  <h4>Explanation</h4>
+  <p>Metal atoms at the metal-oxide interface oxidise: <span class="kterm">M → Mⁿ⁺ + ne⁻</span>. Electrons travel through the oxide layer (which behaves like a solid electrolyte) to the oxide-gas interface, where oxygen is reduced: <span class="kterm">O₂ + 4e⁻ → 2O²⁻</span>. Metal ions diffuse outward and oxygen ions diffuse inward through the oxide lattice. As temperature rises, ionic and electronic mobility through the oxide increases, so the scale grows thicker and faster (often parabolic growth, per Wagner's theory).</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>No liquid electrolyte — the solid oxide layer itself conducts ions and electrons.</li>
+      <li>Rate depends on diffusivity of M ions and O ions through the oxide, plus electron conduction.</li>
+      <li>Higher temperature → faster diffusion → thicker, faster-growing scale.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Even without moisture, electron transfer continues through the solid oxide scale, and rising temperature speeds up ion/electron diffusion, accelerating oxide scale growth.</p></div>
+  `
+},
+{
+  n:29,
+  title:"Avoiding metals far apart in galvanic series (design rule)",
+  tags:["Prevention","Design Practice"],
+  scenario:"A designer avoids pairing metals far apart in the galvanic series for an outdoor structure exposed to rainwater.",
+  ask:"Justify this design decision based on corrosion behavior.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is a fundamental <mark>corrosion prevention design rule</mark> based on the galvanic series.</p>
+  <h4>Justification</h4>
+  <p>The further apart two metals are in the galvanic series, the <span class="kterm">larger the potential difference</span> between them, and the <b>faster and more severe</b> the galvanic corrosion of the less noble (anodic) metal will be when they are electrically connected in a wet environment (rainwater = electrolyte). By choosing metals close together in the series, the potential difference is small, so galvanic corrosion is minimal even if accidental electrical contact and moisture occur.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Rule of thumb: keep potential difference between connected metals as small as possible.</li>
+      <li>If dissimilar metals must be used, insulate them electrically or use compatible fasteners/washers.</li>
+      <li>Rainwater is a natural electrolyte that activates galvanic action whenever dissimilar metals touch.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Choosing metals close together in the galvanic series minimizes the potential difference, reducing galvanic corrosion risk when rainwater provides the electrolyte.</p></div>
+  `
+},
+{
+  n:30,
+  title:"Two dissimilar metals — galvanic roles identification",
+  tags:["Galvanic Series","Roles"],
+  scenario:"Two dissimilar metals connected in an electrolyte; one shows visible dissolution, the other remains unchanged.",
+  ask:"Infer the electrochemical roles of the two metals and relate them to galvanic principles.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This directly demonstrates <mark>Galvanic Corrosion</mark> principles.</p>
+  <h4>Explanation</h4>
+  <p>The metal that dissolves is the <span class="kterm">anode</span> — it is less noble (lower in galvanic series), so it loses electrons and goes into solution as metal ions. The metal that remains unchanged is the <span class="kterm">cathode</span> — it is more noble, simply receives the electrons (used in a reduction reaction such as H⁺ → H₂ or O₂ reduction), and is therefore protected from corrosion.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Dissolving metal = anode = less noble = corrodes.</li>
+      <li>Unchanged metal = cathode = more noble = protected.</li>
+      <li>This is the same logic used deliberately in sacrificial anode cathodic protection.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>The dissolving metal is the anode (less noble), and the unaffected metal is the cathode (more noble) — a direct illustration of galvanic corrosion principles.</p></div>
+  `
+},
+{
+  n:31,
+  title:"Magnesium–iron couple in moist soil with seasonal variation",
+  tags:["Galvanic Series","Soil Corrosion"],
+  scenario:"Magnesium and iron electrically connected in moist soil where conductivity varies with rainfall and mineral content.",
+  ask:"Assess how electrolyte variation impacts corrosion behavior and identify which metal is more vulnerable.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Magnesium is much less noble than iron (far more negative electrode potential), so it always becomes the <mark>anode</mark> and sacrifices itself.</p>
+  <h4>Explanation</h4>
+  <p>Magnesium corrodes (Mg → Mg²⁺ + 2e⁻), protecting iron (cathode). <span class="kterm">Higher rainfall and mineral content increase soil conductivity</span>, which speeds up ionic current flow between the two metals — meaning the galvanic action (and hence Mg's sacrificial corrosion rate) is much faster during wet, mineral-rich seasons, and slower during dry seasons with low conductivity.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Magnesium = anode (more vulnerable, sacrifices itself); Iron = cathode (protected).</li>
+      <li>Higher soil moisture/conductivity → faster galvanic corrosion of magnesium.</li>
+      <li>This is exactly the working principle of magnesium sacrificial anodes used industrially.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Magnesium, being far less noble, acts as the anode and is the vulnerable metal; its corrosion rate rises with soil conductivity (rainfall, minerals) while it protects the iron.</p></div>
+  `
+},
+{
+  n:32,
+  title:"Zinc plates on ship hull — sacrificial anode protection",
+  tags:["Prevention","Sacrificial Anode"],
+  scenario:"A steel ship hull includes small zinc plates that dissolve over time in seawater while the main structure remains intact.",
+  ask:"Interpret the functional role of zinc plates and infer how their placement influences the corrosion protection mechanism.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is the classic <mark>Sacrificial Anode (Cathodic Protection) method</mark>.</p>
+  <h4>Explanation</h4>
+  <p>Zinc is less noble than steel, so when electrically connected, zinc becomes the <span class="kterm">anode</span> and corrodes preferentially, while the steel hull becomes the <span class="kterm">cathode</span> and is protected (electrons flow from zinc to steel, suppressing steel's own oxidation reaction).</p>
+  <div class="diagram">
+   Steel hull (cathode, protected)  ←electrons←  Zinc plate (anode, sacrifices itself)
+                       seawater (electrolyte)
+  </div>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Zinc plates must be replaced periodically as they are "consumed" doing their job.</li>
+      <li>Placement: zinc plates are spread/placed close to areas needing maximum protection (e.g. near propellers, rudders).</li>
+      <li>This is a low-maintenance, no-external-power form of cathodic protection.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Zinc plates act as sacrificial anodes — they corrode in place of the steel hull, which becomes the protected cathode, by virtue of zinc's lower position in the galvanic series.</p></div>
+  `
+},
+{
+  n:33,
+  title:"Stainless steel valve + carbon steel pipe — coating damage corrosion",
+  tags:["Galvanic Series","Prevention"],
+  scenario:"Saline water pipeline with stainless steel valves and carbon steel pipes; coating damage and stagnation cause accelerated corrosion near joints.",
+  ask:"Determine the governing factors and recommend how the galvanic series and environmental control can mitigate the issue.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is combined <mark>Galvanic Corrosion</mark> (dissimilar metals) plus <mark>Crevice/Stagnation Corrosion</mark> at coating defects.</p>
+  <h4>Governing factors</h4>
+  <ul>
+    <li>Carbon steel is less noble than stainless steel → carbon steel becomes <span class="kterm">anode</span> and corrodes faster near the joint.</li>
+    <li>Damaged coating exposes small anodic spots, amplified by the "small anode-large cathode" effect.</li>
+    <li>Stagnant flow zones trap chlorides and deplete oxygen, worsening localized attack.</li>
+  </ul>
+  <div class="keypoints">
+    <h4>Key Points — Mitigation</h4>
+    <ul>
+      <li>Use insulating gaskets/sleeves at stainless-carbon steel joints to break electrical contact.</li>
+      <li>Maintain coating integrity through regular inspection and repair.</li>
+      <li>Improve flow design to avoid stagnation zones at joints.</li>
+      <li>Consider cathodic protection as a supplementary measure.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Carbon steel corrodes faster at joints with nobler stainless steel due to galvanic action, worsened by coating damage and stagnant flow; insulating joints and coating maintenance are the key fixes.</p></div>
+  `
+},
+{
+  n:34,
+  title:"Copper–aluminum heat exchanger joints — pitting on aluminum",
+  tags:["Galvanic Series","Industrial Case"],
+  scenario:"Copper tubes joined with aluminum fins in humid, slightly acidic condensate; pitting observed on aluminum near joints, copper unaffected.",
+  ask:"Evaluate the corrosion mechanism and infer how environmental conditions and material positioning contribute to degradation.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is <mark>Galvanic Corrosion</mark> combined with a <mark>moisture/electrolyte trigger</mark>, concentrated as pitting at the joints.</p>
+  <h4>Explanation</h4>
+  <p>Aluminum is much less noble than copper, so wherever an electrolyte film (acidic condensate) bridges the joint, aluminum becomes the <span class="kterm">anode</span> and corrodes (pits), while copper remains the protected <span class="kterm">cathode</span>. Shutdown periods allow moisture to linger and form a stable electrolyte film exactly at the joints, where the two metals are in direct contact — concentrating the attack there rather than across the whole aluminum surface.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Aluminum (anode, less noble) corrodes; copper (cathode, more noble) is protected.</li>
+      <li>Slightly acidic condensate increases electrolyte conductivity → faster galvanic action.</li>
+      <li>Joint geometry concentrates attack (small contact area = small anode = severe local pitting).</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Aluminum, being less noble than copper, corrodes preferentially at the joints whenever acidic condensate forms an electrolyte bridge, while copper stays protected — a textbook galvanic corrosion case.</p></div>
+  `
+},
+{
+  n:35,
+  title:"Steel–bronze pier in seawater — galvanic series + area ratio effect",
+  tags:["Galvanic Series","Area Effect"],
+  scenario:"Steel piles connected to bronze fittings in seawater with degraded coating; larger steel areas connected to smaller bronze components.",
+  ask:"Analyze the electrochemical interactions and determine which metal preferentially corrodes, justifying the role of galvanic series and area ratio.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Steel is less noble than bronze, so steel becomes the anode. But the <mark>area ratio</mark> here actually works in steel's favor, reducing severity per unit area compared to the worst-case scenario.</p>
+  <h4>Explanation</h4>
+  <p>Steel (anode, less noble) corrodes preferentially; bronze (cathode, more noble) is protected. Since the steel area is <span class="kterm">large</span> compared to the small bronze fittings, the total galvanic current gets spread over a large anodic area → the corrosion current density (and rate) per unit area on steel is relatively lower (large anode / small cathode is the "good" ratio). If it were reversed (small steel, large bronze), steel would corrode much faster.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Steel = anode (less noble) → corrodes; bronze = cathode → protected.</li>
+      <li>Favorable ratio here: large anode (steel) / small cathode (bronze) → spreads attack, less severe per area.</li>
+      <li>Worst case is the opposite: small anode / large cathode → severe localized attack.</li>
+      <li>Degraded coating and tidal oxygen variation add localized hot-spots near junctions.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Steel, being less noble than bronze, is the metal that preferentially corrodes; because the steel area is large relative to bronze, the galvanic current is spread out, somewhat reducing — but not eliminating — localized junction attack.</p></div>
+  `
+},
+{
+  n:36,
+  title:"Weak magnesium anode protection in high-resistivity soil",
+  tags:["Prevention","Sacrificial Anode"],
+  scenario:"Magnesium anodes used in high-resistivity soil show weak protection.",
+  ask:"Determine the cause of reduced protection and propose an improvement strategy.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Cathodic protection current depends directly on the <mark>conductivity (inverse of resistivity)</mark> of the surrounding electrolyte (soil).</p>
+  <h4>Cause</h4>
+  <p>High-resistivity soil <span class="kterm">restricts ionic current flow</span> between the magnesium anode and the structure. Even though magnesium is highly reactive, very little protective current can actually reach the structure, so protection is weak.</p>
+  <div class="keypoints">
+    <h4>Key Points — Improvement Strategy</h4>
+    <ul>
+      <li>Use a <b>backfill material</b> (e.g. bentonite/gypsum mixture) around the anode to lower local resistivity.</li>
+      <li>Increase the number of anodes or use larger anodes to compensate for low current per anode.</li>
+      <li>Consider switching to <b>impressed current cathodic protection</b>, which can drive current through high-resistivity soils using an external power source.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>High soil resistivity limits the protective current from magnesium anodes; using conductive backfill, more/larger anodes, or impressed current protection can restore effective protection.</p></div>
+  `
+},
+{
+  n:37,
+  title:"Incomplete protection from one-sided sacrificial anodes",
+  tags:["Prevention","Sacrificial Anode"],
+  scenario:"A steel water tank shows localized corrosion despite sacrificial anodes attached at only one side.",
+  ask:"Infer the reason for incomplete protection and recommend a corrective measure.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Cathodic protection current spreads outward from the anode but its strength <mark>decreases with distance</mark> — areas far from the anode receive insufficient protective current.</p>
+  <h4>Explanation</h4>
+  <p>Since anodes are attached only on <span class="kterm">one side</span>, the protective current reaches nearby regions well but weakens significantly at distant or shielded regions (e.g. opposite side, corners), leaving them under-protected and prone to localized corrosion.</p>
+  <div class="keypoints">
+    <h4>Key Points — Corrective Measure</h4>
+    <ul>
+      <li><b>Distribute anodes evenly</b> across the whole tank surface, not just one side.</li>
+      <li>Use more, smaller anodes rather than few large ones for uniform current spread.</li>
+      <li>Conduct potential surveys to confirm uniform protection level before finalizing anode layout.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>One-sided anode placement leaves distant areas with insufficient protective current; distributing anodes evenly across the tank ensures complete, uniform cathodic protection.</p></div>
+  `
+},
+{
+  n:38,
+  title:"Sacrificial anode vs impressed current — switching trade-offs",
+  tags:["Prevention","Comparison"],
+  scenario:"An industrial facility considers switching from sacrificial anode to impressed current protection for buried pipelines due to rising maintenance costs.",
+  ask:"Assess the trade-offs involved and determine the conditions under which such a switch becomes advantageous.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Both are forms of <mark>cathodic protection</mark>, but they differ in current source and suitability.</p>
+  <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:.88rem;">
+    <tr style="background:var(--surface-2);"><th style="text-align:left;padding:6px 8px;border:1px solid var(--border);">Factor</th><th style="text-align:left;padding:6px 8px;border:1px solid var(--border);">Sacrificial Anode</th><th style="text-align:left;padding:6px 8px;border:1px solid var(--border);">Impressed Current</th></tr>
+    <tr><td style="padding:6px 8px;border:1px solid var(--border);">Power source</td><td style="padding:6px 8px;border:1px solid var(--border);">None (self-driven by potential difference)</td><td style="padding:6px 8px;border:1px solid var(--border);">External DC power required</td></tr>
+    <tr><td style="padding:6px 8px;border:1px solid var(--border);">Maintenance</td><td style="padding:6px 8px;border:1px solid var(--border);">Frequent anode replacement</td><td style="padding:6px 8px;border:1px solid var(--border);">Low anode wear, but needs power supply upkeep</td></tr>
+    <tr><td style="padding:6px 8px;border:1px solid var(--border);">Coverage</td><td style="padding:6px 8px;border:1px solid var(--border);">Limited current, suited to small structures</td><td style="padding:6px 8px;border:1px solid var(--border);">High current, suited to long pipelines</td></tr>
+    <tr><td style="padding:6px 8px;border:1px solid var(--border);">Initial cost</td><td style="padding:6px 8px;border:1px solid var(--border);">Lower</td><td style="padding:6px 8px;border:1px solid var(--border);">Higher (rectifier, wiring)</td></tr>
+  </table>
+  <h4>When the switch is advantageous</h4>
+  <p>When the pipeline is <span class="kterm">long</span>, soil resistivity is <span class="kterm">high</span>, or anode replacement costs/labor have become excessive — impressed current becomes more economical and effective long-term, despite higher initial investment.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Sacrificial anode: simple, no power, but limited range and frequent replacement.</li>
+      <li>Impressed current: needs power and monitoring, but covers larger structures with adjustable current.</li>
+      <li>Switch is justified for long pipelines / high resistivity soils / rising maintenance costs.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Impressed current protection becomes advantageous over sacrificial anodes for long pipelines or high-resistivity soils, where it offers better coverage and lower long-term maintenance despite a higher initial cost.</p></div>
+  `
+},
+{
+  n:39,
+  title:"Aluminum sacrificial anode efficiency drop in cold seasons",
+  tags:["Prevention","Environmental Factors"],
+  scenario:"Aluminum sacrificial anodes on a coastal bridge show reduced protection efficiency in colder seasons.",
+  ask:"Evaluate how environmental conditions influence the performance of aluminum anodes and infer the underlying factors.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Cathodic protection current output depends on <mark>electrolyte conductivity and reaction kinetics</mark>, both of which fall with temperature.</p>
+  <h4>Explanation</h4>
+  <ul>
+    <li><span class="kterm">Lower temperature</span> reduces ion mobility in seawater, increasing electrolyte resistance → less current flows from anode to structure.</li>
+    <li>The anodic dissolution reaction of aluminum itself slows down kinetically at lower temperature.</li>
+    <li>Cold conditions can also promote formation of a more passive (protective) oxide film on the aluminum anode surface, reducing its "sacrificial" activity — the opposite of what is wanted.</li>
+  </ul>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Lower seawater temperature → lower conductivity → lower protective current.</li>
+      <li>Slower anode dissolution kinetics in cold conditions.</li>
+      <li>Possible passivation of the anode surface in cold seasons reduces efficiency further.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Colder seawater lowers conductivity and slows down both ion mobility and the anode's dissolution reaction, reducing the protective current and overall efficiency of aluminum sacrificial anodes.</p></div>
+  `
+},
+{
+  n:40,
+  title:"Uneven protection in impressed current cathodic protection system",
+  tags:["Prevention","Diagnosis"],
+  scenario:"An oil storage tank's impressed current cathodic protection system shows inconsistent protection levels across sections.",
+  ask:"Diagnose the possible causes of uneven protection and formulate corrective strategies for uniform protection.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>Uneven protection in an <mark>Impressed Current Cathodic Protection (ICCP)</mark> system usually means the current is not distributed evenly across the structure.</p>
+  <h4>Possible Causes</h4>
+  <ul>
+    <li>Anodes are too few or poorly positioned — distant sections get less current.</li>
+    <li>Local variation in coating condition (bare steel draws more current than well-coated areas).</li>
+    <li>Soil/electrolyte resistivity varies across the site.</li>
+    <li>Anode degradation or partial circuit faults reducing output in some zones.</li>
+  </ul>
+  <div class="keypoints">
+    <h4>Key Points — Corrective Strategies</h4>
+    <ul>
+      <li>Conduct a <b>potential survey</b> to map weak zones precisely.</li>
+      <li>Add or reposition anodes to cover under-protected sections.</li>
+      <li>Repair/upgrade coating in heavily corroding zones to reduce current demand there.</li>
+      <li>Install <b>remote monitoring</b> and adjustable rectifiers to fine-tune current distribution.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Uneven protection usually stems from poor anode distribution, coating variation, or resistivity differences; a potential survey followed by anode repositioning and coating repair restores uniform protection.</p></div>
+  `
+},
+{
+  n:41,
+  title:"Zinc blocks protecting ship hull — mechanism and material effectiveness",
+  tags:["Prevention","Sacrificial Anode"],
+  scenario:"Zinc blocks attached to a ship hull show significant material loss over time while steel structure remains intact.",
+  ask:"Interpret the electrochemical mechanism that enables zinc to protect the steel hull and determine how material properties influence effectiveness.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>This is <mark>Sacrificial Anode Cathodic Protection</mark> in action — zinc protects steel purely by being more reactive (less noble).</p>
+  <h4>Mechanism</h4>
+  <div class="eqn">Anode (zinc): Zn → Zn²⁺ + 2e⁻ (zinc dissolves)</div>
+  <div class="eqn">Cathode (steel): receives electrons, its own oxidation (Fe → Fe²⁺ + 2e⁻) is suppressed</div>
+  <p>The electrons released by dissolving zinc flow into the steel hull, supplying enough electrons to satisfy the cathodic reduction reactions (O₂ + 2H₂O + 4e⁻ → 4OH⁻) without the steel itself needing to oxidise — so steel stays intact while zinc steadily sacrifices itself.</p>
+  <div class="keypoints">
+    <h4>Key Points — Material Properties That Matter</h4>
+    <ul>
+      <li>Zinc must be sufficiently more negative (reactive) than steel — confirmed by galvanic series.</li>
+      <li>Zinc should dissolve uniformly (not passivate) to keep supplying current steadily.</li>
+      <li>Purity of zinc matters — impure zinc can form a passive film, reducing effectiveness.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>Zinc, being less noble than steel, sacrifices itself by dissolving and supplying electrons to the hull, suppressing steel's oxidation — effectiveness depends on zinc remaining reactive and not passivating.</p></div>
+  `
+},
+{
+  n:42,
+  title:"Choosing cathodic protection method for a coastal pipeline",
+  tags:["Prevention","Decision Making"],
+  scenario:"Underground crude oil pipeline in saline soil needs cathodic protection; choice between sacrificial anode and impressed current considering cost, maintenance, and long distances.",
+  ask:"Analyze the suitability of each method and justify the most effective method based on corrosion control efficiency and scalability.",
+  body:`
+  <h4>Core Concept</h4>
+  <p>The choice depends on balancing <mark>installation cost, maintenance, and current/coverage requirements</mark> over a long pipeline distance.</p>
+  <h4>Analysis</h4>
+  <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:.88rem;">
+    <tr style="background:var(--surface-2);"><th style="text-align:left;padding:6px 8px;border:1px solid var(--border);">Criterion</th><th style="text-align:left;padding:6px 8px;border:1px solid var(--border);">Sacrificial Anode</th><th style="text-align:left;padding:6px 8px;border:1px solid var(--border);">Impressed Current</th></tr>
+    <tr><td style="padding:6px 8px;border:1px solid var(--border);">Long distance coverage</td><td style="padding:6px 8px;border:1px solid var(--border);">Poor — limited current/anode</td><td style="padding:6px 8px;border:1px solid var(--border);">Excellent — high, adjustable current</td></tr>
+    <tr><td style="padding:6px 8px;border:1px solid var(--border);">Saline soil (low resistivity)</td><td style="padding:6px 8px;border:1px solid var(--border);">Works reasonably</td><td style="padding:6px 8px;border:1px solid var(--border);">Works very efficiently</td></tr>
+    <tr><td style="padding:6px 8px;border:1px solid var(--border);">Maintenance frequency</td><td style="padding:6px 8px;border:1px solid var(--border);">High — frequent anode replacement</td><td style="padding:6px 8px;border:1px solid var(--border);">Lower — anodes last longer</td></tr>
+    <tr><td style="padding:6px 8px;border:1px solid var(--border);">Installation cost</td><td style="padding:6px 8px;border:1px solid var(--border);">Lower</td><td style="padding:6px 8px;border:1px solid var(--border);">Higher (power, rectifier)</td></tr>
+  </table>
+  <h4>Recommendation</h4>
+  <p>For a <span class="kterm">long-distance</span> pipeline in <span class="kterm">saline (highly conductive) soil</span>, <b>Impressed Current Cathodic Protection (ICCP)</b> is the more effective and scalable choice — it provides strong, adjustable current that can be tuned to protect the entire length, with lower long-term maintenance, even though its initial cost is higher.</p>
+  <div class="keypoints">
+    <h4>Key Points</h4>
+    <ul>
+      <li>Long pipeline + need for scalability → favors impressed current.</li>
+      <li>Saline soil's high conductivity makes ICCP very efficient (low resistance to current flow).</li>
+      <li>Sacrificial anodes are better suited for smaller, localized structures.</li>
+    </ul>
+  </div>
+  <div class="summary-box"><h4>Summary</h4><p>For long pipelines in highly conductive saline soil, impressed current cathodic protection is the most efficient and scalable choice despite higher setup cost, due to its strong, adjustable, and low-maintenance current supply.</p></div>
+  `
+}
+];
+
+/* ================= RENDER ================= */
+const container = document.getElementById('cardsContainer');
+const navList = document.getElementById('navList');
+const noResults = document.getElementById('noResults');
+
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+questions.forEach(q=>{
+  // Sidebar nav item
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="#q${q.n}" data-n="${q.n}"><span class="qnum">${String(q.n).padStart(2,'0')}</span><span class="qtitle">${escapeHtml(q.title)}</span></a>`;
+  navList.appendChild(li);
+
+  // Card
+  const card = document.createElement('article');
+  card.className = 'qcard';
+  card.id = `q${q.n}`;
+  card.dataset.n = q.n;
+  card.dataset.search = (q.title+' '+q.scenario+' '+q.ask+' '+q.tags.join(' ')+' '+q.body).toLowerCase();
+
+  card.innerHTML = `
+    <div class="qcard-head">
+      <div class="qbadge">Q${q.n}</div>
+      <div class="qmeta">
+        <p class="qscenario"><b>${escapeHtml(q.title)}</b><br>${escapeHtml(q.scenario)}</p>
+        <p class="qask">➤ ${escapeHtml(q.ask)}</p>
+        <div class="tag-row">${q.tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
+      </div>
+    </div>
+    <div class="qcard-body">${q.body}</div>
+    <div class="qcard-foot">
+      <button class="copy-btn" data-n="${q.n}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy answer
+      </button>
+    </div>
+  `;
+  container.appendChild(card);
+});
+
+/* ================= COPY BUTTON ================= */
+container.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.copy-btn');
+  if(!btn) return;
+  const n = btn.dataset.n;
+  const q = questions.find(x=>x.n == n);
+  const tmp = document.createElement('div');
+  tmp.innerHTML = q.body;
+  const text = `Q${q.n}. ${q.title}\n\nScenario: ${q.scenario}\n\nTask: ${q.ask}\n\n${tmp.innerText.replace(/\n{3,}/g,'\n\n')}`;
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.classList.add('copied');
+    const orig = btn.innerHTML;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(()=>{ btn.classList.remove('copied'); btn.innerHTML = orig; }, 1600);
+  }).catch(()=>{
+    btn.textContent = 'Copy failed';
+    setTimeout(()=>{ btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy answer`; }, 1600);
+  });
+});
+
+/* ================= SEARCH ================= */
+const searchInput = document.getElementById('searchInput');
+const searchCount = document.getElementById('searchCount');
+const cards = Array.from(document.querySelectorAll('.qcard'));
+const navItems = Array.from(document.querySelectorAll('.nav-list a'));
+
+function clearHighlights(){
+  document.querySelectorAll('mark.search-hit').forEach(m=>{
+    const parent = m.parentNode;
+    parent.replaceChild(document.createTextNode(m.textContent), m);
+    parent.normalize();
+  });
+}
+
+function highlightText(root, term){
+  if(!term) return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node){
+      if(!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      if(node.parentNode.closest('script,style')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  let n;
+  while(n = walker.nextNode()) nodes.push(n);
+  const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+  nodes.forEach(node=>{
+    const text = node.nodeValue;
+    if(!re.test(text)) return;
+    const frag = document.createDocumentFragment();
+    let lastIdx = 0;
+    text.replace(re, (match, idx)=>{
+      frag.appendChild(document.createTextNode(text.slice(lastIdx, idx)));
+      const mark = document.createElement('mark');
+      mark.className = 'search-hit';
+      mark.textContent = match;
+      frag.appendChild(mark);
+      lastIdx = idx + match.length;
+    });
+    frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+    node.parentNode.replaceChild(frag, node);
+  });
+}
+
+let searchTimer;
+searchInput.addEventListener('input', ()=>{
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(runSearch, 120);
+});
+
+function runSearch(){
+  const term = searchInput.value.trim().toLowerCase();
+  clearHighlights();
+  let visibleCount = 0;
+
+  cards.forEach(card=>{
+    const matches = !term || card.dataset.search.includes(term);
+    card.style.display = matches ? '' : 'none';
+    if(matches){
+      visibleCount++;
+      if(term) highlightText(card, term);
+    }
+  });
+
+  navItems.forEach(a=>{
+    const n = a.dataset.n;
+    const card = document.getElementById('q'+n);
+    a.parentElement.style.display = (card.style.display === 'none') ? 'none' : '';
+  });
+
+  noResults.classList.toggle('show', visibleCount === 0);
+
+  if(term){
+    searchCount.style.display = 'block';
+    searchCount.textContent = `${visibleCount} of ${questions.length} match`;
+  } else {
+    searchCount.style.display = 'none';
+  }
+}
+
+/* ================= ACTIVE NAV ON SCROLL ================= */
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const n = entry.target.dataset.n;
+      navItems.forEach(a=> a.classList.toggle('active', a.dataset.n === n));
+    }
+  });
+},{rootMargin:'-20% 0px -65% 0px', threshold:0});
+cards.forEach(c=>observer.observe(c));
+
+/* close sidebar on mobile nav click */
+navItems.forEach(a=>{
+  a.addEventListener('click', ()=>{
+    if(window.innerWidth <= 980){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('backdrop').classList.remove('show');
+    }
+  });
+});
+
+/* ================= SIDEBAR TOGGLE (mobile) ================= */
+const sidebar = document.getElementById('sidebar');
+const backdrop = document.getElementById('backdrop');
+document.getElementById('menuToggle').addEventListener('click', ()=>{
+  sidebar.classList.toggle('open');
+  backdrop.classList.toggle('show');
+});
+backdrop.addEventListener('click', ()=>{
+  sidebar.classList.remove('open');
+  backdrop.classList.remove('show');
+});
+
+/* ================= THEME TOGGLE ================= */
+const themeBtn = document.getElementById('themeBtn');
+function applyTheme(theme){
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('u3-theme', theme);
+}
+themeBtn.addEventListener('click', ()=>{
+  const current = document.body.getAttribute('data-theme');
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+(function initTheme(){
+  const saved = localStorage.getItem('u3-theme');
+  if(saved){ applyTheme(saved); }
+  else if(window.matchMedia('(prefers-color-scheme: dark)').matches){ applyTheme('dark'); }
+})();
+
+/* ================= PRINT ================= */
+document.getElementById('printBtn').addEventListener('click', ()=> window.print());
+</script>
+</body>
+</html>

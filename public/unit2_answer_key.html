@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>22CH203 – Engineering Chemistry II | Unit 2 Answer Key</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Merriweather:wght@300;400;700&display=swap');
+
+  :root {
+    --bg: #f8f9fc;
+    --surface: #ffffff;
+    --sidebar-bg: #1a1f2e;
+    --sidebar-text: #c8d0e0;
+    --sidebar-active: #4f8ef7;
+    --sidebar-hover: #2a3148;
+    --accent: #4f8ef7;
+    --accent2: #7c5cbf;
+    --text: #1e2433;
+    --text-muted: #6b7492;
+    --border: #e4e8f2;
+    --formula-bg: #eef3ff;
+    --formula-border: #b8ccff;
+    --key-bg: #f0fdf4;
+    --key-border: #86efac;
+    --card-shadow: 0 2px 12px rgba(79,142,247,0.08);
+    --sidebar-width: 280px;
+    --header-h: 60px;
+  }
+  .dark {
+    --bg: #0f1117;
+    --surface: #1a1f2e;
+    --sidebar-bg: #0a0d14;
+    --sidebar-text: #8a93b0;
+    --sidebar-active: #4f8ef7;
+    --sidebar-hover: #1a1f2e;
+    --text: #e2e8f8;
+    --text-muted: #8a93b0;
+    --border: #252b3b;
+    --formula-bg: #1a2140;
+    --formula-border: #2e4080;
+    --key-bg: #0f2020;
+    --key-border: #1a5a3a;
+    --card-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  #topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: var(--header-h);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px; padding: 0 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  #menu-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--text); font-size: 22px; padding: 4px 8px;
+    display: none;
+  }
+  #topbar h1 {
+    font-size: 15px; font-weight: 700; color: var(--accent);
+    letter-spacing: -0.3px; flex: 1;
+  }
+  #topbar h1 span { color: var(--text-muted); font-weight: 400; }
+  #search-wrap {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 12px; width: 260px;
+  }
+  #search-wrap svg { color: var(--text-muted); flex-shrink: 0; }
+  #search-input {
+    border: none; background: transparent; outline: none;
+    font-size: 13px; color: var(--text); width: 100%;
+  }
+  #search-input::placeholder { color: var(--text-muted); }
+  .top-btns { display: flex; gap: 8px; }
+  .icon-btn {
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; cursor: pointer;
+    padding: 6px 10px; font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+  }
+  .icon-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    position: fixed; top: var(--header-h); left: 0; bottom: 0;
+    width: var(--sidebar-width); background: var(--sidebar-bg);
+    overflow-y: auto; z-index: 100; transition: transform 0.3s;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-thumb { background: #2a3148; border-radius: 4px; }
+  .sidebar-header {
+    padding: 20px 16px 12px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: #4a5270; text-transform: uppercase;
+  }
+  .sidebar-count {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #2a3148; color: var(--sidebar-active);
+    font-size: 10px; font-weight: 700; border-radius: 99px;
+    padding: 1px 7px; margin-left: 6px;
+  }
+  #nav-list { list-style: none; padding: 0 8px 20px; }
+  #nav-list li a {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 9px 10px; border-radius: 8px;
+    color: var(--sidebar-text); text-decoration: none;
+    font-size: 12.5px; line-height: 1.4;
+    transition: all 0.15s;
+  }
+  #nav-list li a:hover { background: var(--sidebar-hover); color: #e2e8f8; }
+  #nav-list li a.active { background: rgba(79,142,247,0.12); color: var(--sidebar-active); font-weight: 600; }
+  .nav-num {
+    flex-shrink: 0; width: 22px; height: 22px;
+    background: #252b3b; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: #4a5270;
+    margin-top: 1px;
+  }
+  #nav-list li a.active .nav-num { background: rgba(79,142,247,0.2); color: var(--sidebar-active); }
+
+  /* ── MAIN ── */
+  #main {
+    margin-left: var(--sidebar-width);
+    padding: calc(var(--header-h) + 28px) 40px 60px;
+    max-width: calc(860px + var(--sidebar-width));
+    transition: margin-left 0.3s;
+  }
+  .page-title {
+    margin-bottom: 32px;
+  }
+  .page-title .badge {
+    display: inline-block; background: var(--accent); color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    padding: 3px 10px; border-radius: 99px; margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .page-title h2 {
+    font-size: 26px; font-weight: 800; color: var(--text);
+    letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 6px;
+  }
+  .page-title p { font-size: 14px; color: var(--text-muted); }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .q-card:hover { box-shadow: 0 4px 20px rgba(79,142,247,0.14); }
+  .q-card.hidden { display: none; }
+
+  .q-header {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 18px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; user-select: none;
+  }
+  .q-num {
+    flex-shrink: 0; width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; font-weight: 800;
+    color: #fff; margin-top: 1px;
+  }
+  .q-text { flex: 1; }
+  .q-scenario {
+    font-size: 13px; color: var(--text-muted);
+    line-height: 1.6; margin-bottom: 6px;
+  }
+  .q-ask {
+    font-size: 14px; font-weight: 600; color: var(--text);
+    line-height: 1.5;
+  }
+  .q-toggle {
+    flex-shrink: 0; width: 28px; height: 28px;
+    background: var(--bg); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 16px;
+    transition: transform 0.3s, background 0.2s;
+    margin-top: 4px;
+  }
+  .q-card.open .q-toggle { transform: rotate(180deg); background: var(--accent); color: #fff; }
+
+  .q-answer {
+    display: none; padding: 0 20px 20px;
+  }
+  .q-card.open .q-answer { display: block; }
+
+  /* Answer inner blocks */
+  .ans-body { padding-top: 18px; }
+
+  .ans-section { margin-bottom: 16px; }
+  .ans-section:last-child { margin-bottom: 0; }
+  .ans-section h4 {
+    font-size: 11.5px; font-weight: 700; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .ans-section p, .ans-section li {
+    font-size: 13.5px; line-height: 1.75; color: var(--text);
+  }
+  .ans-section ul { padding-left: 18px; }
+  .ans-section ul li { margin-bottom: 4px; }
+
+  .formula-box {
+    background: var(--formula-bg);
+    border: 1px solid var(--formula-border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--text);
+    line-height: 1.8;
+  }
+  .formula-box .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    letter-spacing: 0.5px; margin-bottom: 4px;
+  }
+
+  .key-points {
+    background: var(--key-bg);
+    border: 1px solid var(--key-border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 12px;
+  }
+  .key-points .kp-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+    text-transform: uppercase; color: #16a34a; margin-bottom: 8px;
+  }
+  .dark .key-points .kp-label { color: #4ade80; }
+  .key-points ul { list-style: none; padding: 0; }
+  .key-points ul li {
+    font-size: 13px; line-height: 1.65; color: var(--text);
+    padding: 3px 0; display: flex; gap: 8px;
+  }
+  .key-points ul li::before {
+    content: "✦"; color: #16a34a; font-size: 10px; flex-shrink: 0; margin-top: 4px;
+  }
+  .dark .key-points ul li::before { color: #4ade80; }
+
+  .copy-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: none; border: 1px solid var(--border);
+    color: var(--text-muted); font-size: 12px; font-weight: 500;
+    border-radius: 7px; padding: 5px 12px; cursor: pointer;
+    margin-top: 16px; transition: all 0.2s;
+  }
+  .copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .copy-btn.copied { background: #16a34a; color: #fff; border-color: #16a34a; }
+
+  /* ── NO RESULTS ── */
+  #no-results {
+    display: none; text-align: center; padding: 60px 0;
+    color: var(--text-muted); font-size: 15px;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    #topbar, #sidebar, .q-toggle, .copy-btn { display: none !important; }
+    #main { margin-left: 0; padding: 20px; }
+    .q-answer { display: block !important; }
+    .q-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    #menu-btn { display: flex; }
+    #sidebar { transform: translateX(-100%); }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; padding: calc(var(--header-h) + 16px) 16px 40px; }
+    #search-wrap { width: 160px; }
+    .top-btns .icon-btn span { display: none; }
+    #topbar h1 { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <button id="menu-btn" onclick="toggleSidebar()" title="Menu">☰</button>
+  <h1>22CH203 &nbsp;<span>Unit 2 — Answer Key</span></h1>
+  <div id="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input id="search-input" type="text" placeholder="Search questions…" oninput="searchQ(this.value)">
+  </div>
+  <div class="top-btns">
+    <button class="icon-btn" onclick="toggleDark()">🌙 <span>Dark</span></button>
+    <button class="icon-btn" onclick="window.print()">🖨️ <span>Print</span></button>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">Unit 2 Questions <span class="sidebar-count">39</span></div>
+  <ul id="nav-list"></ul>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+  <div class="page-title">
+    <span class="badge">Unit 2</span>
+    <h2>Electrochemical Cells & Batteries</h2>
+    <p>Engineering Chemistry II — 22CH203 | Bannari Amman Institute of Technology</p>
+  </div>
+
+  <div id="q-container"></div>
+  <div id="no-results">No questions match your search. Try different keywords.</div>
+</main>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const questions = [
+  {
+    n: 1,
+    scenario: "An electrochemical device operates in a cold region where low temperature and diluted electrolyte reduce performance. The observed EMF is lower than standard values, affecting energy output. Engineers aim to improve efficiency under these conditions.",
+    ask: "Analyze how concentration variations influence the electrical energy output of the cell and determine strategies to improve performance using thermodynamic relationships.",
+    answer: {
+      explanation: "The electrical energy output of a cell is directly governed by the Nernst equation, which links cell potential to reactant/product concentrations. When electrolyte concentration is diluted, the activity of ions decreases, reducing the cell potential (E) below its standard value (E°). Cold temperatures further slow ion mobility and reduce conductivity.",
+      formulas: [
+        { label: "Nernst Equation", code: "E = E° − (RT/nF) × ln Q\n   where Q = [products]/[reactants]" },
+        { label: "Electrical Energy", code: "W_elec = nFE\n   (in Joules; n = moles of electrons, F = 96485 C/mol)" }
+      ],
+      keyPoints: [
+        "Lower concentration → higher Q → lower E (Nernst equation)",
+        "Cold temperature → reduced RT/nF correction but also lower ionic conductivity",
+        "Strategies: increase ion concentration, use higher-conductivity electrolyte, insulate cell from cold, use concentrated electrolyte solutions",
+        "Energy output W = nFE decreases proportionally with E"
+      ],
+      summary: "Concentration variations shift the reaction quotient Q, lowering E. Maintaining high reactant concentrations and minimizing temperature loss are key strategies."
+    }
+  },
+  {
+    n: 2,
+    scenario: "A laboratory cell shows declining voltage after repeated use due to solvent evaporation and slight heating. These changes shift the system away from standard conditions. The output energy becomes inconsistent over time.",
+    ask: "Diagnose the causes of reduced EMF and infer how these deviations affect Gibbs free energy and overall efficiency.",
+    answer: {
+      explanation: "Two factors cause voltage decline: (1) Solvent evaporation increases solute concentration (initially), then further evaporation may deposit salts, increasing internal resistance. (2) Temperature rise increases molecular disorder, affecting thermodynamic equilibrium. Both effects alter the actual EMF from standard E°, changing ΔG and cell efficiency.",
+      formulas: [
+        { label: "Gibbs Free Energy – EMF Link", code: "ΔG = −nFE\n   (negative ΔG = spontaneous; larger E → more negative ΔG)" },
+        { label: "Efficiency", code: "η = (Actual E / E°) × 100%" }
+      ],
+      keyPoints: [
+        "Solvent evaporation → higher ionic concentration → initially increases E, then salt deposition clogs electrodes",
+        "Heating shifts equilibrium; if ΔS is negative, higher T lowers E",
+        "ΔG = −nFE: reduced E means less negative ΔG → less spontaneity → lower energy output",
+        "Inconsistent conditions → irreproducible voltage → poor device performance"
+      ],
+      summary: "Deviations from standard conditions change E, which directly changes ΔG. Reduced E means less electrical work can be extracted, lowering overall efficiency."
+    }
+  },
+  {
+    n: 3,
+    scenario: "A galvanic cell with known EMF and electron transfer number is analyzed under reversible conditions. The researcher wants to estimate maximum electrical work. The system follows thermodynamic principles.",
+    ask: "Determine the relationship between EMF and Gibbs free energy and infer how it indicates spontaneity and energy output.",
+    answer: {
+      explanation: "The Gibbs free energy change (ΔG) represents the maximum non-PV work a system can do at constant T and P. In electrochemistry, this maximum work is the electrical work done by the cell. The relationship ΔG = −nFE ties these together quantitatively.",
+      formulas: [
+        { label: "Fundamental Relationship", code: "ΔG = −nFE\n   n = no. of electrons transferred\n   F = Faraday's constant (96485 C/mol)\n   E = cell EMF (V)" },
+        { label: "Standard Conditions", code: "ΔG° = −nFE°" }
+      ],
+      keyPoints: [
+        "Positive E → negative ΔG → reaction is spontaneous",
+        "Negative E → positive ΔG → reaction is non-spontaneous",
+        "Maximum electrical work = |ΔG| = nFE (only under reversible/quasi-static conditions)",
+        "Larger E → more energy available → higher theoretical efficiency"
+      ],
+      summary: "ΔG = −nFE is the cornerstone of electrochemical thermodynamics. A positive E confirms spontaneity and the magnitude nFE gives the maximum electrical energy extractable."
+    }
+  },
+  {
+    n: 4,
+    scenario: "An electrochemical system operates at constant temperature but varying electrolyte concentrations. The EMF changes with concentration differences. The energy output becomes variable.",
+    ask: "Analyze how concentration changes affect EMF and infer the impact on energy output.",
+    answer: {
+      explanation: "According to the Nernst equation, EMF depends logarithmically on the ratio of product to reactant activities (concentrations). At constant temperature, any change in concentration directly changes Q, which alters E. Since energy output W = nFE, it varies proportionally.",
+      formulas: [
+        { label: "Nernst Equation (at 298 K)", code: "E = E° − (0.0592/n) × log Q\n   Q = [products]^stoich / [reactants]^stoich" },
+        { label: "Energy Output", code: "W = nFE  (in Joules)" }
+      ],
+      keyPoints: [
+        "Increasing reactant concentration → Q decreases → E increases → more energy output",
+        "Increasing product concentration → Q increases → E decreases → less energy",
+        "At Q=1 (equal concentrations), E = E° (standard EMF)",
+        "Variability in concentration = variability in energy output"
+      ],
+      summary: "Concentration controls Q in the Nernst equation, making E variable. Engineers must control electrolyte composition to stabilize energy output."
+    }
+  },
+  {
+    n: 5,
+    scenario: "Different electrode materials are tested under standard conditions. Each combination produces a different EMF. The goal is to identify the most efficient pair.",
+    ask: "Determine how standard electrode potentials influence EMF and energy efficiency.",
+    answer: {
+      explanation: "The standard EMF of a cell is the algebraic difference between the standard reduction potentials of the cathode and anode. The larger this difference, the higher the cell voltage and hence the greater the energy output per mole of reaction. Materials with a large separation in the electrochemical series are the most efficient pair.",
+      formulas: [
+        { label: "Standard Cell EMF", code: "E°cell = E°cathode − E°anode\n   (both E° values are standard reduction potentials)" },
+        { label: "Maximum Work (Standard)", code: "W_max = nFE°cell" }
+      ],
+      keyPoints: [
+        "Higher E°cell → greater spontaneity → higher energy efficiency",
+        "Cathode must have higher (more positive) E° than anode",
+        "Example: Zn/Cu cell — E°cell = 0.34 − (−0.76) = 1.10 V",
+        "Most efficient pair: largest separation in electrochemical series"
+      ],
+      summary: "Standard electrode potentials dictate the theoretical maximum EMF. Choose electrode pairs with the largest E° difference for maximum energy efficiency."
+    }
+  },
+  {
+    n: 6,
+    scenario: "A cell shows reduced output at higher temperature compared to optimal conditions. The system deviates slightly from equilibrium. The energy produced decreases.",
+    ask: "Infer how temperature variation affects Gibbs free energy and EMF.",
+    answer: {
+      explanation: "The relationship between ΔG, ΔH, and ΔS is: ΔG = ΔH − TΔS. For cells where the reaction is exothermic (ΔH < 0) and entropy decreases (ΔS < 0), higher temperature makes ΔG less negative, reducing E. The temperature coefficient of EMF (dE/dT) determines whether E rises or falls with temperature.",
+      formulas: [
+        { label: "Gibbs–Helmholtz", code: "ΔG = ΔH − TΔS" },
+        { label: "Temperature Coefficient", code: "dE/dT = ΔS / nF\n   (positive if entropy increases in reaction; negative otherwise)" },
+        { label: "EMF at Temperature T", code: "E(T) = E° + (dE/dT)(T − 298)" }
+      ],
+      keyPoints: [
+        "If ΔS < 0 for cell reaction: E decreases with temperature",
+        "If ΔS > 0: E increases with temperature",
+        "Higher T can also increase activation energy losses (overpotential)",
+        "Optimal temperature balances kinetics and thermodynamics"
+      ],
+      summary: "Temperature affects ΔG via the TΔS term. For reactions with negative ΔS, higher temperature reduces E and energy output. Operate cells at their optimal temperature."
+    }
+  },
+  {
+    n: 7,
+    scenario: "A system uses measured EMF to estimate electrical energy output. The cell operates under known conditions. The output depends on voltage.",
+    ask: "Determine how EMF relates to electrical energy output of the cell.",
+    answer: {
+      explanation: "The electrical energy delivered by a cell is the product of charge transferred and the potential difference. The total charge = n × F (n = moles of electrons, F = Faraday's constant). Multiplying by E gives the maximum electrical energy for a reversible cell.",
+      formulas: [
+        { label: "Electrical Energy", code: "W_elec = Q × E = nFE  (Joules)\n   Q = total charge (Coulombs)\n   n = moles of e⁻\n   F = 96485 C/mol" },
+        { label: "Power", code: "P = I × E  (Watts)\n   I = current (Amperes)" },
+        { label: "Energy in Wh", code: "W(Wh) = (I × E × t) / 3600" }
+      ],
+      keyPoints: [
+        "Higher EMF → more energy per mole of electrons",
+        "Energy is maximized in reversible (quasi-static) operation",
+        "In practical cells: W_actual < nFE due to irreversibilities",
+        "At E = 0 (equilibrium), no energy is delivered"
+      ],
+      summary: "W = nFE directly links measured EMF to extractable energy. Higher voltage = more energy output. This forms the basis for battery rating (Wh or Ah)."
+    }
+  },
+  {
+    n: 8,
+    scenario: "A laboratory demonstrates an electrolytic cell where external electrical energy drives chemical reactions. This setup differs from galvanic cells where reactions occur spontaneously. Students observe how energy input influences reaction direction and electron flow.",
+    ask: "Infer the procedural flow of energy and reaction direction in an electrolytic cell compared to a galvanic cell.",
+    answer: {
+      explanation: "In a galvanic cell, spontaneous redox reactions (ΔG < 0) generate electrical energy — chemical energy converts to electrical energy. In an electrolytic cell, external electrical energy forces a non-spontaneous reaction (ΔG > 0) to occur — electrical energy converts to chemical energy. The electron flow direction reverses between the two types.",
+      formulas: [
+        { label: "Galvanic Cell", code: "ΔG = −nFE  (negative ΔG, positive E)\n   Chemical energy → Electrical energy" },
+        { label: "Electrolytic Cell", code: "ΔG = +nFE_applied  (positive ΔG)\n   Electrical energy → Chemical energy\n   Applied voltage > E°cell needed" }
+      ],
+      keyPoints: [
+        "Galvanic: anode (−) oxidation, cathode (+) reduction; spontaneous",
+        "Electrolytic: anode (+) oxidation, cathode (−) reduction; non-spontaneous",
+        "External source must supply voltage ≥ E°cell to drive electrolysis",
+        "Applications: electroplating, electro-refining, water splitting"
+      ],
+      summary: "Galvanic cells produce energy from reactions; electrolytic cells consume energy to drive reactions. The key difference is the direction of electron flow and the role of spontaneity."
+    }
+  },
+  {
+    n: 9,
+    scenario: "A rural lighting project relies on primary cells, leading to frequent replacements and increased waste generation. The lack of rechargeability raises sustainability concerns. The project team considers switching to rechargeable alternatives.",
+    ask: "Assess the suitability of replacing primary cells with secondary cells by considering sustainability and operational efficiency.",
+    answer: {
+      explanation: "Primary cells use irreversible electrode reactions; once reactants are exhausted, the cell is discarded. Secondary cells use reversible reactions and can be recharged hundreds to thousands of times. For rural lighting, secondary cells (e.g., lead-acid, Li-ion) are far more sustainable and economically viable over time.",
+      formulas: [
+        { label: "Cost-Effectiveness", code: "Cost per cycle (secondary) << Cost per cycle (primary)\n   e.g., Li-ion: ~500–2000 cycles\n       Lead-acid: ~200–500 cycles" }
+      ],
+      keyPoints: [
+        "Primary cells: irreversible reactions, single-use, low upfront cost but high total cost",
+        "Secondary cells: reversible reactions, rechargeable, higher initial cost but much lower lifecycle cost",
+        "Secondary cells reduce waste, fewer replacements, lower environmental impact",
+        "Solar-charged secondary cells ideal for rural off-grid lighting"
+      ],
+      summary: "Secondary cells are clearly superior for rural lighting: lower long-term cost, reduced waste, and compatible with solar charging. The switch addresses both sustainability and operational efficiency."
+    }
+  },
+  {
+    n: 10,
+    scenario: "A research team compares two electrochemical cells — one with high energy density but low power density, and another with low energy density but high power density. The application requires rapid bursts of energy rather than long-term supply.",
+    ask: "Determine which cell is more suitable for high-power applications by analytically interpreting energy density and power density relationships.",
+    answer: {
+      explanation: "Energy density (Wh/kg or Wh/L) measures how much total energy is stored per unit mass/volume. Power density (W/kg) measures how quickly that energy can be delivered. For applications needing rapid energy bursts (e.g., electric motors, power tools), high power density is critical. A supercapacitor or high-power battery is preferred over a high-energy-density cell.",
+      formulas: [
+        { label: "Energy Density", code: "Energy Density = Total Energy / Mass  (Wh/kg)" },
+        { label: "Power Density", code: "Power Density = Peak Power / Mass  (W/kg)" },
+        { label: "Ragone Relationship", code: "Energy × Time = Power (W = E/t)\n   High power = fast discharge = low energy delivery per unit time" }
+      ],
+      keyPoints: [
+        "High energy density → better for long-duration, low-power applications (e.g., flashlights)",
+        "High power density → better for burst applications (e.g., starting motors, EV acceleration)",
+        "Capacitors > batteries in power density; batteries > capacitors in energy density",
+        "For rapid bursts: choose cell with HIGH POWER DENSITY (low energy density, high power density)"
+      ],
+      summary: "For rapid burst applications, the low-energy-density, high-power-density cell is more suitable. Power density determines how quickly energy is available, which is the critical parameter here."
+    }
+  },
+  {
+    n: 11,
+    scenario: "A portable electronics company designs compact devices requiring stable voltage output using electrochemical cells. Engineers analyze how electrodes, electrolytes, and separators interact to maintain consistent performance.",
+    ask: "Integrate the roles of key cell components to infer how their interaction determines energy output consistency in portable devices.",
+    answer: {
+      explanation: "A cell has three key components: electrodes (anode + cathode), electrolyte, and separator. Their coordinated functioning determines output stability. Any failure or degradation in one component cascades to affect voltage and energy output.",
+      formulas: [
+        { label: "Terminal Voltage", code: "V_terminal = E_cell − I × r\n   r = internal resistance (from electrolyte + contacts)\n   I = discharge current" }
+      ],
+      keyPoints: [
+        "Electrodes: define E° through material choice; degradation reduces capacity",
+        "Electrolyte: provides ionic conduction; viscosity and conductivity affect internal resistance r",
+        "Separator: prevents short-circuit while allowing ion flow; a clogged separator raises r",
+        "Higher r → larger voltage drop under load → inconsistent output",
+        "Thin, high-conductivity electrolyte + minimal separator resistance = stable voltage"
+      ],
+      summary: "Electrodes set the voltage potential; electrolyte and separator determine how efficiently charge is transported. Consistent performance requires all components to maintain low internal resistance and stable interfacial chemistry."
+    }
+  },
+  {
+    n: 12,
+    scenario: "An electric vehicle manufacturer compares lithium-ion, lead-acid, and dry cells to select a battery system for large-scale production.",
+    ask: "Prioritize the most scalable cell technology by analyzing trade-offs between energy density, cost, efficiency, and lifecycle performance, and justify the selection logically.",
+    answer: {
+      explanation: "The three cell types differ significantly in energy density, cycle life, cost, and safety. For large-scale EV production, lithium-ion batteries offer the best combination of energy density and lifecycle, despite higher initial cost.",
+      formulas: [
+        { label: "Comparison Table", code: "Cell Type  | Energy Density | Cycles | Cost\n-----------|----------------|--------|------\nLi-ion     | ~150-300 Wh/kg | >1000  | High\nLead-acid  | ~30-50 Wh/kg   | ~300   | Low\nDry cell   | ~40-80 Wh/kg   | N/A    | Low" }
+      ],
+      keyPoints: [
+        "Li-ion: highest energy density, longest cycle life, suitable for EV range requirements",
+        "Lead-acid: heavy, lower energy density, short lifecycle — unsuitable for EV at scale",
+        "Dry cells: non-rechargeable, single-use — completely unsuitable for EV",
+        "Li-ion disadvantages: higher cost, thermal management needed, rare mineral supply chain",
+        "Verdict: Li-ion is the most scalable despite higher upfront cost"
+      ],
+      summary: "Lithium-ion batteries are the clear choice for EV large-scale production due to superior energy density, efficiency, and lifecycle. Cost can be offset at scale and with recycling programs."
+    }
+  },
+  {
+    n: 13,
+    scenario: "A manufacturing plant observes inconsistent voltage output and rapid efficiency loss in electrochemical cells used for industrial sensors. Engineers suspect electrode degradation, electrolyte contamination, or separator malfunction.",
+    ask: "Analyze the possible causes of performance degradation by correlating component-level failures with electrochemical principles and infer the most critical fault affecting energy output.",
+    answer: {
+      explanation: "Multiple failure modes can degrade cell performance. Electrode degradation (oxidation, cracking, delamination) reduces active surface area and increases charge-transfer resistance. Electrolyte contamination introduces parasitic reactions. Separator malfunction allows cross-mixing of species (short circuits or direct chemical reaction, reducing useful output).",
+      formulas: [
+        { label: "Butler-Volmer (simplified)", code: "i = i₀ [exp(αnFη/RT) − exp(−(1−α)nFη/RT)]\n   Electrode degradation → reduced i₀ → slower kinetics" }
+      ],
+      keyPoints: [
+        "Electrode degradation: most critical — reduces active surface area → lower current → lower energy",
+        "Electrolyte contamination: introduces side reactions → parasitic current loss",
+        "Separator failure: internal short circuit → rapid energy loss, safety risk",
+        "Assembly inconsistency: poor contact → high contact resistance → voltage drop",
+        "Most critical fault: electrode degradation (directly limits electrochemical reaction rate)"
+      ],
+      summary: "Electrode degradation is the most critical fault as it directly reduces the rate and capacity of the primary electrochemical reaction. Electrolyte and separator issues are secondary but compound the problem."
+    }
+  },
+  {
+    n: 14,
+    scenario: "A remote healthcare unit in a mountainous region must select an electrochemical energy source for diagnostic equipment with constraints of limited transportation, fluctuating temperatures, and need for consistent energy over long durations.",
+    ask: "Determine the most suitable electrochemical cell classification for the healthcare unit by integrating energy storage requirements, reaction reversibility, and operational constraints.",
+    answer: {
+      explanation: "The constraints — remote location, long-duration operation, fluctuating temperatures, minimal maintenance — point strongly toward a secondary cell (rechargeable) that can be paired with a renewable charging source (solar). Lead-acid or Li-ion secondary cells are candidates; Li-ion is better at low temperatures.",
+      formulas: [],
+      keyPoints: [
+        "Primary cells: unsuitable — require frequent replacement, no logistics support",
+        "Secondary cells (Li-ion): excellent energy density, stable at low temperatures, rechargeable",
+        "Lead-acid: heavier, poorer cold-weather performance, but cheaper and robust",
+        "Best choice: Li-iron phosphate (LiFePO₄) — safe, thermally stable, long cycle life",
+        "Solar-powered charging eliminates logistics dependency"
+      ],
+      summary: "A secondary cell (preferably Li-ion or LiFePO₄) paired with solar charging is the most suitable choice. It provides rechargeability, good temperature tolerance, and long operational life with minimal maintenance."
+    }
+  },
+  {
+    n: 15,
+    scenario: "A reversible electrochemical cell is used as a reference system in thermodynamic studies.",
+    ask: "Interpret why reversible cells are preferred in thermodynamic analysis and justify their role.",
+    answer: {
+      explanation: "A reversible electrochemical cell operates infinitely slowly, maintaining equilibrium at every instant. This ensures that no energy is dissipated as heat, so all the Gibbs free energy change is converted to electrical work. The measured EMF (E_rev) equals the thermodynamic equilibrium value, making it ideal for calculating ΔG, ΔH, and ΔS precisely.",
+      formulas: [
+        { label: "Reversible Work", code: "W_max = ΔG = −nFE_rev\n   (only valid for reversible process)" },
+        { label: "Entropy from E-T data", code: "ΔS = nF(dE/dT)\n   ΔH = ΔG + TΔS = −nFE + nFT(dE/dT)" }
+      ],
+      keyPoints: [
+        "Reversible cell: zero current drawn, equilibrium maintained at all times",
+        "EMF = maximum possible (no losses to internal resistance or kinetics)",
+        "Allows exact calculation of ΔG, ΔH, ΔS from electrical measurements",
+        "Any irreversibility introduces energy losses (η_actual < η_theoretical)"
+      ],
+      summary: "Reversible cells are thermodynamic benchmarks — they provide the maximum possible EMF and allow precise determination of all thermodynamic quantities from simple voltage and temperature measurements."
+    }
+  },
+  {
+    n: 16,
+    scenario: "A cell operates under standard conditions, and its EMF is calculated using standard electrode potentials.",
+    ask: "Determine the relevance of standard EMF in assessing reversibility and infer its thermodynamic significance.",
+    answer: {
+      explanation: "The standard EMF (E°) is measured at unit activity (1 M concentrations, 1 atm, 25°C) with negligible current flow — effectively a reversible condition. It represents the maximum achievable cell potential under those defined conditions and serves as a thermodynamic reference.",
+      formulas: [
+        { label: "Standard EMF", code: "E°cell = E°cathode − E°anode" },
+        { label: "Standard Gibbs Energy", code: "ΔG° = −nFE°\n   Also: ΔG° = −RT ln K  →  E° = (RT/nF) ln K" }
+      ],
+      keyPoints: [
+        "E° represents ideal, reversible cell potential at standard conditions",
+        "Used as baseline for Nernst equation calculations",
+        "Positive E° confirms spontaneous standard-state reaction",
+        "Directly calculates equilibrium constant K: ln K = nFE°/RT",
+        "Acts as thermodynamic fingerprint of electrode pair"
+      ],
+      summary: "Standard EMF is thermodynamically significant because it directly yields ΔG°, K, and allows comparison of all electrode pairs on a universal scale (SHE reference)."
+    }
+  },
+  {
+    n: 17,
+    scenario: "An electrochemical cell shows deviation from predicted potential values when operated in real-world conditions with high current flow and internal resistance.",
+    ask: "Analyze the limitations affecting reversibility in practical electrochemical cells and justify their impact on performance.",
+    answer: {
+      explanation: "Practical cells are irreversible due to three main loss mechanisms: (1) Activation overpotential — energy needed to overcome the kinetic barrier at electrode surfaces. (2) Concentration overpotential — depletion of reactants near electrodes. (3) Ohmic losses — voltage drop due to internal resistance (electrolyte, connections). These together make the terminal voltage always less than the theoretical E.",
+      formulas: [
+        { label: "Terminal Voltage", code: "V = E_cell − η_act − η_conc − IR\n   η = overpotential, I = current, R = internal resistance" }
+      ],
+      keyPoints: [
+        "Higher current → larger IR drop → lower terminal voltage",
+        "Activation overpotential: inherent kinetic barrier, material-dependent",
+        "Concentration overpotential: grows with time/discharge rate",
+        "Practical efficiency always < 100% due to these losses",
+        "Minimize by: using catalysts, stirring, low-resistance electrolytes"
+      ],
+      summary: "Real cells deviate from reversibility due to overpotentials and ohmic losses. These increase with current, making high-current operation less efficient and explaining why measured voltage < theoretical EMF."
+    }
+  },
+  {
+    n: 18,
+    scenario: "A scientist studies electrode reactions in a cell where no current is drawn, and both oxidation and reduction occur at equal rates. The system appears stable with no net chemical change.",
+    ask: "Infer the state of the system and determine how electrode reactions contribute to reversibility under these conditions.",
+    answer: {
+      explanation: "When no current is drawn and both forward (oxidation) and reverse (reduction) reactions occur at equal rates, the electrode is at electrochemical equilibrium (also called the exchange current condition). This is the ideal reversible state — the electrode potential corresponds exactly to the Nernst equilibrium value.",
+      formulas: [
+        { label: "Exchange Current Density", code: "i_forward = i_backward = i₀ (exchange current density)\n   Net current I = 0 at equilibrium" },
+        { label: "Nernst Potential", code: "E_eq = E° − (RT/nF) ln Q\n   At this state, Q = K (equilibrium constant)" }
+      ],
+      keyPoints: [
+        "State: dynamic equilibrium — reactions occur but net change = 0",
+        "This is the true reversible electrode potential",
+        "EMF measured under these conditions = maximum thermodynamic EMF",
+        "Exchange current i₀ reflects electrode activity (higher i₀ = faster kinetics)",
+        "No current drawn → no ohmic or concentration losses"
+      ],
+      summary: "The system is in dynamic electrochemical equilibrium. Equal forward and reverse rates define the reversible electrode potential, where the cell is perfectly reversible and no energy is lost."
+    }
+  },
+  {
+    n: 19,
+    scenario: "An electrochemical system is designed to extract maximum electrical energy from a spontaneous redox reaction. Compared under two conditions: rapid reaction with energy losses vs. slow reaction maintaining equilibrium.",
+    ask: "Evaluate which condition ensures maximum work output and reconcile this with the concept of reversibility in electrochemical cells.",
+    answer: {
+      explanation: "The second law of thermodynamics dictates that maximum work is obtained only from a reversible process. In the slow (quasi-static) operation, the cell remains near equilibrium at all times — no energy is wasted as heat. Rapid operation introduces irreversible losses (ohmic heating, concentration gradients), reducing useful work.",
+      formulas: [
+        { label: "Max Work (Reversible)", code: "W_max = |ΔG| = nFE_rev" },
+        { label: "Actual Work (Irreversible)", code: "W_actual = nFE_rev − Losses\n   Losses = I²Rt + overpotential × I × t" }
+      ],
+      keyPoints: [
+        "Slow, quasi-static operation → nearly reversible → maximum work",
+        "Rapid operation → irreversible → energy wasted as heat → less electrical work",
+        "In practice, trade-off: very slow = impractical; optimize rate for acceptable efficiency",
+        "Reversibility criterion: system always near equilibrium, infinitesimal current"
+      ],
+      summary: "Slow, near-equilibrium operation extracts maximum work equal to |ΔG|. Rapid operation is irreversible and always yields less work. This is the thermodynamic basis for preferring controlled, low-current discharge for energy efficiency."
+    }
+  },
+  {
+    n: 20,
+    scenario: "A Daniell cell is constructed using Zn and Cu electrodes. The concentration of Zn²⁺ ions is gradually increased while Cu²⁺ concentration remains constant.",
+    ask: "Determine how the change in Zn²⁺ concentration influences the cell potential using appropriate electrochemical principles.",
+    answer: {
+      explanation: "In a Daniell cell, Zn is the anode (Zn → Zn²⁺ + 2e⁻) and Cu is the cathode (Cu²⁺ + 2e⁻ → Cu). The Nernst equation for the cell includes [Zn²⁺] in the denominator. Increasing [Zn²⁺] increases Q, which by the Nernst equation decreases E.",
+      formulas: [
+        { label: "Cell Reaction", code: "Zn + Cu²⁺ → Zn²⁺ + Cu" },
+        { label: "Nernst Equation", code: "E = E° − (0.0592/2) × log([Zn²⁺]/[Cu²⁺])\n   E° = 0.34 − (−0.76) = 1.10 V" },
+        { label: "Effect of [Zn²⁺]", code: "↑[Zn²⁺] → ↑Q → ↑log Q → ↓E" }
+      ],
+      keyPoints: [
+        "Increasing [Zn²⁺] increases Q → cell potential E decreases",
+        "This reflects Le Chatelier's principle: product accumulation opposes forward reaction",
+        "At equilibrium: Q = K, E = 0 (cell cannot do more work)",
+        "Maintaining low [Zn²⁺] (e.g., by removing ZnSO₄) keeps E higher"
+      ],
+      summary: "Increasing Zn²⁺ concentration raises Q, which the Nernst equation converts to a lower E. This makes physical sense: accumulation of reaction products opposes the cell reaction, reducing driving force."
+    }
+  },
+  {
+    n: 21,
+    scenario: "A research laboratory is testing a cell where both electrodes are under identical temperature and pressure, operating very slowly near equilibrium with no heat loss and maximum electrical work output. Engineers are unsure whether it fully satisfies thermodynamic reversibility.",
+    ask: "Analyze the given system and determine whether the electrochemical cell qualifies as reversible by evaluating thermodynamic conditions.",
+    answer: {
+      explanation: "A thermodynamically reversible cell must satisfy: (1) operation at equilibrium at all times (infinitesimal current), (2) no irreversible heat generation, (3) ability to reverse direction without hysteresis. The described system — near-equilibrium, no heat loss, maximum work output — closely satisfies all criteria. The key uncertainty is whether equilibrium is truly maintained or only approximated.",
+      formulas: [
+        { label: "Reversibility Conditions", code: "1. I → 0 (quasi-static operation)\n2. No concentration gradients\n3. ΔS_universe = 0\n4. W_elec = ΔG (maximum work)" }
+      ],
+      keyPoints: [
+        "Identical T and P: thermodynamic state variables controlled ✓",
+        "Very slow operation: quasi-static, near-equilibrium ✓",
+        "No heat loss: all energy appears as work ✓ (implies ΔS_universe ≈ 0)",
+        "Ion exchange via salt bridge: maintains charge balance without entropy generation ✓",
+        "Conclusion: qualifies as reversible within practical limits"
+      ],
+      summary: "The cell qualifies as thermodynamically reversible: it operates quasi-statically, maintains equilibrium, produces maximum electrical work, and generates negligible entropy. Absolute reversibility is theoretical; this system is the closest practical approximation."
+    }
+  },
+  {
+    n: 22,
+    scenario: "A comparison between two cells: one maintains constant voltage under ideal conditions, another shows fluctuating voltage and energy loss in real-world conditions.",
+    ask: "Analyze how operational behavior differentiates reversible and irreversible cells in terms of energy efficiency.",
+    answer: {
+      explanation: "The reversible cell maintains constant voltage because it operates at equilibrium — no concentration gradients develop, no activation barriers are overcome irreversibly. The irreversible cell shows voltage fluctuations because of time-varying ohmic losses, changing concentration polarization, and activation overpotentials under real current draw.",
+      formulas: [
+        { label: "Reversible Efficiency", code: "η_rev = W_elec / ΔG = 1 (100%)" },
+        { label: "Irreversible Efficiency", code: "η_irrev = W_actual / ΔG < 1\n   = (nFE_actual) / (nFE_rev)\n   = E_actual / E_rev" }
+      ],
+      keyPoints: [
+        "Reversible: constant E = E_rev, no energy dissipated as heat, 100% theoretical efficiency",
+        "Irreversible: E < E_rev, fluctuating due to changing losses",
+        "Energy lost in irreversible operation = T × ΔS_generated (second law)",
+        "Voltage fluctuations indicate changing internal resistance or polarization"
+      ],
+      summary: "Constant voltage = reversible operation. Fluctuating voltage = irreversible losses. The difference quantifies efficiency loss: any energy not converted to electrical work becomes entropy (heat)."
+    }
+  },
+  {
+    n: 23,
+    scenario: "A small electronic device battery shows slight heating and reduced output voltage when used for extended durations.",
+    ask: "Determine how such small inefficiencies indicate irreversible behavior and infer their effect on device performance.",
+    answer: {
+      explanation: "Heating is a direct signature of irreversibility — it represents energy dissipated via Joule heating (I²R), which is entropy generation. Even small temperature rises indicate that not all chemical energy is being converted to useful electrical work. Over time, this reduces available energy and shortens battery life.",
+      formulas: [
+        { label: "Joule Heating", code: "P_heat = I² × R_internal  (Watts)\n   Q_heat = I²Rt  (Joules over time t)" },
+        { label: "Voltage Drop", code: "V = E − IR\n   Heating → R increases → further V drop (positive feedback)" }
+      ],
+      keyPoints: [
+        "Any heat generation = entropy production = irreversibility",
+        "Higher temperature → increased internal resistance → more heating (runaway risk)",
+        "Reduced voltage = less useful work delivered to device",
+        "Extended use accumulates these losses, shortening battery runtime"
+      ],
+      summary: "Heating proves irreversible operation. Even 'small' inefficiencies compound over time: heat raises internal resistance, further reducing voltage and accelerating energy loss, ultimately degrading device performance."
+    }
+  },
+  {
+    n: 24,
+    scenario: "An industrial battery system shows a sequence of losses starting from activation barriers to concentration imbalances and finally resistive heating under load conditions.",
+    ask: "Formulate the logical sequence of processes that convert an ideal electrochemical cell into an irreversible one during operation.",
+    answer: {
+      explanation: "The sequence of irreversibility-causing losses in a real battery follows a logical progression from kinetic to transport to resistive phenomena as load increases.",
+      formulas: [
+        { label: "Total Overpotential", code: "η_total = η_activation + η_concentration + η_ohmic\nV_terminal = E° − η_total" }
+      ],
+      keyPoints: [
+        "Stage 1 — Activation Overpotential: energy needed to initiate electrode reactions; significant at low currents",
+        "Stage 2 — Concentration Overpotential: reactant depletion near electrode creates diffusion gradient; grows with current",
+        "Stage 3 — Ohmic (Resistive) Losses: I²R heating in electrolyte, contacts, and current collectors; dominates at high current",
+        "Together: E_actual << E_theoretical; efficiency drops with increasing load",
+        "This sequence is the basis of polarization curves"
+      ],
+      summary: "Ideal → irreversible via: (1) activation barrier → (2) concentration depletion → (3) ohmic heating. Each stage adds an overpotential that reduces terminal voltage and extracts electrical efficiency."
+    }
+  },
+  {
+    n: 25,
+    scenario: "A laboratory cell under ideal conditions is compared with a real system where entropy production is observed due to energy dissipation and heat generation during operation under sustained current flow.",
+    ask: "Integrate entropy production with energy loss mechanisms to infer why practical efficiency deviates from theoretical predictions.",
+    answer: {
+      explanation: "The second law of thermodynamics states that any irreversible process generates entropy (ΔS_univ > 0). In electrochemical cells, irreversible processes (ohmic heating, overpotentials) generate entropy, diverting energy from useful electrical work to thermal energy. The more entropy generated, the lower the practical efficiency.",
+      formulas: [
+        { label: "2nd Law Link", code: "W_actual = ΔG − T × ΔS_generated\n   → W_actual < |ΔG|\n   → η_practical = W_actual / |ΔG| < 1" },
+        { label: "Entropy Generation Rate", code: "dS_gen/dt = P_dissipated / T = I²R / T" }
+      ],
+      keyPoints: [
+        "Every irreversible loss (I²R, overpotential × I) generates entropy",
+        "Generated entropy = wasted energy (appears as heat)",
+        "Theoretical efficiency assumes ΔS_gen = 0 (reversible)",
+        "Higher current → more entropy generation → larger deviation from ideal",
+        "Efficiency = 1 − (T × ΔS_gen) / |ΔG|"
+      ],
+      summary: "Practical efficiency is always below theoretical because irreversible processes generate entropy. This entropy production directly quantifies energy lost as heat, explaining why measured efficiency < thermodynamic predictions."
+    }
+  },
+  {
+    n: 26,
+    scenario: "A grid-scale storage system compares theoretical energy output with actual measured output under varying loads and finds increasing discrepancy at higher currents due to resistive heating and kinetic limitations.",
+    ask: "Evaluate how increasing current leads to deviation from thermodynamic efficiency and recommend whether such a system can be considered reversible under practical conditions.",
+    answer: {
+      explanation: "As current increases, ohmic losses scale as I²R (quadratic) while activation and concentration overpotentials also grow. The efficiency η = W_actual/W_theoretical decreases nonlinearly with current. At high currents, the system is far from equilibrium and strongly irreversible. For grid-scale storage, this means significant energy loss during rapid charge/discharge cycles.",
+      formulas: [
+        { label: "Efficiency vs Current", code: "η = (E − IR − η_act − η_conc) / E\n   At I → 0: η → 1 (reversible limit)\n   At high I: η << 1" }
+      ],
+      keyPoints: [
+        "I²R losses grow quadratically — doubling current quadruples ohmic losses",
+        "Concentration polarization increases nonlinearly with current density",
+        "At high currents: system is far from equilibrium → strongly irreversible",
+        "Recommendation: system cannot be reversible under high-current practical conditions",
+        "Use partial-load operation or hybrid systems to maintain reasonable efficiency"
+      ],
+      summary: "High-current operation makes a system inherently irreversible. Grid-scale batteries operating under realistic loads cannot achieve thermodynamic reversibility; efficiency optimization requires minimizing I²R losses through cell design and operating at partial load."
+    }
+  },
+  {
+    n: 27,
+    scenario: "An electric vehicle battery experiences gradual efficiency loss over repeated charging cycles where side reactions form unwanted deposits and overpotential increases with time.",
+    ask: "Analyze how side reactions and overpotential lead to irreversible behavior and infer their role in reducing both efficiency and lifespan.",
+    answer: {
+      explanation: "Side reactions (e.g., electrolyte decomposition, lithium plating in Li-ion batteries) consume charge that does not contribute to the main redox process — this is Coulombic inefficiency. Solid-electrolyte interphase (SEI) growth from side reactions increases electrode resistance. Overpotential increases with aging, requiring more energy input during charging and delivering less during discharge.",
+      formulas: [
+        { label: "Coulombic Efficiency", code: "CE = Q_discharge / Q_charge × 100%\n   Side reactions reduce CE below 100%" },
+        { label: "Capacity Fade", code: "Q_n = Q_0 × (CE)^n\n   After n cycles, remaining capacity degrades" }
+      ],
+      keyPoints: [
+        "Side reactions: consume charge, produce resistive deposits (e.g., Li₂CO₃, LiF in Li-ion)",
+        "SEI growth: increases internal resistance over cycles → more irreversibility",
+        "Rising overpotential: cell needs more voltage to charge, delivers less when discharging",
+        "Both effects compound: capacity fade + efficiency loss over hundreds of cycles",
+        "Result: reduced range (EVs), shorter battery lifespan"
+      ],
+      summary: "Side reactions create resistive layers and waste charge; rising overpotential amplifies voltage losses. Together they cause progressive irreversibility, reducing both efficiency per cycle and total battery lifespan."
+    }
+  },
+  {
+    n: 28,
+    scenario: "A portable power unit shows decreasing voltage output and heats up during continuous usage. Internal resistance and polarization effects increase as load demand rises.",
+    ask: "Determine how internal resistance and polarization jointly contribute to classifying the system as irreversible and justify their impact on practical efficiency.",
+    answer: {
+      explanation: "Internal resistance (r) and polarization are the two primary pathways for energy dissipation in practical cells. Internal resistance causes Joule heating (I²r), converting electrical energy to thermal energy irreversibly. Polarization (activation + concentration overpotential) reflects kinetic and mass-transport barriers that prevent the electrode from operating at its equilibrium potential.",
+      formulas: [
+        { label: "Terminal Voltage", code: "V = E_eq − I×r − η_pol\n   η_pol = η_activation + η_concentration" },
+        { label: "Practical Efficiency", code: "η = V × I / (E_eq × I) = (E_eq − Ir − η_pol) / E_eq" }
+      ],
+      keyPoints: [
+        "Internal resistance r → I²r heat → irreversible entropy generation → system is irreversible",
+        "Polarization overpotential → electrode not at equilibrium → irreversible electrode process",
+        "Both increase with load (higher I) → more losses at higher demand",
+        "Heating of electrolyte changes r further, creating a feedback loop",
+        "Classifies system as irreversible: energy balance shows T×ΔS_gen > 0"
+      ],
+      summary: "Internal resistance causes ohmic heating (I²r); polarization causes kinetic and transport losses. Both grow with current, making the system increasingly irreversible and reducing practical efficiency proportionally."
+    }
+  },
+  {
+    n: 29,
+    scenario: "A technician must maintain a fleet of batteries in telecommunications infrastructure where reliability is critical. Batteries experience moderate usage but must be ready for sudden discharge events.",
+    ask: "Assess the professional practices required to maintain reversibility and ensure consistent performance in such systems.",
+    answer: {
+      explanation: "Maintaining battery reversibility in critical infrastructure requires systematic management protocols that prevent irreversible degradation mechanisms from accumulating. Key practices focus on controlling depth of discharge, temperature, charge rates, and conducting regular performance assessments.",
+      formulas: [
+        { label: "Depth of Discharge", code: "DoD = (Discharged Capacity / Full Capacity) × 100%\n   Lower DoD → longer cycle life" }
+      ],
+      keyPoints: [
+        "Avoid deep discharge (DoD > 80%): deep discharge causes irreversible sulfation (lead-acid) or lithium plating (Li-ion)",
+        "Temperature management: maintain 20–25°C; extreme temps increase internal resistance and side reactions",
+        "Regular float charging: keeps batteries at full state of charge without overcharging",
+        "Periodic equalization charging: corrects cell imbalance, prevents stratification",
+        "State-of-health (SoH) monitoring: impedance testing detects capacity fade early",
+        "Replace at SoH < 80%: before reliability becomes compromised"
+      ],
+      summary: "Professional battery maintenance — controlled DoD, temperature management, regular charging protocols, and monitoring — preserves reversibility by preventing the accumulation of irreversible degradation mechanisms. This ensures reliability for critical telecommunications applications."
+    }
+  },
+  {
+    n: 30,
+    scenario: "A charging system applies constant current initially and later switches to constant voltage mode in lithium-ion batteries to ensure safe charging.",
+    ask: "Determine the logical sequence of this charging architecture and infer its role in maintaining reversibility.",
+    answer: {
+      explanation: "This is the standard CC-CV (Constant Current – Constant Voltage) charging protocol for Li-ion batteries. The two-stage approach maximizes charge acceptance while preventing irreversible damage from overcharging or excessive voltage stress.",
+      formulas: [
+        { label: "CC Phase", code: "I = constant (e.g., 1C rate)\n   Voltage rises from V_min to V_max (e.g., 4.2V for Li-ion)" },
+        { label: "CV Phase", code: "V = V_max = constant\n   Current decreases exponentially\n   Stop when I < C/10 (trickle threshold)" }
+      ],
+      keyPoints: [
+        "CC phase: fast charging, charges ~80% of capacity; electrode reactions remain reversible",
+        "CV phase: voltage held at maximum; current tapers to prevent overcharge and lithium plating",
+        "Overcharge prevention: prevents electrolyte decomposition and metallic Li deposition (irreversible)",
+        "Tapering current in CV phase allows full intercalation without mechanical stress",
+        "Result: maximized capacity with minimized irreversible side reactions → longer cycle life"
+      ],
+      summary: "CC-CV charging maintains reversibility by controlling voltage and current to prevent overcharge. CC phase provides rapid, controlled bulk charging; CV phase safely completes charging while tapering current to avoid irreversible electrode stress."
+    }
+  },
+  {
+    n: 31,
+    scenario: "A battery system delivers 90 Wh during discharge but requires 110 Wh input during charging due to energy losses. The system operates under repeated cycles.",
+    ask: "Determine the charge-discharge efficiency and interpret its implications for energy losses and system performance.",
+    answer: {
+      explanation: "Charge-discharge (round-trip) efficiency measures how much of the energy put into charging is recovered during discharge. The 20 Wh difference (110 − 90 = 20 Wh) is lost primarily as heat through ohmic losses, overpotentials, and side reactions. This directly impacts long-term operating costs.",
+      formulas: [
+        { label: "Round-Trip Efficiency", code: "η_RT = (W_discharge / W_charge) × 100%\n      = (90 / 110) × 100%\n      = 81.8%" },
+        { label: "Energy Lost per Cycle", code: "ΔW_loss = 110 − 90 = 20 Wh (18.2%)" },
+        { label: "Annual Loss (100 cycles)", code: "Total loss = 20 Wh × 100 = 2000 Wh = 2 kWh/year" }
+      ],
+      keyPoints: [
+        "81.8% round-trip efficiency means 18.2% energy wasted per cycle",
+        "Losses manifest as heat: Joule heating + overpotential dissipation",
+        "Over 1000 cycles: 20 kWh wasted — significant operational cost",
+        "Typical Li-ion: 90–95% RT efficiency; lead-acid: 70–80%",
+        "Improving efficiency requires reducing internal resistance and optimizing charge protocol"
+      ],
+      summary: "η = 81.8%. Each cycle wastes 20 Wh (18.2%), entirely due to irreversibilities. Over many cycles, this cumulative loss is substantial, justifying investment in higher-efficiency cells and optimized charging strategies."
+    }
+  },
+  {
+    n: 32,
+    scenario: "A hybrid energy storage system combines lithium-ion batteries with supercapacitors to manage peak loads. Batteries handle sustained energy delivery; supercapacitors manage sudden spikes.",
+    ask: "Integrate the role of hybridization in enhancing charge-discharge efficiency and infer how it improves reversibility within the battery system.",
+    answer: {
+      explanation: "Hybridization exploits the complementary strengths of batteries (high energy density) and supercapacitors (high power density, near-perfect charge-discharge reversibility). By routing peak power demands through supercapacitors, the battery experiences lower and more uniform current — reducing I²R losses and overpotentials, preserving reversibility.",
+      formulas: [
+        { label: "Battery Current Reduction", code: "I_battery = I_total − I_supercap\n   During peaks: I_battery << I_total\n   → reduced I²R losses" }
+      ],
+      keyPoints: [
+        "Supercapacitors: near 100% RT efficiency for rapid charge/discharge cycles",
+        "Batteries: protected from high-current stress → less polarization → more reversible",
+        "Battery cycle life improves significantly when peak loads are buffered",
+        "System efficiency increases: each component operates in its optimal regime",
+        "Trade-off: increased system complexity and cost"
+      ],
+      summary: "Hybridization improves overall efficiency by letting supercapacitors handle high-current spikes (preventing battery stress) while batteries provide sustained energy. This reduces battery overpotential, preserves reversibility, and extends cycle life."
+    }
+  },
+  {
+    n: 33,
+    scenario: "An EV manufacturer compares full discharge (maximum range) vs. restricted 60% discharge (extended lifespan) strategies. Full discharge: better immediate performance but earlier replacement. Restricted: longer cycle life but less usable energy per cycle.",
+    ask: "Analyze the trade-offs and recommend an optimal approach by evaluating efficiency, cycle life, and electrochemical reversibility considerations.",
+    answer: {
+      explanation: "Deep discharge (high DoD) accelerates irreversible degradation: lithium plating at low SoC, mechanical stress from large volume changes, and electrolyte side reactions at extreme potentials. Restricted discharge (DoD ~60%) keeps electrode materials in their most reversible operating range, dramatically extending cycle life.",
+      formulas: [
+        { label: "Cycle Life vs DoD (empirical)", code: "Cycles ∝ 1 / DoD^k  (k ≈ 1.5–2 for Li-ion)\n   DoD 60% → ~2–3× more cycles than DoD 100%" },
+        { label: "Total Energy Delivered", code: "E_total = Q × Cycles × DoD\n   Optimization needed to maximize E_total" }
+      ],
+      keyPoints: [
+        "100% DoD: maximum energy per cycle, but accelerated aging → earlier, costly replacement",
+        "60% DoD: fewer Wh per cycle, but 2–3× longer cycle life → more total energy over lifetime",
+        "Optimal: 80% DoD with smart BMS — balances range and longevity",
+        "Electrochemically: limited DoD prevents extreme potential excursions → maintains reversibility",
+        "Fleet TCO (total cost of ownership) is lower with restricted DoD"
+      ],
+      summary: "Recommend 80% DoD with smart BMS management as the optimal trade-off. Total lifetime energy output and TCO are maximized while preserving electrochemical reversibility, avoiding the extremes of either strategy."
+    }
+  },
+  {
+    n: 34,
+    scenario: "A lead-acid battery for hospital backup shows reduced discharge capacity, incomplete charging, electrolyte irregularities, frequent deep discharges, and high-temperature environment due to poor ventilation.",
+    ask: "Evaluate the operational conditions and infer the primary electrochemical causes of performance degradation, justifying how each factor contributes to loss of reversibility.",
+    answer: {
+      explanation: "Multiple simultaneous degradation mechanisms are active, each rooted in lead-acid battery electrochemistry. Identifying each cause and its electrochemical mechanism is essential for diagnosis.",
+      formulas: [
+        { label: "Sulfation Reaction", code: "During deep discharge:\nPb + SO₄²⁻ → PbSO₄ + 2e⁻  (anode)\nPbO₂ + 4H⁺ + SO₄²⁻ + 2e⁻ → PbSO₄ + 2H₂O  (cathode)\n(PbSO₄ is insoluble, hard to reverse)" }
+      ],
+      keyPoints: [
+        "Deep discharge → irreversible sulfation: large PbSO₄ crystals block electrode surface → capacity loss",
+        "Electrolyte stratification: dense H₂SO₄ sinks, dilute top → non-uniform current distribution → cell imbalance",
+        "High temperature: accelerates self-discharge, water loss (gassing), and grid corrosion → permanent capacity fade",
+        "Incomplete charging: un-reformed PbSO₄ accumulates → progressive capacity loss per cycle",
+        "Most critical factor: deep discharge + high temperature together create synergistic irreversible sulfation"
+      ],
+      summary: "Deep discharge triggers hard sulfation; high temperature accelerates electrode corrosion and electrolyte degradation; electrolyte stratification causes cell imbalance. All factors destroy reversibility. Corrective actions: controlled DoD limits, equalization charging, ventilation, and temperature control."
+    }
+  },
+  {
+    n: 35,
+    scenario: "A renewable energy storage system in a remote microgrid uses Li-ion batteries with intermittent solar input and fluctuating load demand. Capacity has declined and charging takes longer. Temperature varies day/night. Operator must redesign the charging strategy.",
+    ask: "Analyze the given system behavior and determine an optimized charging and discharging strategy that preserves electrode reversibility while minimizing efficiency losses.",
+    answer: {
+      explanation: "The described degradation (capacity fade, longer charge times) indicates SEI growth, calendar aging, and possibly partial lithium plating from rapid/deep discharge. Optimizing the strategy requires addressing temperature sensitivity, DoD limits, and charge rate management.",
+      formulas: [
+        { label: "CCCV with Temperature Compensation", code: "V_charge(T) = V_ref − α × (T − T_ref)\n   α ≈ −3 to −5 mV/°C for Li-ion\n   (lower voltage limit at high T, higher at low T)" }
+      ],
+      keyPoints: [
+        "Limit DoD to 80%: reduce electrode stress, preserve reversibility",
+        "Use adaptive CC-CV: reduce C-rate during night (cold) to prevent Li plating",
+        "Temperature compensation: adjust charge voltage limits with ambient temperature",
+        "Partial state-of-charge (PSoC) operation: avoid extremes (0–20% or 95–100%) where degradation is fastest",
+        "Periodic full charge cycles: balance cells and refresh electrode chemistry",
+        "Battery management system (BMS): continuously monitor SoH, adjust strategy dynamically"
+      ],
+      summary: "Optimized strategy: adaptive CC-CV charging with temperature compensation, DoD limited to 80%, and BMS-guided dynamic current control. This preserves electrode reversibility, reduces SEI growth, and extends system lifetime under intermittent solar and fluctuating temperature conditions."
+    }
+  },
+  {
+    n: 36,
+    scenario: "A rural electrification project requires long-duration energy storage but faces budget constraints and maintenance limitations.",
+    ask: "Identify a suitable storage approach and justify its relevance to the scenario.",
+    answer: {
+      explanation: "The constraints — rural, budget-limited, low maintenance — point to a robust, proven, and inexpensive electrochemical storage technology rather than cutting-edge systems. Lead-acid batteries or flow batteries are practical options; lead-acid remains most accessible for rural applications.",
+      formulas: [],
+      keyPoints: [
+        "Lead-acid batteries: low upfront cost, mature technology, widely available, easy to repair locally",
+        "Flow batteries (vanadium): excellent for long-duration storage, scalable, long cycle life — but high initial cost",
+        "For rural/budget-constrained: lead-acid flooded batteries with solar charging is the pragmatic choice",
+        "Maintenance: periodic electrolyte level checks, equalization charging — simpler than Li-ion BMS management",
+        "Long-duration storage: lead-acid banks can be sized for 2–3 days of autonomy"
+      ],
+      summary: "Lead-acid batteries paired with solar PV is the most suitable approach for rural electrification: low cost, proven reliability, and simple maintenance match the project constraints perfectly."
+    }
+  },
+  {
+    n: 37,
+    scenario: "A data center experiences frequent overheating in battery backup systems during peak load operations.",
+    ask: "Determine the cause and recommend a conceptual solution to mitigate the issue.",
+    answer: {
+      explanation: "Battery overheating during peak loads is primarily caused by excessive I²R losses in internal resistance, exacerbated in high-current events. In Li-ion UPS systems, high current draws during data center peak loads generate significant heat, especially if cells are already warm or aging (higher r).",
+      formulas: [
+        { label: "Heat Generation", code: "P_heat = I² × R_internal\n   At peak load I doubles → heat quadruples" }
+      ],
+      keyPoints: [
+        "Cause: high current (I) during peak load → I²R heat exceeds thermal dissipation capacity",
+        "Compounded by: aging cells (higher r), confined rack space (poor airflow), inadequate thermal management",
+        "Solutions: (1) Hybrid UPS with supercapacitors to absorb peak current spikes",
+        "(2) Active liquid cooling or forced-air cooling in battery racks",
+        "(3) Battery derating: operate cells below rated current limit",
+        "(4) Cell replacement schedule to prevent high-r aging cells from overheating"
+      ],
+      summary: "Overheating = I²R losses at peak current. Solution: reduce peak current to batteries (supercapacitor buffering), improve thermal management (active cooling), and maintain cell health. This prevents thermal runaway and maintains reliability."
+    }
+  },
+  {
+    n: 38,
+    scenario: "A manufacturing firm aims to replace conventional battery systems with eco-friendly alternatives. Current systems rely on rare metals and generate disposal challenges.",
+    ask: "Analyze how material selection influences sustainability and propose key considerations for eco-friendly design.",
+    answer: {
+      explanation: "Conventional Li-ion batteries use cobalt, nickel, and lithium — rare, geographically concentrated, and difficult to recycle. Eco-friendly alternatives focus on earth-abundant materials, reduced toxicity, and designed recyclability. Material choice determines the entire environmental lifecycle of the battery.",
+      formulas: [],
+      keyPoints: [
+        "Problem materials: Co, Ni (mining toxicity), Li (water-intensive extraction), fluorinated electrolytes",
+        "Eco alternatives: Na-ion batteries (sodium abundant), LiFePO₄ (no Co/Ni, thermally stable), organic electrode materials",
+        "Key sustainability considerations: (1) Earth-abundant active materials (Fe, Mn, Na)",
+        "(2) Aqueous electrolytes instead of flammable organic solvents",
+        "(3) Biodegradable binders and separators",
+        "(4) Design for disassembly: easy cell separation for recycling",
+        "(5) Closed-loop recycling integration: recover active materials for reuse"
+      ],
+      summary: "Eco-friendly battery design requires earth-abundant, non-toxic materials (Na-ion, LiFePO₄), safe electrolytes, and recyclability-by-design. Material selection is the primary lever for reducing environmental impact across the battery lifecycle."
+    }
+  },
+  {
+    n: 39,
+    scenario: "A startup is designing energy storage for portable medical devices where compact size and quick charge-discharge cycles are critical. Traditional batteries fail to meet rapid energy delivery requirements efficiently.",
+    ask: "Infer which emerging technology is most suitable and justify its selection based on operational requirements.",
+    answer: {
+      explanation: "The requirements — compact, fast charge/discharge, rapid energy delivery — match the profile of supercapacitors (electrochemical double-layer capacitors or pseudocapacitors) or advanced hybrid lithium capacitors rather than conventional batteries. These technologies store energy electrostatically or through fast surface redox, enabling very high power density.",
+      formulas: [
+        { label: "Supercapacitor Energy", code: "E = ½CV²\n   C = capacitance (farads), V = voltage" },
+        { label: "Power Density Comparison", code: "Supercapacitor: ~10,000 W/kg\nLi-ion battery: ~300–1500 W/kg\nHybrid Li-capacitor: ~2000–5000 W/kg" }
+      ],
+      keyPoints: [
+        "Supercapacitors: excellent for rapid bursts, near-infinite cycle life, but lower energy density",
+        "Hybrid Li-ion capacitors: combine Li-ion energy density with capacitor power density — ideal for medical devices",
+        "Best choice: Lithium-ion capacitor (LIC) — compact, fast, high power, and reasonable energy density",
+        "Charge/discharge in seconds to minutes vs. hours for conventional batteries",
+        "No chemical reaction degradation: long service life critical for medical reliability"
+      ],
+      summary: "Lithium-ion capacitors (hybrid devices) are the most suitable emerging technology: they offer high power density for rapid cycles, sufficient energy density for compact design, and long cycle life essential for portable medical devices."
+    }
+  }
+];
+
+// ─── BUILD UI ─────────────────────────────────────────────────────────────────
+const container = document.getElementById('q-container');
+const navList   = document.getElementById('nav-list');
+
+questions.forEach(q => {
+  // Sidebar nav entry
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="#q${q.n}" id="nav${q.n}">
+    <span class="nav-num">${q.n}</span>
+    <span>${q.ask.substring(0,60)}…</span>
+  </a>`;
+  navList.appendChild(li);
+
+  // Formula HTML
+  const formulaHTML = q.answer.formulas.map(f => `
+    <div class="formula-box">
+      <div class="label">${f.label}</div>
+      ${f.code.split('\n').map(l => `<div>${l}</div>`).join('')}
+    </div>
+  `).join('');
+
+  // Key points HTML
+  const kpHTML = q.answer.keyPoints.length ? `
+    <div class="key-points">
+      <div class="kp-label">Key Points</div>
+      <ul>${q.answer.keyPoints.map(kp => `<li>${kp}</li>`).join('')}</ul>
+    </div>
+  ` : '';
+
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = `q${q.n}`;
+  card.dataset.text = `${q.scenario} ${q.ask} ${q.answer.explanation} ${q.answer.keyPoints.join(' ')}`.toLowerCase();
+
+  card.innerHTML = `
+    <div class="q-header" onclick="toggleCard(this)">
+      <div class="q-num">${q.n}</div>
+      <div class="q-text">
+        <div class="q-scenario">${q.scenario}</div>
+        <div class="q-ask">❓ ${q.ask}</div>
+      </div>
+      <div class="q-toggle">▾</div>
+    </div>
+    <div class="q-answer">
+      <div class="ans-body">
+        <div class="ans-section">
+          <h4>Answer</h4>
+          <p>${q.answer.explanation}</p>
+        </div>
+        ${q.answer.formulas.length ? `<div class="ans-section"><h4>Formulas</h4>${formulaHTML}</div>` : ''}
+        ${kpHTML}
+        <div class="ans-section" style="margin-top:12px">
+          <h4>Summary</h4>
+          <p><strong>${q.answer.summary}</strong></p>
+        </div>
+        <button class="copy-btn" onclick="copyAnswer(this, ${q.n})">
+          📋 Copy Answer
+        </button>
+      </div>
+    </div>
+  `;
+  container.appendChild(card);
+});
+
+// ─── FUNCTIONS ────────────────────────────────────────────────────────────────
+function toggleCard(header) {
+  const card = header.closest('.q-card');
+  card.classList.toggle('open');
+  updateNav();
+}
+
+function updateNav() {
+  document.querySelectorAll('#nav-list a').forEach(a => a.classList.remove('active'));
+  const visible = [...document.querySelectorAll('.q-card:not(.hidden)')];
+  // Highlight nav for card in view
+  const fromTop = window.scrollY + 120;
+  let activeId = null;
+  visible.forEach(card => {
+    if (card.offsetTop <= fromTop) activeId = card.id;
+  });
+  if (activeId) {
+    const navLink = document.getElementById('nav' + activeId.replace('q',''));
+    if (navLink) navLink.classList.add('active');
+  }
+}
+
+function searchQ(val) {
+  const term = val.toLowerCase().trim();
+  let any = false;
+  document.querySelectorAll('.q-card').forEach(card => {
+    const match = !term || card.dataset.text.includes(term);
+    card.classList.toggle('hidden', !match);
+    if (match) any = true;
+  });
+  document.getElementById('no-results').style.display = any ? 'none' : 'block';
+}
+
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  const btn = document.querySelector('#topbar .top-btns .icon-btn');
+  btn.innerHTML = document.body.classList.contains('dark') ? '☀️ <span>Light</span>' : '🌙 <span>Dark</span>';
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+function copyAnswer(btn, n) {
+  const q = questions.find(x => x.n === n);
+  const text = [
+    `Q${n}: ${q.ask}`,
+    `\nAnswer:\n${q.answer.explanation}`,
+    q.answer.formulas.length ? `\nFormulas:\n${q.answer.formulas.map(f => `${f.label}: ${f.code}`).join('\n')}` : '',
+    q.answer.keyPoints.length ? `\nKey Points:\n${q.answer.keyPoints.map((k,i) => `${i+1}. ${k}`).join('\n')}` : '',
+    `\nSummary:\n${q.answer.summary}`
+  ].filter(Boolean).join('');
+
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = '📋 Copy Answer';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    btn.textContent = '⚠️ Failed';
+    setTimeout(() => { btn.innerHTML = '📋 Copy Answer'; }, 2000);
+  });
+}
+
+window.addEventListener('scroll', updateNav);
+updateNav();
+</script>
+</body>
+</html>

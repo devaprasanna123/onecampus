@@ -1,0 +1,17 @@
+{
+  "name": "OneCampus",
+  "short_name": "OneCampus",
+  "description": "Smart Exam Preparation Platform",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#0d0d0d",
+  "background_color": "#0d0d0d",
+  "icons": [
+    {
+      "src": "/icons.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
