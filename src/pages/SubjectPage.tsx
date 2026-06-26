@@ -68,6 +68,14 @@ export const STATIC_UNITS = [
   }
 ];
 
+const studyLinks: Record<string, string> = {
+  "unit-1": "https://drive.google.com/file/d/1AvsDWHesRFQv-pX-JVA0xHj_lIEJJB4C/preview",
+  "unit-2": "https://drive.google.com/file/d/1k-zFoqRi5kfBDXrtj6DHcynGmeJQK3Am/preview",
+  "unit-3": "https://drive.google.com/file/d/1v2iRISIb8JQYC3Dt6GgPiaYhvvsTXjRc/preview",
+  "unit-4": "https://drive.google.com/file/d/1Eo_lk0F_kLBFsXCTv50x0z97yKy485oD/preview",
+  "unit-5": "https://drive.google.com/file/d/1T-Gex_tGGAybLp7cJOCCJicOrQIBZteD/preview",
+};
+
 export const SubjectPage: React.FC<SubjectPageProps> = ({ globalSearchQuery }) => {
   const navigate = useNavigate();
   const { unitProgress, isUBookmarked, toggleUBookmark } = useProgress();
@@ -209,7 +217,14 @@ export const SubjectPage: React.FC<SubjectPageProps> = ({ globalSearchQuery }) =
                           Answer Key
                         </button>
                         <button
-                          onClick={() => navigate(`/subject/subject-chem/unit/${unit.id}/study`)}
+                          onClick={() => {
+                            const link = studyLinks[unit.id];
+                            if (link) {
+                              window.open(link, "_blank", "noopener,noreferrer");
+                            } else {
+                              alert("Study material not available.");
+                            }
+                          }}
                           className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-primary-600 hover:bg-primary-700 text-white text-[12px] font-medium rounded-md transition-colors shadow-sm"
                         >
                           Study Now
