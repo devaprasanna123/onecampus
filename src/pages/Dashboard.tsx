@@ -15,7 +15,8 @@ import {
   BookOpen,
   ArrowRight,
   AlertCircle,
-  FileText
+  FileText,
+  X // Added X icon for dismiss button
 } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
@@ -24,6 +25,9 @@ export const Dashboard: React.FC = () => {
   const { stats } = useProgress();
   const countdown = useCountdown('2026-06-29T09:00:00');
   const { schedule, updateTask } = useStudyPlanner(profile?.id);
+
+  // State to control visibility of the new Computer Problem Solving alert key banner
+  const [showAlert, setShowAlert] = React.useState(true);
 
   const todayStr = new Date().toISOString().split('T')[0];
   const todaysTasks = schedule.filter(item => item.target_date === todayStr);
@@ -58,6 +62,32 @@ export const Dashboard: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* NEW ALERT BANNER: Computer Problem Solving Answer Key */}
+      {showAlert && (
+        <div className="flex items-start justify-between gap-3 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50 rounded-premium shadow-sm animate-fade-in relative">
+          <div className="flex items-start gap-3 pr-6">
+            <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-md text-blue-700 dark:text-blue-400 shrink-0">
+              <AlertCircle size={18} />
+            </div>
+            <div>
+              <h4 className="text-[14px] font-semibold text-blue-900 dark:text-blue-200">
+                Answer Key Update!
+              </h4>
+              <p className="text-[13px] text-blue-700 dark:text-blue-400 mt-0.5">
+                The answer key for <strong>Computer Problem Solving</strong> was updated on <strong>28.06.2026 Evening 6 PM</strong>. Check your email for more updates. Give feedback if you want pre-request access to answer keys; we respond respectively.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setShowAlert(false)}
+            className="p-1 text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-200 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors shrink-0"
+            aria-label="Dismiss alert"
+          >
+            <X size={18} />
+          </button>
+        </div>
+      )}
 
       {/* UPDATE NOTIFICATION BANNER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-premium shadow-sm animate-fade-in">
@@ -108,7 +138,7 @@ export const Dashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        {/* SECTION 3: Study Progress & Upcoming Exam (Combined in left column) */}
+        {/* SECTION 3: Study Progress & Upcoming Exam */}
         <div className="lg:col-span-2 space-y-6">
           
           {/* Study Progress Card */}
