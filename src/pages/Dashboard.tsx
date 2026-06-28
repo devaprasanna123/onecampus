@@ -72,10 +72,10 @@ export const Dashboard: React.FC = () => {
             </div>
             <div>
               <h4 className="text-[14px] font-semibold text-blue-900 dark:text-blue-200">
-                Answer Key Update!
+                Answer Key For CPS Postponed! 
               </h4>
               <p className="text-[13px] text-blue-700 dark:text-blue-400 mt-0.5">
-                The answer key for <strong>Computer Problem Solving</strong> was updated on <strong>28.06.2026 Evening 6 PM</strong>. Check your email for more updates. Give feedback if you want pre-request access to answer keys; we respond respectively.
+              The answer key for <strong>Computer Problem Solving</strong> was updated on <strong>29.06.2026 Evening 6 PM</strong>. Check your email for more updates. Give feedback if you want pre-request access to answer keys; we respond respectively.
               </p>
             </div>
           </div>
@@ -90,23 +90,23 @@ export const Dashboard: React.FC = () => {
       )}
 
       {/* UPDATE NOTIFICATION BANNER */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-premium shadow-sm animate-fade-in">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900/50 rounded-premium shadow-sm animate-fade-in">
         <div className="flex items-start gap-3">
-          <div className="p-2 bg-amber-100 dark:bg-amber-900/50 rounded-md text-amber-700 dark:text-amber-400 shrink-0">
+          <div className="p-2 bg-green-100 dark:bg-green-900/50 rounded-md text-green-700 dark:text-green-400 shrink-0">
             <FileText size={18} />
           </div>
           <div>
-            <h4 className="text-[14px] font-semibold text-amber-900 dark:text-amber-200">
-              Formula Sheets Updated!
+            <h4 className="text-[14px] font-semibold text-green-900 dark:text-green-200">
+              To view Formula Sheets For Engineering Chemistry II
             </h4>
-            <p className="text-[13px] text-amber-700 dark:text-amber-400 mt-0.5">
+            <p className="text-[13px] text-green-700 dark:text-amber-400 mt-0.5">
               The Engineering Chemistry II high-yield formula sheets have been updated with recent exam topics.
             </p>
           </div>
         </div>
         <button
           onClick={() => navigate('/revision')}
-          className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-md text-[12px] font-medium transition-colors shadow-sm flex items-center gap-1.5 self-start sm:self-center shrink-0"
+          className="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-md text-[12px] font-medium transition-colors shadow-sm flex items-center gap-1.5 self-start sm:self-center shrink-0"
         >
           View Formula Sheets
           <ArrowRight size={14} />
